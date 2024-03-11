@@ -5,5 +5,9 @@
 
 (deftest data-spec-validity
   (testing "2024"
-    (is (true? (s/valid? :roster/entries nlclc-stats.data.2024/assignments))
-        (s/explain-str :roster/entries nlclc-stats.data.2024/assignments))))
+    (is (s/valid? :roster/entries nlclc-stats.data.2024/assignments)
+        (s/explain-str :roster/entries nlclc-stats.data.2024/assignments)))
+  
+  (testing "2023"
+    (is (s/valid? :roster/entries nlclc-stats.data.2023/assignments)
+        (s/explain-str :roster/entries nlclc-stats.data.2023/assignments))))

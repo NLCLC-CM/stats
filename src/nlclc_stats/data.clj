@@ -1,20 +1,51 @@
 (ns nlclc-stats.data
   (:require [clojure.spec.alpha :as s]))
 
-(def names #{"Gabriel Lam"
+(def names #{"Gab"
              "Helen"
-             "Phison"
+             "Amy"
+             "Terry"
+             "Billy Sir"
+             "Steven"
+             "Gabe"
+             "Philson"
              "Adriel"
+             "Kiki"
+             "Ken"
+             "Dorothy"
+             "Vivian"
+             "Gigi"
              "Andrew"
-             "Cheuk Yin"
-             "Michelle To"})
+             "Arthur"
+             "Bertha"
+             "Eddie"
+             "YauYau"
+             "Sinead"
+             "Sammy"
+             "Toby"
+             "Kovia"
+             "Cindy"
+             "Stephy"
+             "Martin"
+             "Jack"
+             "Kiki Pau"
+             "Mavis"
+             "Devin"
+             "Matthew"
+             "April"
+             "Eric"
+             "Ka Bo"
+             "Cheuk"
+             "ToTo"})
 
-(def roles #{:worship-lead
+(def roles #{:lead
              :vocals
              :pianist
              :drummer
              :bassist
-             :guitarist})
+             :guitarist
+             :av
+             :usher})
 
 (s/def :entry/person (s/and string? (partial contains? names)))
 
