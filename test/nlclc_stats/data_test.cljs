@@ -10,4 +10,8 @@
   
   (testing "2023"
     (is (s/valid? :roster/entries nlclc-stats.data.2023/assignments)
-        (s/explain-str :roster/entries nlclc-stats.data.2023/assignments))))
+        (s/explain-str :roster/entries nlclc-stats.data.2023/assignments)))
+
+  (testing "2022"
+    (is (s/valid? :roster/entries nlclc-stats.data.2022/assignments)
+        (s/explain-str :roster/entries nlclc-stats.data.2022/assignments))))
