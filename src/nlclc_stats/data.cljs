@@ -1,5 +1,5 @@
 (ns nlclc-stats.data
-  (:require [clojure.spec.alpha :as s]))
+  (:require [cljs.spec.alpha :as s]))
 
 (def names
   #{
@@ -71,5 +71,3 @@
                              :opt []))
 
 (s/def :roster/entries (s/coll-of :roster/entry))
-
-; (def valid-entries? (partial s/valid? :roster/entries))

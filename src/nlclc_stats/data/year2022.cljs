@@ -1,4 +1,4 @@
-(ns nlclc-stats.data.2022)
+(ns nlclc-stats.data.year2022)
 
 (def q1
   (list
@@ -416,3 +416,6 @@
                    "求主給這世代看見異象"]
      :entry/lecture-name "真光來到世上"}
     ))
+
+(def assignments
+  (concat q1 q2 q3 q4))

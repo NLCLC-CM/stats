@@ -1,0 +1,15 @@
+{:source-paths ["src"]
+
+ :dependencies [[cider/cider-nrepl "0.28.7"]
+                [cider/piggieback "0.5.2"]]
+
+ :dev-http {8020 "public"}
+
+ :builds {:app {:target :browser
+                :output-dir "public/js"
+                :asset-path "/js"
+
+                :modules
+                {:main ; becomes public/js/main.js
+                 {:init-fn nlclc-stats.browser/init}}}}}
+                 ; {:init-fn starter.browser/init}}}}}

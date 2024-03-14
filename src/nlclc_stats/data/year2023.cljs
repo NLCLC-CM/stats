@@ -1,4 +1,4 @@
-(ns nlclc-stats.data.2023)
+(ns nlclc-stats.data.year2023)
 
 (def q1
   (list

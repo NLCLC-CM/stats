@@ -1,4 +1,4 @@
-(ns nlclc-stats.data.2024)
+(ns nlclc-stats.data.year2024)
 
 (def q1
   (list {:entry/date "2024-01-06"
