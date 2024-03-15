@@ -39,6 +39,8 @@
     "Stephy"
     "Steven"
     "Terry"
+    "Tin Hei"
+    "Tin Lok"
     "ToTo"
     "Toby"
     "Vivian"
