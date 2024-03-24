@@ -4,6 +4,6 @@
     "release": "shadow-cljs release app"
   },
   "devDependencies": {
-    "shadow-cljs": "^2.27.5"
+    "shadow-cljs": "2.19.6"
   }
 }
