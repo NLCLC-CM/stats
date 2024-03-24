@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "server": "shadow-cljs server",
+    "release": "shadow-cljs release app"
+  },
   "devDependencies": {
     "shadow-cljs": "^2.27.5"
   }

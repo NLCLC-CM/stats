@@ -1,5 +1,9 @@
 (ns nlclc-stats.data
-  (:require [cljs.spec.alpha :as s]))
+  (:require [cljs.spec.alpha :as s]
+            [nlclc-stats.data.year2021]
+            [nlclc-stats.data.year2022]
+            [nlclc-stats.data.year2023]
+            [nlclc-stats.data.year2024]))
 
 (def names
   #{
@@ -73,3 +77,10 @@
                              :opt []))
 
 (s/def :roster/entries (s/coll-of :roster/entry))
+
+(def entries
+  (concat
+    nlclc-stats.data.year2021/assignments
+    nlclc-stats.data.year2022/assignments
+    nlclc-stats.data.year2023/assignments
+    nlclc-stats.data.year2024/assignments))
