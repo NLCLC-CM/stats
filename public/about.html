@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About: NLCLC Stats</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <h1><a href="/">NLCLC Stats</a></h1>
+
+      <section class="languages">
+        <span>en</span>
+        <span>zh</span>
+      </section>
+    </nav>
+  </header>
+
+  <article>
+    <p>
+    This site was created with the following goals in mind:
+    </p>
+
+    <ol>
+      <li>To recommend songs based on frequency</li>
+      <li>To view most-likely groupings</li>
+      <li>To gamify the act of serving</li>
+      <li>To actually get to use <a href="https://clojurescript.org/">ClojureScript</a></li>
+    </ol>
+
+    <p>
+    Safe to say that these goals are met.
+    </p>
+
+    <table>
+      <tbody>
+        <tr>
+          <th>Entries</th>
+          <td id="num-entries">0</td>
+        </tr>
+
+        <tr>
+          <th>People</th>
+          <td id="num-people">0</td>
+        </tr>
+
+        <tr>
+          <th>Songs</th>
+          <td id="num-songs">0</td>
+        </tr>
+
+        <tr>
+          <th>Earliest entry</th>
+          <td><time id="earliest-entry" datetime="1974-01-01">1974-01-01</time></td>
+        </tr>
+
+        <tr>
+          <th>Latest entry</th>
+          <td><time id="latest-entry" datetime="1974-01-01">1974-01-01</time></td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <script src="./js/data.js" type="text/javascript"></script>
+  <script src="./js/about.js" type="text/javascript"></script>
+</body>
+</html>
+

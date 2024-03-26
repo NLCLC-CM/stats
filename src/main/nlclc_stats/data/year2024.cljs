@@ -123,6 +123,31 @@
                        "逾越"
                        "至愛的迴響"]
          :entry/lecture-name "出死入生的福音"}
+        {:entry/date "2024-03-16"
+         :entry/people {:lead ["Sinead"]
+                        :vocals ["YauYau"]
+                        :pianist ["Cheuk"]
+                        :av ["Philson"
+                             "Joyce"]
+                        :usher ["Cindy"
+                                "Tin Hei"]}
+         :entry/songs ["你成就救恩"
+                       "救恩的記號"
+                       "如你"
+                       "寶貴十架"]
+         :entry/lecture-name "父的本性"}
+        {:entry/date "2024-03-23"
+         :entry/people {:lead ["Arthur"]
+                        :vocals ["Helen"]
+                        :pianist ["Dorothy"]
+                        :guitarist ["Toby"]
+                        :av ["Andrew"]
+                        :drummer ["Steven"]}
+         :entry/songs ["Hosanna"
+                       "十架犧牲的愛"
+                       "祂獨自承擔"
+                       "世界最好的愛"]
+         :entry/lecture-name "耶穌與我何干？"}
         ))
 
 (def q2 (list))

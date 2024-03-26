@@ -80,7 +80,7 @@
 
 (def entries
   (concat
-    nlclc-stats.data.year2021/assignments
-    nlclc-stats.data.year2022/assignments
-    nlclc-stats.data.year2023/assignments
-    nlclc-stats.data.year2024/assignments))
+    main.nlclc-stats.data.year2021/assignments
+    main.nlclc-stats.data.year2022/assignments
+    main.nlclc-stats.data.year2023/assignments
+    main.nlclc-stats.data.year2024/assignments))
