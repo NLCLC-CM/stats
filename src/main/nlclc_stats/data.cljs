@@ -1,9 +1,9 @@
-(ns nlclc-stats.data
+(ns main.nlclc-stats.data
   (:require [cljs.spec.alpha :as s]
-            [nlclc-stats.data.year2021]
-            [nlclc-stats.data.year2022]
-            [nlclc-stats.data.year2023]
-            [nlclc-stats.data.year2024]))
+            [main.nlclc-stats.data.year2021]
+            [main.nlclc-stats.data.year2022]
+            [main.nlclc-stats.data.year2023]
+            [main.nlclc-stats.data.year2024]))
 
 (def names
   #{

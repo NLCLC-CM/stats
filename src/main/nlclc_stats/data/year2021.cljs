@@ -1,4 +1,4 @@
-(ns nlclc-stats.data.year2021)
+(ns main.nlclc-stats.data.year2021)
 
 (def q4
   (list

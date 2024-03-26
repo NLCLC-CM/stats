@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "server": "shadow-cljs server",
+    "dev": "shadow-cljs watch app",
     "release": "shadow-cljs release app"
   },
   "devDependencies": {
