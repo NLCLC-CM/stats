@@ -11,4 +11,7 @@
 
                 :modules {:data {:entries [main.nlclc-stats.data]}
                           :main {:init-fn main.nlclc-stats.main/init :depends-on #{:data}}
-                          :about {:init-fn main.nlclc-stats.about/init :depends-on #{:data}}}}}}
+                          :about {:init-fn main.nlclc-stats.about/init :depends-on #{:data}}}}
+          :test {:target :node-test
+                 :output-to "out/node-tests.js"
+                 :autorun true}}}

@@ -1,6 +1,7 @@
 {
   "scripts": {
     "dev": "shadow-cljs watch app",
+    "test": "shadow-cljs compile test",
     "release": "shadow-cljs release app"
   },
   "devDependencies": {

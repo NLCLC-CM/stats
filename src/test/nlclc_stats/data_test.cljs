@@ -8,14 +8,9 @@
             ))
 
 (deftest data-spec-validity
-  (testing "2024"
-    (is (s/valid? :roster/entries nlclc-stats.data.year2024/assignments)
-        (s/explain-str :roster/entries nlclc-stats.data.year2024/assignments)))
-  
-  (testing "2023"
-    (is (s/valid? :roster/entries nlclc-stats.data.year2023/assignments)
-        (s/explain-str :roster/entries nlclc-stats.data.year2023/assignments)))
+  (testing "entries"
+    (is (let [dates (map :entry/date data/entries)]
+          (= (sort dates) dates)))
 
-  (testing "2022"
-    (is (s/valid? :roster/entries nlclc-stats.data.year2022/assignments)
-        (s/explain-str :roster/entries nlclc-stats.data.year2022/assignments))))
+    (is (s/valid? :roster/entries data/entries)
+        (s/explain-str :roster/entries data/entries))))
