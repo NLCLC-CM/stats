@@ -1,11 +1,7 @@
 (ns test.nlclc-stats.data-test
   (:require [cljs.test :refer-macros [deftest is testing]]
             [cljs.spec.alpha :as s]
-            [main.nlclc-stats.data :as data]
-            [main.nlclc-stats.data.year2022]
-            [main.nlclc-stats.data.year2023]
-            [main.nlclc-stats.data.year2024]
-            ))
+            [main.nlclc-stats.data :as data]))
 
 (deftest data-spec-validity
   (testing "entries"

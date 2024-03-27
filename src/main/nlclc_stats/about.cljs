@@ -8,8 +8,8 @@
         latest-date-elem (js/document.getElementById "latest-entry")
         earliest-date-elem (js/document.getElementById "earliest-entry")
         num-songs (count (distinct (apply concat (map :entry/songs data/entries))))
-        earliest-entry (apply min-key :entry/date data/entries)
-        latest-entry (apply max-key :entry/date data/entries)]
+        earliest-entry (first data/entries)
+        latest-entry (last data/entries)]
     (set! (.-textContent entry-count-elem) (count data/entries))
     (set! (.-textContent num-people-elem) (count data/names))
     (set! (.-textContent num-songs-elem) num-songs)
