@@ -25,26 +25,26 @@
         "songs"
         (for [song-name DISTINCTSONGS]
           [:option {:value song-name} song-name])
-        
+
         (list @selected-item))])
 
 (defn- add []
   (do (case @selected-item
         "people"
         (swap! people cons @query)
-        
+
         "songs"
         (swap! songs cons @query)
-        
+
         "roles"
         (swap! roles cons @query)
-        
+
         "starting-date"
         (reset! starting-date @query)
-        
+
         "ending-date"
         (reset! ending-date @query))
-      
+
       (reset! query "")))
 
 (defn- change-select [this]
@@ -73,8 +73,44 @@
    [:button {:on-click add :class "btn btn-outline-secondary"}
     "Add"]])
 
+(defn- delete-entity-btn [entity entity-ls]
+  [:button {:on-click #(swap! entity-ls filter (partial not= entity))
+            :title "Remove from query"
+            :class "btn btn-outline-secondary"}
+   entity])
+
+(defn- delete-scalar-btn [scalar]
+  [:button {:on-click #(reset! scalar nil)
+            :title "Remove from query"
+            :class "btn btn-outline-secondary"}
+   @scalar])
+
 (defn- query-explanation [thing-to-search]
-  [:p "Searching for " thing-to-search " with "])
+  "Assumes the query isn't empty."
+  `[:p "Searching for " ~thing-to-search " with "
+
+    ~@(when (not (empty? @people))
+        (cons "people"
+              (for [person @people]
+                [delete-entity-btn person people])))
+
+    ~@(when (not (empty? @songs))
+        (cons "songs"
+              (for [song @songs]
+                [delete-entity-btn song songs])))
+
+    ~@(when (not (empty? @roles))
+        (cons "roles"
+              (for [role @roles]
+                [delete-entity-btn role roles])))
+
+    ~@(when (not (nil? @starting-date))
+        (cons "starting on"
+              [delete-scalar-btn starting-date]))
+
+    ~@(when (not (nil? @ending-date))
+        (cons "ending on"
+              [delete-scalar-btn ending-date]))])
 
 (defn component [thing-to-search]
   [:section {:class "col"}
