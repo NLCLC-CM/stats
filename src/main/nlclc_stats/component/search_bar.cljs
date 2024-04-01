@@ -1,16 +1,19 @@
 (ns main.nlclc-stats.component.search-bar
   (:require [reagent.core :as r]
+            [clojure.set :refer [difference]]
             [main.nlclc-stats.data :as data]))
 
-(def ^:const DISTINCTSONGS (distinct (apply concat (map :entry/songs data/entries))))
+(def ^:const DISTINCTSONGS (set (apply concat (map :entry/songs data/entries))))
 
 (defonce selected-item (r/atom "songs"))
 (defonce query (r/atom ""))
-(defonce people (r/atom []))
-(defonce songs (r/atom []))
-(defonce roles (r/atom []))
+(defonce people (r/atom #{}))
+(defonce songs (r/atom #{}))
+(defonce roles (r/atom #{}))
 (defonce starting-date (r/atom nil))
 (defonce ending-date (r/atom nil))
+
+(def query-on-change (r/atom identity))
 
 (defn- get-query []
   {:people @people
@@ -23,33 +26,37 @@
   `[:datalist {:id "autocomplete-list"}
     ~@(case @selected-item
         "people"
-        (for [person-name (into '() data/names)]
+        (for [person-name (difference data/names @people)]
           [:option {:value person-name} person-name])
 
         "songs"
-        (for [song-name DISTINCTSONGS]
+        (for [song-name (difference DISTINCTSONGS @songs)]
           [:option {:value song-name} song-name])
 
-        (list @selected-item))])
+        "roles"
+        (for [role-name (difference data/roles @roles)]
+          [:option {:value (name role-name)} (name role-name)])
 
-(defn- add []
-  (do (case @selected-item
+        (list))])
+
+(defn add-item [item-type text]
+  (do (case item-type
         "people"
-        (swap! people conj @query)
+        (swap! people conj text)
 
         "songs"
-        (swap! songs conj @query)
+        (swap! songs conj text)
 
         "roles"
-        (swap! roles conj @query)
+        (swap! roles conj text)
 
         "starting-date"
-        (reset! starting-date @query)
+        (reset! starting-date text)
 
         "ending-date"
-        (reset! ending-date @query))
-
-      (reset! query "")))
+        (reset! ending-date text))
+      
+      (@query-on-change (get-query))))
 
 (defn- change-select [this]
   (do (reset! selected-item (-> this .-target .-value))
@@ -85,7 +92,8 @@
 
    [input]
 
-   [:button {:on-click #(do (add)
+   [:button {:on-click #(do (add-item @selected-item @query)
+                            (reset! query "")
                             (on-change (get-query)))
              :class "btn btn-outline-secondary"}
     "Add"]])
@@ -142,6 +150,7 @@
                                         :x ending-date}])))])
 
 (defn component [{:keys [thing-to-search on-change]}]
+  (reset! query-on-change on-change)
   [:section {:class "col"}
    [add-component on-change]
    (when (not (and (empty? @people)

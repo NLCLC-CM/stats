@@ -26,17 +26,15 @@
      [:li (props-for :history) "History"]]))
 
 (defn- contains-all-people? [people subset]
-  (let [all-people (set (apply concat (vals people)))
-        subset (set subset)]
+  (let [all-people (set (apply concat (vals people)))]
     (subset? subset all-people)))
 
 (defn- contains-all-roles? [people subset]
-  (let [all-roles (set (map str (keys people)))
-        subset (set subset)]
+  (let [all-roles (set (map name (keys people)))]
     (subset? subset all-roles)))
 
 (defn- contains-all-songs? [songs subset]
-  (subset? (set subset) (set songs)))
+  (subset? subset (set songs)))
 
 (defn- valid-entry?
   [{:keys [people songs roles starting-date ending-date]
@@ -56,7 +54,16 @@
 
 (defn- history-content []
   (let [filtered-history (filter (partial valid-entry? @query) data/entries)
-        sorted-history (if @sort-dates-ascending filtered-history (reverse filtered-history))]
+        sorted-history (if @sort-dates-ascending filtered-history (reverse filtered-history))
+        item->link (fn [item-type item] [:a {:on-click #(search-bar/add-item item-type item)
+                                             :href "#"
+                                             :title "Add to query"} item])
+        role-people->hiccup (fn [[role people]]
+                              `[:span
+                                ~(item->link "roles" role)
+                                ": "
+                                ~@(interpose ", " (for [person people]
+                                                    (item->link "people" person)))])]
     [:table {:class "table"}
      [:thead
       [:tr
@@ -70,16 +77,16 @@
      `[:tbody
        ~@(for [{:entry/keys [date lecture-name people songs]} sorted-history]
            [:tr
-            [:td {:scope "row"} [:time {:datetime date} date]]
+            [:td {:scope "row"} [:time {:dateTime date} date]]
             [:td lecture-name]
-            [:td `[:p ~@(interpose [:br] (map #(str (name (first %)) ": " (string/join ", " (second %))) (into [] people)))]]
-            [:td `[:p ~@(interpose [:br] songs)]]])]
+            [:td `[:p ~@(interpose [:br] (map role-people->hiccup (into [] people)))]]
+            [:td `[:p ~@(interpose [:br] (map (partial item->link "songs") songs))]]])]
 
      (if (empty? sorted-history)
        [:tfoot
-        [:tr {:colspan 4} "No entries found"]]
+        [:tr [:td {:colSpan 4} "No entries found"]]]
        [:tfoot
-        [:tr {:colspan 4} (count sorted-history) " entries found"]])]))
+        [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
 (defn- content []
   [:section {:class "col-sm-10"}
