@@ -2,6 +2,7 @@
   (:require [reagent.core :as r]
             [cljs.pprint :refer [pprint]]
             [clojure.set :refer [subset?]]
+            [clojure.string :as string]
             [main.nlclc-stats.data :as data]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
@@ -67,12 +68,12 @@
        [:th {:scope "col"} "Songs"]]]
 
      `[:tbody
-       ~@(for [{:entry/keys [date lecture-name]} sorted-history]
+       ~@(for [{:entry/keys [date lecture-name people songs]} sorted-history]
            [:tr
             [:td {:scope "row"} [:time {:datetime date} date]]
             [:td lecture-name]
-            [:td "placeholder"]
-            [:td "placeholder"]])]
+            [:td `[:p ~@(interpose [:br] (map #(str (name (first %)) ": " (string/join ", " (second %))) (into [] people)))]]
+            [:td `[:p ~@(interpose [:br] songs)]]])]
 
      (if (empty? sorted-history)
        [:tfoot
