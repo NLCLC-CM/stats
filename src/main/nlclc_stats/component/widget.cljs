@@ -1,5 +1,6 @@
 (ns main.nlclc-stats.component.widget
   (:require [reagent.core :as r]
+            [cljs.pprint :refer [pprint]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
 (defonce tab (r/atom :history))
@@ -28,7 +29,8 @@
 (defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
-    [search-bar/component @tab]
+    [search-bar/component {:thing-to-search @tab
+                           :on-change pprint}]
 
     (case @tab
       :history [history-content]

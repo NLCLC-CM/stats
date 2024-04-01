@@ -12,8 +12,12 @@
 (defonce starting-date (r/atom nil))
 (defonce ending-date (r/atom nil))
 
-(defn- submit-element []
-  :hello)
+(defn- get-query []
+  {:people @people
+   :songs @songs
+   :roles @roles
+   :starting-date @starting-date
+   :ending-date @ending-date})
 
 (defn- autocomplete-list []
   `[:datalist {:id "autocomplete-list"}
@@ -31,13 +35,13 @@
 (defn- add []
   (do (case @selected-item
         "people"
-        (swap! people cons @query)
+        (swap! people conj @query)
 
         "songs"
-        (swap! songs cons @query)
+        (swap! songs conj @query)
 
         "roles"
-        (swap! roles cons @query)
+        (swap! roles conj @query)
 
         "starting-date"
         (reset! starting-date @query)
@@ -51,7 +55,24 @@
   (do (reset! selected-item (-> this .-target .-value))
       (reset! query "")))
 
-(defn- add-component []
+(defn- input []
+  (case @selected-item
+    ("people" "songs" "roles")
+    [:div {:class "form-control"}
+     [:input {:type "text"
+              :class "form-control"
+              :list "autocomplete-list"
+              :value @query   ; TODO add validation on input
+              :on-input #(reset! query (-> % .-target .-value))}]
+     [autocomplete-list]]
+
+    ("starting-date" "ending-date")
+    [:input {:type "date"
+             :class "form-control"
+             :value @query
+             :on-input #(reset! query (-> % .-target .-value))}]))
+
+(defn- add-component [on-change]
   [:div {:class "input-group mb-3"}
    [:select {:class "btn btn-outline-secondary"
              :value @selected-item
@@ -62,62 +83,70 @@
     [:option {:value "starting-date"} "Starting date"]
     [:option {:value "ending-date"} "Ending date"]]
 
-   ; TODO change input based on what we select
-   [:input {:type "text"
-            :class "form-control"
-            :list "autocomplete-list"
-            :value @query   ; TODO add validation on input
-            :on-input #(reset! query (-> % .-target .-value))}]
-   [autocomplete-list]
+   [input]
 
-   [:button {:on-click add :class "btn btn-outline-secondary"}
+   [:button {:on-click #(do (add)
+                            (on-change (get-query)))
+             :class "btn btn-outline-secondary"}
     "Add"]])
 
-(defn- delete-entity-btn [entity entity-ls]
-  [:button {:on-click #(swap! entity-ls filter (partial not= entity))
+(defn- delete-entity-btn [{:keys [on-change x xs]}]
+  [:button {:on-click #(do (reset! xs (remove (partial = x) @xs))
+                           (on-change (get-query)))
+            :title "Remove from query"
+            :style {:margin-left "0.5rem" :margin-right "0.5rem"}
+            :class "btn btn-outline-secondary"}
+   x])
+
+(defn- delete-scalar-btn [{:keys [on-change x]}]
+  [:button {:on-click #(do (reset! x nil)
+                           (on-change (get-query)))
             :title "Remove from query"
             :class "btn btn-outline-secondary"}
-   entity])
+   @x])
 
-(defn- delete-scalar-btn [scalar]
-  [:button {:on-click #(reset! scalar nil)
-            :title "Remove from query"
-            :class "btn btn-outline-secondary"}
-   @scalar])
-
-(defn- query-explanation [thing-to-search]
+(defn- query-explanation [{:keys [thing-to-search on-change]}]
   "Assumes the query isn't empty."
   `[:p "Searching for " ~thing-to-search " with "
 
     ~@(when (not (empty? @people))
         (cons "people"
               (for [person @people]
-                [delete-entity-btn person people])))
+                [delete-entity-btn {:on-change on-change
+                                    :x person
+                                    :xs people}])))
 
     ~@(when (not (empty? @songs))
         (cons "songs"
               (for [song @songs]
-                [delete-entity-btn song songs])))
+                [delete-entity-btn {:on-change on-change
+                                    :x song
+                                    :xs songs}])))
 
     ~@(when (not (empty? @roles))
         (cons "roles"
               (for [role @roles]
-                [delete-entity-btn role roles])))
+                [delete-entity-btn {:on-change on-change
+                                    :x role
+                                    :xs roles}])))
 
     ~@(when (not (nil? @starting-date))
         (cons "starting on"
-              [delete-scalar-btn starting-date]))
+              [delete-scalar-btn {:on-change on-change
+                                  :x starting-date}]))
 
     ~@(when (not (nil? @ending-date))
         (cons "ending on"
-              [delete-scalar-btn ending-date]))])
+              [delete-scalar-btn {:on-change on-change
+                                  :x ending-date}]))])
 
-(defn component [thing-to-search]
+(defn component [{:keys [thing-to-search on-change]}]
   [:section {:class "col"}
-   [add-component]
+   [add-component on-change]
    (when (not (and (empty? @people)
                    (empty? @songs)
                    (empty? @roles)
                    (nil? @starting-date)
                    (nil? @ending-date)))
-     [query-explanation thing-to-search])])
+     [query-explanation {:thing-to-search thing-to-search
+                         :on-change on-change}])])
