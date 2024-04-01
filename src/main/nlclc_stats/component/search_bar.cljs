@@ -102,6 +102,7 @@
   [:button {:on-click #(do (reset! x nil)
                            (on-change (get-query)))
             :title "Remove from query"
+            :style {:margin-left "0.5rem" :margin-right "0.5rem"}
             :class "btn btn-outline-secondary"}
    @x])
 
@@ -132,13 +133,13 @@
 
     ~@(when (not (nil? @starting-date))
         (cons "starting on"
-              [delete-scalar-btn {:on-change on-change
-                                  :x starting-date}]))
+              (list [delete-scalar-btn {:on-change on-change
+                                        :x starting-date}])))
 
     ~@(when (not (nil? @ending-date))
         (cons "ending on"
-              [delete-scalar-btn {:on-change on-change
-                                  :x ending-date}]))])
+              (list [delete-scalar-btn {:on-change on-change
+                                        :x ending-date}])))])
 
 (defn component [{:keys [thing-to-search on-change]}]
   [:section {:class "col"}
