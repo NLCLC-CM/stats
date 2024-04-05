@@ -255,7 +255,7 @@
      :entry/people {:lead ["Dorothy"]
                     :av ["Terry"]
                     :pianist ["Vivian"]}
-     :entry/songs ["我們的神 - 讚美之泉"
+     :entry/songs ["我們的神"
                    "無人能像祢"
                    "10,000 Reasons (Bless the Lord)"
                    "捉緊我 - 頌恩旋律"]
