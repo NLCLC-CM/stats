@@ -1,4 +1,4 @@
-name: Deploy
+name: Quality Assurance
 
 on:
   push:
@@ -11,9 +11,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          key: shadow-cljs
+          path: .shadow-cljs
       - uses: actions/setup-node@v4
       - run: npm ci
       - run: npm run release
+      - run: npm test
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public/
