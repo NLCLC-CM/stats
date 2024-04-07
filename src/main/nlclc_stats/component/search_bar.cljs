@@ -149,8 +149,15 @@
               (list [delete-scalar-btn {:on-change on-change
                                         :x ending-date}])))])
 
-(defn component [{:keys [thing-to-search on-change]}]
+(defn component [{:keys [thing-to-search on-change init-query]}]
   (reset! query-on-change on-change)
+
+  (reset! people (:people init-query))
+  (reset! songs (:songs init-query))
+  (reset! roles (:roles init-query))
+  (reset! starting-date (:starting-date init-query))
+  (reset! ending-date (:ending-date init-query))
+
   [:section {:class "col"}
    [add-component on-change]
    (when (not (and (empty? @people)

@@ -16,6 +16,21 @@
     (reset! tab new-tab-name)
     (reset! selected-key nil)))
 
+(defn- share-this-page! [evt]
+  (let [this (.-target evt)
+        original-text (.-textContent this)
+        share64 (js/btoa (prn-str {:tab @tab
+                                   :query @query
+                                   :selected-key @selected-key
+                                   :sort-dates-ascending @sort-dates-ascending}))
+        baseurl js/window.location.origin
+        url (js/URL. baseurl)]
+    (.append (.-searchParams url) "share" share64)
+    (js/navigator.clipboard.writeText (str url))
+    (set! (.-textContent this) "Copied!")
+    
+    (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
+
 (defn- tabs-component []
   (let [props-for (fn [t] {:class ["nav-link" "nav-item" (when (= t @tab) "active")]
                            :on-click #(switch-tabs! t)})]
@@ -23,7 +38,14 @@
      [:li (props-for :people) "People"]
      [:li (props-for :songs) "Songs"]
      [:li (props-for :roles) "Roles"]
-     [:li (props-for :history) "History"]]))
+     [:li (props-for :history) "History"]
+     
+     [:li
+      [:button
+       {:class "btn btn-outline-light"
+        :style {:position "fixed" :bottom "1rem"}
+        :on-click #(share-this-page! %)}
+       "Share this page!"]]]))
 
 (defn- contains-all-people? [people subset]
   (let [all-people (set (apply concat (vals people)))]
@@ -88,18 +110,24 @@
        [:tfoot
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
-(defn- content []
+(defn- content [q]
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
     [search-bar/component {:thing-to-search @tab
-                           :on-change #(reset! query %)}]
+                           :on-change #(reset! query %)
+                           :query q}]
 
     (case @tab
       :history [history-content]
 
       [:p {:class "text-danger"} "Unknown tab = " @tab])]])
 
-(defn component []
+(defn component [init-state]
+  (reset! tab (:tab init-state))
+  (reset! query (:query init-state))
+  (reset! selected-key (:selected-key init-state))
+  (reset! sort-dates-ascending (:sort-dates-ascending init-state))
+
   [:section {:class "row"}
    [tabs-component]
-   [content]])
+   [content (:query init-state)]])
