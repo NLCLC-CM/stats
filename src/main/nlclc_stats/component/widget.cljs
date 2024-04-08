@@ -4,10 +4,10 @@
             [clojure.set :refer [subset?]]
             [clojure.string :as string]
             [main.nlclc-stats.data :as data]
+            [main.nlclc-stats.serde :refer [edn->base64]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
 (defonce tab (r/atom :history))
-(defonce query (r/atom {}))
 (defonce selected-key (r/atom nil))
 (defonce sort-dates-ascending (r/atom false))
 
@@ -19,16 +19,16 @@
 (defn- share-this-page! [evt]
   (let [this (.-target evt)
         original-text (.-textContent this)
-        share64 (js/btoa (prn-str {:tab @tab
-                                   :query @query
-                                   :selected-key @selected-key
-                                   :sort-dates-ascending @sort-dates-ascending}))
+        share64 (edn->base64 {:tab @tab
+                              :query (search-bar/get-query)
+                              :selected-key @selected-key
+                              :sort-dates-ascending @sort-dates-ascending})
         baseurl js/window.location.href
         url (js/URL. baseurl)]
     (.set (.-searchParams url) "share" share64)
     (js/navigator.clipboard.writeText (str url))
     (set! (.-textContent this) "Copied!")
-    
+
     (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
 
 (defn- tabs-component []
@@ -75,7 +75,8 @@
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
 (defn- history-content []
-  (let [filtered-history (filter (partial valid-entry? @query) data/entries)
+  (let [query (search-bar/get-query)
+        filtered-history (filter (partial valid-entry? query) data/entries)
         sorted-history (if @sort-dates-ascending filtered-history (reverse filtered-history))
         item->link (fn [item-type item] [:a {:on-click #(search-bar/add-item item-type item)
                                              :href "#"
@@ -110,12 +111,10 @@
        [:tfoot
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
-(defn- content [q]
+(defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
-    [search-bar/component {:thing-to-search @tab
-                           :on-change #(reset! query %)
-                           :query q}]
+    [search-bar/component {:thing-to-search @tab}]
 
     (case @tab
       :history [history-content]
@@ -124,10 +123,9 @@
 
 (defn component [init-state]
   (reset! tab (:tab init-state))
-  (reset! query (:query init-state))
   (reset! selected-key (:selected-key init-state))
   (reset! sort-dates-ascending (:sort-dates-ascending init-state))
 
   [:section {:class "row"}
    [tabs-component]
-   [content (:query init-state)]])
+   [content]])

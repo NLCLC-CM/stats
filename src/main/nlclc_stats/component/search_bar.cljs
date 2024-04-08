@@ -13,8 +13,6 @@
 (defonce starting-date (r/atom nil))
 (defonce ending-date (r/atom nil))
 
-(def query-on-change (r/atom identity))
-
 (defn- get-query []
   {:people @people
    :songs @songs
@@ -54,9 +52,7 @@
         (reset! starting-date text)
 
         "ending-date"
-        (reset! ending-date text))
-      
-      (@query-on-change (get-query))))
+        (reset! ending-date text))))
 
 (defn- change-select [this]
   (do (reset! selected-item (-> this .-target .-value))
@@ -79,7 +75,7 @@
              :value @query
              :on-input #(reset! query (-> % .-target .-value))}]))
 
-(defn- add-component [on-change]
+(defn- add-component []
   [:div {:class "input-group mb-3"}
    [:select {:class "btn btn-outline-secondary"
              :value @selected-item
@@ -93,77 +89,71 @@
    [input]
 
    [:button {:on-click #(do (add-item @selected-item @query)
-                            (reset! query "")
-                            (on-change (get-query)))
+                            (reset! query ""))
              :class "btn btn-outline-secondary"}
     "Add"]])
 
-(defn- delete-entity-btn [{:keys [on-change x xs]}]
-  [:button {:on-click #(do (reset! xs (remove (partial = x) @xs))
-                           (on-change (get-query)))
+(defn- delete-entity-btn [{:keys [x xs]}]
+  [:button {:on-click #(do (reset! xs (remove (partial = x) @xs)))
             :title "Remove from query"
             :style {:margin-left "0.5rem" :margin-right "0.5rem"}
             :class "btn btn-outline-secondary"}
    x])
 
-(defn- delete-scalar-btn [{:keys [on-change x]}]
-  [:button {:on-click #(do (reset! x nil)
-                           (on-change (get-query)))
+(defn- delete-scalar-btn [{:keys [x]}]
+  [:button {:on-click #(reset! x nil)
             :title "Remove from query"
             :style {:margin-left "0.5rem" :margin-right "0.5rem"}
             :class "btn btn-outline-secondary"}
    @x])
 
-(defn- query-explanation [{:keys [thing-to-search on-change]}]
+(defn- query-explanation [{:keys [thing-to-search]}]
   "Assumes the query isn't empty."
   `[:p "Searching for " ~thing-to-search " with "
 
     ~@(when (not (empty? @people))
         (cons "people"
               (for [person @people]
-                [delete-entity-btn {:on-change on-change
-                                    :x person
+                [delete-entity-btn {:x person
                                     :xs people}])))
 
     ~@(when (not (empty? @songs))
         (cons "songs"
               (for [song @songs]
-                [delete-entity-btn {:on-change on-change
+                [delete-entity-btn {
                                     :x song
                                     :xs songs}])))
 
     ~@(when (not (empty? @roles))
         (cons "roles"
               (for [role @roles]
-                [delete-entity-btn {:on-change on-change
+                [delete-entity-btn {
                                     :x role
                                     :xs roles}])))
 
     ~@(when (not (nil? @starting-date))
         (cons "starting on"
-              (list [delete-scalar-btn {:on-change on-change
+              (list [delete-scalar-btn {
                                         :x starting-date}])))
 
     ~@(when (not (nil? @ending-date))
         (cons "ending on"
-              (list [delete-scalar-btn {:on-change on-change
+              (list [delete-scalar-btn {
                                         :x ending-date}])))])
 
-(defn component [{:keys [thing-to-search on-change init-query]}]
-  (reset! query-on-change on-change)
-
-  (reset! people (:people init-query))
-  (reset! songs (:songs init-query))
-  (reset! roles (:roles init-query))
+(defn set-query! [init-query]
+  (reset! people (:people init-query #{}))
+  (reset! songs (:songs init-query #{}))
+  (reset! roles (:roles init-query #{}))
   (reset! starting-date (:starting-date init-query))
-  (reset! ending-date (:ending-date init-query))
+  (reset! ending-date (:ending-date init-query)))
 
+(defn component [{:keys [thing-to-search]}]
   [:section {:class "col"}
-   [add-component on-change]
+   [add-component]
    (when (not (and (empty? @people)
                    (empty? @songs)
                    (empty? @roles)
                    (nil? @starting-date)
                    (nil? @ending-date)))
-     [query-explanation {:thing-to-search thing-to-search
-                         :on-change on-change}])])
+     [query-explanation {:thing-to-search thing-to-search}])])
