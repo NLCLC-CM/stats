@@ -23,9 +23,9 @@
                                    :query @query
                                    :selected-key @selected-key
                                    :sort-dates-ascending @sort-dates-ascending}))
-        baseurl js/window.location.origin
+        baseurl js/window.location.href
         url (js/URL. baseurl)]
-    (.append (.-searchParams url) "share" share64)
+    (.set (.-searchParams url) "share" share64)
     (js/navigator.clipboard.writeText (str url))
     (set! (.-textContent this) "Copied!")
     
