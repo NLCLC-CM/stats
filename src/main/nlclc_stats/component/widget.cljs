@@ -4,25 +4,34 @@
             [clojure.set :refer [subset?]]
             [clojure.string :as string]
             [main.nlclc-stats.data :as data]
-            [main.nlclc-stats.serde :refer [edn->base64]]
+            [main.nlclc-stats.serde :refer [base64->edn edn->base64]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
-(defonce tab (r/atom :history))
-(defonce selected-key (r/atom nil))
-(defonce sort-dates-ascending (r/atom false))
+(defonce stored-state
+  (let [shareB64 (-> js/window.location.href
+                     js/URL.
+                     .-searchParams
+                     (.get "share"))]
+    (if (nil? shareB64)
+      (r/atom {:tab :history
+               :selected-key nil
+               :sort-dates-asc? false
+               :query {:people #{}
+                       :songs #{}
+                       :roles #{}
+                       :starting-date nil
+                       :ending-date nil}})
+      (r/atom (base64->edn shareB64)))))
 
 (defn- switch-tabs! [new-tab-name]
-  (do
-    (reset! tab new-tab-name)
-    (reset! selected-key nil)))
+  (when (not= (:tab @stored-state) new-tab-name)
+    (swap! stored-state assoc :tab new-tab-name)
+    (swap! stored-state assoc :selected-key nil)))
 
 (defn- share-this-page! [evt]
   (let [this (.-target evt)
         original-text (.-textContent this)
-        share64 (edn->base64 {:tab @tab
-                              :query (search-bar/get-query)
-                              :selected-key @selected-key
-                              :sort-dates-ascending @sort-dates-ascending})
+        share64 (edn->base64 @stored-state)
         baseurl js/window.location.href
         url (js/URL. baseurl)]
     (.set (.-searchParams url) "share" share64)
@@ -32,7 +41,7 @@
     (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
 
 (defn- tabs-component []
-  (let [props-for (fn [t] {:class ["nav-link" "nav-item" (when (= t @tab) "active")]
+  (let [props-for (fn [t] {:class ["nav-link" "nav-item" (when (= t (:tab @stored-state)) "active")]
                            :on-click #(switch-tabs! t)})]
     [:ul {:class "nav flex-column nav-pills col-sm-2"}
      [:li (props-for :people) "People"]
@@ -74,36 +83,46 @@
        (or (nil? starting-date) (not (neg? (compare entry-date starting-date))))
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
-(defn- history-content []
-  (let [query (search-bar/get-query)
+(defn- history-content [{:keys [on-update-query]}]
+  (let [query (:query @stored-state)
         filtered-history (filter (partial valid-entry? query) data/entries)
-        sorted-history (if @sort-dates-ascending filtered-history (reverse filtered-history))
-        item->link (fn [item-type item] [:a {:on-click #(search-bar/add-item item-type item)
+        sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))
+        item->link (fn [item-type item] [:a {:on-click #(search-bar/add-item item-type item stored-state)
+                                             :key (str item-type \- item)
+                                             :style {:display "block"
+                                                     :marginBottom "0.2rem"}
                                              :href "#"
                                              :title "Add to query"} item])
         role-people->hiccup (fn [[role people]]
-                              `[:span
-                                ~(item->link "roles" role)
-                                ": "
-                                ~@(interpose ", " (for [person people]
-                                                    (item->link "people" person)))])]
+                              [:div
+                               {:style {:display "grid"
+                                        :gridTemplateColumns "1fr 2fr"}
+                                :key role}
+                               [:div role]
+                               [:div (map (partial item->link "people") people)]])]
     [:table {:class "table"}
      [:thead
       [:tr
        [:th {:scope "col"
              :style {:cursor "pointer"}
-             :on-click #(swap! sort-dates-ascending not)} "Date " (if @sort-dates-ascending "(ASC)" "(DESC)")]
+             :on-click #(swap! stored-state update :sort-dates-asc? not)}
+        "Date "
+        (if (:sort-dates-asc? @stored-state)
+          "(ASC)"
+          "(DESC)")]
        [:th {:scope "col"} "Lecture title"]
        [:th {:scope "col"} "People involved"]
        [:th {:scope "col"} "Songs"]]]
 
-     `[:tbody
-       ~@(for [{:entry/keys [date lecture-name people songs]} sorted-history]
-           [:tr
-            [:td {:scope "row"} [:time {:dateTime date} date]]
-            [:td lecture-name]
-            [:td `[:p ~@(interpose [:br] (map role-people->hiccup (into [] people)))]]
-            [:td `[:p ~@(interpose [:br] (map (partial item->link "songs") songs))]]])]
+     [:tbody
+      (for [{:entry/keys [date lecture-name people songs]} sorted-history]
+        ^{:key date}
+
+        [:tr
+         [:td {:scope "row"} [:time {:dateTime date} date]]
+         [:td lecture-name]
+         [:td (map role-people->hiccup (into [] people))]
+         [:td [:p (map (partial item->link "songs") songs)]]])]
 
      (if (empty? sorted-history)
        [:tfoot
@@ -114,18 +133,17 @@
 (defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
-    [search-bar/component {:thing-to-search @tab}]
+    [search-bar/component stored-state]
 
-    (case @tab
-      :history [history-content]
+    (case (:tab @stored-state)
+      :people [:p "People!"]
+      :songs [:p "Songs!"]
+      :roles [:p "Roles!"]
+      :history [history-content stored-state]
 
-      [:p {:class "text-danger"} "Unknown tab = " @tab])]])
+      [:p {:class "text-danger"} "Unknown tab = " (:tab @stored-state)])]])
 
-(defn component [init-state]
-  (reset! tab (:tab init-state))
-  (reset! selected-key (:selected-key init-state))
-  (reset! sort-dates-ascending (:sort-dates-ascending init-state))
-
+(defn component []
   [:section {:class "row"}
    [tabs-component]
    [content]])

@@ -5,155 +5,134 @@
 
 (def ^:const DISTINCTSONGS (set (apply concat (map :entry/songs data/entries))))
 
-(defonce selected-item (r/atom "songs"))
-(defonce query (r/atom ""))
-(defonce people (r/atom #{}))
-(defonce songs (r/atom #{}))
-(defonce roles (r/atom #{}))
-(defonce starting-date (r/atom nil))
-(defonce ending-date (r/atom nil))
+(defn- autocomplete-list [query selected-item]
+  [:datalist {:id "autocomplete-list"}
+   (case selected-item
+     "people"
+     (for [person-name (difference data/names (:people query))]
+       ^{:key person-name} [:option {:value person-name} person-name])
 
-(defn- get-query []
-  {:people @people
-   :songs @songs
-   :roles @roles
-   :starting-date @starting-date
-   :ending-date @ending-date})
+     "songs"
+     (for [song-name (difference DISTINCTSONGS (:songs query))]
+       ^{:key song-name} [:option {:value song-name} song-name])
 
-(defn- autocomplete-list []
-  `[:datalist {:id "autocomplete-list"}
-    ~@(case @selected-item
-        "people"
-        (for [person-name (difference data/names @people)]
-          [:option {:value person-name} person-name])
+     "roles"
+     (for [role-name (difference data/roles (:roles query))]
+       ^{:key role-name} [:option {:value (name role-name)} (name role-name)])
 
-        "songs"
-        (for [song-name (difference DISTINCTSONGS @songs)]
-          [:option {:value song-name} song-name])
+     (list))])
 
-        "roles"
-        (for [role-name (difference data/roles @roles)]
-          [:option {:value (name role-name)} (name role-name)])
-
-        (list))])
-
-(defn add-item [item-type text]
+(defn add-item [item-type text stored-state]
   (do (case item-type
         "people"
-        (swap! people conj text)
+        (swap! stored-state update-in [:query :people] conj text)
 
         "songs"
-        (swap! songs conj text)
+        (swap! stored-state update-in [:query :songs] conj text)
 
         "roles"
-        (swap! roles conj text)
+        (swap! stored-state update-in [:query :roles] conj text)
 
         "starting-date"
-        (reset! starting-date text)
+        (swap! stored-state assoc-in [:query :starting-date] text)
 
         "ending-date"
-        (reset! ending-date text))))
+        (swap! stored-state assoc-in [:query :ending-date] text))))
 
-(defn- change-select [this]
-  (do (reset! selected-item (-> this .-target .-value))
-      (reset! query "")))
-
-(defn- input []
-  (case @selected-item
+(defn- input [{:keys [query selected-item text on-input]}]
+  (case selected-item
     ("people" "songs" "roles")
-    [:div {:class "form-control"}
-     [:input {:type "text"
-              :class "form-control"
-              :list "autocomplete-list"
-              :value @query   ; TODO add validation on input
-              :on-input #(reset! query (-> % .-target .-value))}]
-     [autocomplete-list]]
+    (let [query (r/atom "")]
+      [:div {:class "form-control"}
+       [:input {:type "text"
+                :class "form-control"
+                :list "autocomplete-list"
+                :value text
+                :on-input on-input}]
+       [autocomplete-list query selected-item]])
 
     ("starting-date" "ending-date")
     [:input {:type "date"
              :class "form-control"
-             :value @query
-             :on-input #(reset! query (-> % .-target .-value))}]))
+             :value text
+             :on-input on-input}]))
 
-(defn- add-component []
-  [:div {:class "input-group mb-3"}
-   [:select {:class "btn btn-outline-secondary"
-             :value @selected-item
-             :on-change change-select}
-    [:option {:value "people"} "People"]
-    [:option {:value "songs"} "Songs"]
-    [:option {:value "roles"} "Roles"]
-    [:option {:value "starting-date"} "Starting date"]
-    [:option {:value "ending-date"} "Ending date"]]
+(defn- add-component [stored-state]
+  (let [selected-item (r/atom "songs")
+        typed-text (r/atom "")]
+    (fn []
+      [:div {:class "input-group mb-3"}
+       [:select {:class "btn btn-outline-secondary"
+                 :value @selected-item
+                 :on-change #(do (reset! selected-item (-> % .-target .-value))
+                                 (reset! typed-text ""))}
+        [:option {:value "people"} "People"]
+        [:option {:value "songs"} "Songs"]
+        [:option {:value "roles"} "Roles"]
+        [:option {:value "starting-date"} "Starting date"]
+        [:option {:value "ending-date"} "Ending date"]]
 
-   [input]
+       [input {:text @typed-text
+               :on-input #(reset! typed-text (-> % .-target .-value))
+               :query (:query @stored-state)
+               :selected-item @selected-item}]
 
-   [:button {:on-click #(do (add-item @selected-item @query)
-                            (reset! query ""))
-             :class "btn btn-outline-secondary"}
-    "Add"]])
+       [:button {:on-click #(do (add-item @selected-item @typed-text stored-state)
+                                (reset! typed-text ""))
+                 :class "btn btn-outline-secondary"}
+        "Add"]])))
 
-(defn- delete-entity-btn [{:keys [x xs]}]
-  [:button {:on-click #(do (reset! xs (remove (partial = x) @xs)))
+(defn- delete-btn [{:keys [x on-click]}]
+  [:button {:on-click on-click
             :title "Remove from query"
             :style {:margin-left "0.5rem" :margin-right "0.5rem"}
             :class "btn btn-outline-secondary"}
    x])
 
-(defn- delete-scalar-btn [{:keys [x]}]
-  [:button {:on-click #(reset! x nil)
-            :title "Remove from query"
-            :style {:margin-left "0.5rem" :margin-right "0.5rem"}
-            :class "btn btn-outline-secondary"}
-   @x])
-
-(defn- query-explanation [{:keys [thing-to-search]}]
+(defn- query-explanation [stored-state]
   "Assumes the query isn't empty."
-  `[:p "Searching for " ~thing-to-search " with "
+  [:p "Searching for " (:tab @stored-state) " with "
 
-    ~@(when (not (empty? @people))
-        (cons "people"
-              (for [person @people]
-                [delete-entity-btn {:x person
-                                    :xs people}])))
+   (when (not (empty? (get-in @stored-state [:query :people])))
+     (cons "people"
+           (for [person (get-in @stored-state [:query :people])]
+             ^{:key person}
+             [delete-btn {:x person
+                          :on-click #(swap! stored-state update-in [:query :people] disj person)}])))
 
-    ~@(when (not (empty? @songs))
-        (cons "songs"
-              (for [song @songs]
-                [delete-entity-btn {
-                                    :x song
-                                    :xs songs}])))
+   (when (not (empty? (get-in @stored-state [:query :songs])))
+     (cons "songs"
+           (for [song (get-in @stored-state [:query :songs])]
+             ^{:key song}
+             [delete-btn {:x song
+                          :on-click #(swap! stored-state update-in [:query :songs] disj song)}])))
 
-    ~@(when (not (empty? @roles))
-        (cons "roles"
-              (for [role @roles]
-                [delete-entity-btn {
-                                    :x role
-                                    :xs roles}])))
+   (when (not (empty? (get-in @stored-state [:query :roles])))
+     (cons "roles"
+           (for [role (get-in @stored-state [:query :roles])]
+             ^{:key role}
+             [delete-btn {:x role
+                          :on-click #(swap! stored-state update-in [:query :roles] disj role)}])))
 
-    ~@(when (not (nil? @starting-date))
-        (cons "starting on"
-              (list [delete-scalar-btn {
-                                        :x starting-date}])))
+   (when (not (nil? (get-in @stored-state [:query :starting-date])))
+     (cons "starting on"
+           (list [delete-btn {:on-click #(swap! stored-state assoc-in [:query :starting-date] nil)
+                              :x (get-in @stored-state [:query :starting-date])}])))
 
-    ~@(when (not (nil? @ending-date))
-        (cons "ending on"
-              (list [delete-scalar-btn {
-                                        :x ending-date}])))])
+   (when (not (nil? (get-in @stored-state [:query :ending-date])))
+     (cons "ending on"
+           (list [delete-btn {:on-click #(swap! stored-state assoc-in [:query :ending-date] nil)
+                              :x (get-in @stored-state [:query :ending-date])}])))])
 
-(defn set-query! [init-query]
-  (reset! people (:people init-query #{}))
-  (reset! songs (:songs init-query #{}))
-  (reset! roles (:roles init-query #{}))
-  (reset! starting-date (:starting-date init-query))
-  (reset! ending-date (:ending-date init-query)))
+(defn- need-explanation? [query]
+  (not (and (empty? (:people query))
+            (empty? (:songs query))
+            (empty? (:roles query))
+            (nil? (:starting-date query))
+            (nil? (:ending-date query)))))
 
-(defn component [{:keys [thing-to-search]}]
+(defn component [stored-state]
   [:section {:class "col"}
-   [add-component]
-   (when (not (and (empty? @people)
-                   (empty? @songs)
-                   (empty? @roles)
-                   (nil? @starting-date)
-                   (nil? @ending-date)))
-     [query-explanation {:thing-to-search thing-to-search}])])
+   [add-component stored-state]
+   (when (need-explanation? (:query @stored-state))
+     [query-explanation stored-state])])
