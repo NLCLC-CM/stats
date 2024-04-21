@@ -4,7 +4,7 @@
             [main.nlclc-stats.data :as data]))
 
 (deftest data-spec-validity
-  (testing "entries"
+  (testing "entries meet the specs"
     (is (let [dates (map :entry/date data/entries)]
           (= (sort dates) dates)))
 

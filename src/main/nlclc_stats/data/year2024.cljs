@@ -150,7 +150,46 @@
          :entry/lecture-name "耶穌與我何干？"}
         ))
 
-(def q2 (list))
+(def q2
+  (list {:entry/date "2024-04-06"
+         :entry/people {:lead ["ToTo"]
+                        :vocals ["飛宇"]
+                        :pianist ["Adriel"]
+                        :usher ["Cindy"
+                                "Stephy"]
+                        :av ["Philson"
+                             "Joyce"]}
+         :entry/songs ["得著自由"
+                       "再次將我更新"
+                       "平安"
+                       "耶穌我感謝祢"]
+         :entry/lecture-name "不要疑惑，總要信！"}
+        {:entry/date "2024-04-13"
+         :entry/people {:lead ["Philson"]
+                        :vocals ["YauYau"]
+                        :pianist ["Cheuk"]
+                        :usher ["Kovia"
+                                "Tin Hei"]
+                        :drummer ["Kiki"]
+                        :av ["Andrew"]}
+         :entry/songs ["What a Beautiful Name"
+                       "我安然住進"
+                       "神的帳幕在人間"
+                       "顯現"]
+         :entry/lecture-name "你認得主嗎？"}
+        {:entry/date "2024-04-20"
+         :entry/people {:lead ["Arthur"]
+                        :vocals ["Dorothy"]
+                        :pianist ["Vivian"]
+                        :usher ["Cindy"
+                                "Toby"]
+                        :drummer ["Eric"]
+                        :av ["Philson"]}
+         :entry/songs ["再次將我更新"
+                       "Thank You Jesus for the Blood"
+                       "向著前方"
+                       "期待耶穌"]
+         :entry/lecture-name "我是好牧人"}))
 
 (def q3 (list))
 

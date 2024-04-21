@@ -53,6 +53,8 @@
     "Vivian"
     "YauYau"
     "Yoko"
+
+    "飛宇"
     })
 
 (def roles #{:lead
