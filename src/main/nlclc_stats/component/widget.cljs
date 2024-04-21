@@ -4,15 +4,12 @@
             [clojure.set :refer [subset?]]
             [clojure.string :as string]
             [main.nlclc-stats.data :as data]
-            [main.nlclc-stats.serde :refer [base64->edn edn->base64]]
+            [main.nlclc-stats.serde :refer [url->state state->url]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
 (defonce stored-state
-  (let [shareB64 (-> js/window.location.href
-                     js/URL.
-                     .-searchParams
-                     (.get "share"))]
-    (if (nil? shareB64)
+  (let [url-state (url->state js/window.location)]
+    (if (nil? (:tab url-state))
       (r/atom {:tab :history            ; keyword
                :selected-key nil        ; str
                :sort-dates-asc? false   ; bool
@@ -21,7 +18,7 @@
                        :roles #{}
                        :starting-date nil
                        :ending-date nil}})
-      (r/atom (base64->edn shareB64)))))
+      (r/atom url-state))))
 
 (defn- switch-tabs! [new-tab-name]
   (when (not= (:tab @stored-state) new-tab-name)
@@ -31,11 +28,9 @@
 (defn- share-this-page! [evt]
   (let [this (.-target evt)
         original-text (.-textContent this)
-        share64 (edn->base64 @stored-state)
-        baseurl js/window.location.href
-        url (js/URL. baseurl)]
-    (.set (.-searchParams url) "share" share64)
-    (js/navigator.clipboard.writeText (str url))
+        baseurl (str js/window.location.origin js/window.location.path)
+        url (state->url baseurl @stored-state)]
+    (js/navigator.clipboard.writeText url)
     (set! (.-textContent this) "Copied!")
 
     (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
@@ -48,7 +43,7 @@
      [:li (props-for :songs) "Songs"]
      [:li (props-for :roles) "Roles"]
      [:li (props-for :history) "History"]
-     
+
      [:li
       [:button
        {:class "btn btn-outline-light"
@@ -79,7 +74,7 @@
   (and (contains-all-people? entry-people people)
        (contains-all-songs? entry-songs songs)
        (contains-all-roles? entry-people roles)
-       
+
        (or (nil? starting-date) (not (neg? (compare entry-date starting-date))))
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
