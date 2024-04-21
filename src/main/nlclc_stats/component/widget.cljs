@@ -13,9 +13,9 @@
                      .-searchParams
                      (.get "share"))]
     (if (nil? shareB64)
-      (r/atom {:tab :history
-               :selected-key nil
-               :sort-dates-asc? false
+      (r/atom {:tab :history            ; keyword
+               :selected-key nil        ; str
+               :sort-dates-asc? false   ; bool
                :query {:people #{}
                        :songs #{}
                        :roles #{}

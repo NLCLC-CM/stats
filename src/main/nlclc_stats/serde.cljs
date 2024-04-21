@@ -14,3 +14,65 @@
       js/escape
       js/decodeURIComponent
       cljs.reader/read-string))
+
+(comment
+  (def state {:tab :history
+              :selected-key nil
+              :sort-dates-asc? false
+              :query {:people #{"Cheuk"}
+                      :songs #{}
+                      :roles #{}
+                      :starting-date nil
+                      :ending-date nil}})
+
+  (def u (js/URL. js/window.location))
+
+  (for [person (get-in state [:query :people])]
+    (.searchParams.append u "a" person))
+
+  (def converted (state->url state "http://localhost/"))
+  (url->state converted))
+
+(defn url->state
+  "Given some string url from window.location, get the state."
+  [url-string]
+  (let [url (js/URL. url-string)
+        state (atom {})]
+    (swap! state assoc :tab (keyword (.searchParams.get url "tab")))
+    (swap! state assoc :sort-dates-asc? (= "true" (.searchParams.get url "sort-dates-asc")))
+    (swap! state assoc :selected-key (.searchParams.get url "selected-key"))
+    (swap! state assoc-in [:query :people] (into #{} (.searchParams.getAll url "query-people")))
+    (swap! state assoc-in [:query :songs] (into #{} (.searchParams.getAll url "query-songs")))
+    (swap! state assoc-in [:query :roles] (into #{} (.searchParams.getAll url "query-roles")))
+    (swap! state assoc-in [:query :starting-date] (.searchParams.get url "query-starting-date"))
+    (swap! state assoc-in [:query :ending-date] (.searchParams.get url "query-ending-date"))
+
+    @state))
+
+(defn state->url
+  "Base url is just the origin and the path name. it should be a string."
+  [base-url state]
+  (let [url (js/URL. base-url)]
+    (.searchParams.set url "tab" (name (:tab state)))
+
+    (when (not (nil? (:selected-key state)))
+      (.searchParams.set url "selected-key" (:selected-key state)))
+
+    (.searchParams.set url "sort-dates-asc" (str (:sort-dates-asc? state)))
+
+    (doseq [person (get-in state [:query :people])]
+      (.searchParams.append url "query-people" person))
+
+    (doseq [song (get-in state [:query :songs])]
+      (.searchParams.append url "query-songs" song))
+
+    (doseq [role (get-in state [:query :roles])]
+      (.searchParams.append url "query-roles" role))
+
+    (when (not (nil? (get-in state [:query :starting-date])))
+      (.searchParams.set url "query-starting-date" (get-in state [:query :starting-date])))
+
+    (when (not (nil? (get-in state [:query :ending-date])))
+      (.searchParams.set url "query-ending-date" (get-in state [:query :ending-date])))
+
+    (str url)))
