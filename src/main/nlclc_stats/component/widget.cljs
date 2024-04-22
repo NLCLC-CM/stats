@@ -78,7 +78,7 @@
        (or (nil? starting-date) (not (neg? (compare entry-date starting-date))))
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
-(defn- history-content [{:keys [on-update-query]}]
+(defn- history-content []
   (let [query (:query @stored-state)
         filtered-history (filter (partial valid-entry? query) data/entries)
         sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))
@@ -125,16 +125,33 @@
        [:tfoot
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
+(defn- people-content []
+  (let [query (:query @stored-state)
+        filtered-history (filter (partial valid-entry? query) data/entries)
+        people (sort-by first (into [] (data/people-data filtered-history '(:av :usher))))]
+    [:div
+     (for [[person-name {:keys [frequency starting-date ending-date]}] people]
+       ^{:key person-name}
+
+       [:div {:class "card" :style {:width "18rem"}}
+        [:img {:src "" :class "card-img-top"}]
+        [:div {:class "card-body"}
+         [:h5 {:class "card-title"} person-name]
+         [:small {:class "text-body-secondary"}
+          [:time {:dateTime starting-date} starting-date]
+          " to "
+          [:time {:dateTime ending-date} ending-date]]]])]))
+
 (defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
     [search-bar/component stored-state]
 
     (case (:tab @stored-state)
-      :people [:p "People!"]
+      :people [people-content]
       :songs [:p "Songs!"]
       :roles [:p "Roles!"]
-      :history [history-content stored-state]
+      :history [history-content]
 
       [:p {:class "text-danger"} "Unknown tab = " (:tab @stored-state)])]])
 

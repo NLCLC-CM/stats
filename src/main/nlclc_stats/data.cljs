@@ -89,3 +89,28 @@
     main.nlclc-stats.data.year2022/assignments
     main.nlclc-stats.data.year2023/assignments
     main.nlclc-stats.data.year2024/assignments))
+
+(defn- assoc-person-data [m e person]
+  (if (contains? m person)
+    (assoc-in (update-in m [person :frequency] inc) [person :ending-date] (:entry/date e))
+    (assoc m person {:starting-date (:entry/date e)
+                     :ending-date (:entry/date e)
+                     :frequency 1})))
+
+(defn- assoc-people-data [m e blacklisted-roles]
+  (loop [[person & people :as remaining] (flatten (vals (apply dissoc (:entry/people e) blacklisted-roles)))
+         m m]
+    (if (empty? remaining)
+      m
+      (recur
+        people
+        (assoc-person-data m e person)))))
+
+(defn people-data
+  "Get people data."
+  [entries blacklisted-roles]
+  (loop [m {}
+         [e & ex :as remaining] entries]
+    (if (empty? remaining)
+      m
+      (recur (assoc-people-data m e blacklisted-roles) ex))))
