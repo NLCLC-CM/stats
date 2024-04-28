@@ -161,6 +161,7 @@
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
         songs (reverse (take-last 5 (sort-by second (into [] (data/songs-frequencies filtered-history)))))]
     [:section {:class "col"}
+     [:h5 "Favourite songs"]
      [:table {:class "table"}
       [:thead
        [:tr
@@ -179,6 +180,7 @@
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
         partners (reverse (take-last 5 (sort-by second (into [] (data/people-frequencies filtered-history #{:av :usher})))))]
     [:section {:class "col"}
+     [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"]
      [:table {:class "table"}
       [:thead
        [:tr
@@ -198,6 +200,7 @@
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
         roles (reverse (take-last 5 (sort-by second (into [] (data/roles-frequencies filtered-history person)))))]
     [:section {:class "col"}
+     [:h5 "Favourite roles"]
      [:table {:class "table"}
       [:thead
        [:tr
