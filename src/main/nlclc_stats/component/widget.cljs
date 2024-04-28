@@ -91,19 +91,27 @@
   (let [query (:query @stored-state)
         filtered-history (filter (partial valid-entry? query) data/entries)
         sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))
-        item->link (fn [item-type item] [:a {:on-click #(search-bar/add-item item-type item stored-state)
-                                             :key (str item-type \- item)
-                                             :style {:display "block"
-                                                     :marginBottom "0.2rem"}
-                                             :href "#"
-                                             :title "Add to query"} item])
+        item->link (fn [item-type item]
+                     [:div {:class ["btn-group"]
+                            :role "group"
+                            :key (str item-type \- item)}
+                      [:button {:class ["btn" "btn-outline-light"]
+                                :style {:width "100%"}
+                                :on-click #(do (swap! stored-state assoc :tab item-type)
+                                               (swap! stored-state assoc :selected-key item))
+                                :title "View"}
+                       item]
+                      [:button {:class ["btn" "btn-outline-light"]
+                                :on-click #(search-bar/add-item item-type item stored-state)
+                                :title "Add to query"}
+                       \+]])
         role-people->hiccup (fn [[role people]]
                               [:div
                                {:style {:display "grid"
                                         :gridTemplateColumns "1fr 2fr"}
                                 :key role}
                                [:div role]
-                               [:div (map (partial item->link "people") people)]])]
+                               [:div {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :people) people)]])]
     [:table {:class "table"}
      [:thead
       [:tr
@@ -126,7 +134,7 @@
          [:td {:scope "row"} [:time {:dateTime date} date]]
          [:td lecture-name]
          [:td (map role-people->hiccup (into [] people))]
-         [:td [:p (map (partial item->link "songs") songs)]]])]
+         [:td [:p {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :songs) songs)]]])]
 
      (if (empty? sorted-history)
        [:tfoot
