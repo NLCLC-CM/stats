@@ -42,6 +42,14 @@
         :class ["nav-link" (when (= tab (:tab @stored-state)) "active")]}
     (string/capitalize (name tab))]])
 
+(defn- share-btn []
+  [:button
+   {:class ["btn" "btn-outline-light"]
+    :style {:position "fixed"
+            :bottom "1rem"}
+    :on-click share-this-page!}
+   "Share this page!"])
+
 (defn- tabs-component []
   [:ul {:class "nav flex-column nav-pills col-sm-2"}
    [tab-component :people]
@@ -50,11 +58,7 @@
    [tab-component :history]
 
    [:li
-    [:button
-     {:class "btn btn-outline-light"
-      :style {:position "fixed" :bottom "1rem"}
-      :on-click #(share-this-page! %)}
-     "Share this page!"]]])
+    [share-btn]]])
 
 (defn- contains-all-people? [people subset]
   (let [all-people (set (apply concat (vals people)))]
