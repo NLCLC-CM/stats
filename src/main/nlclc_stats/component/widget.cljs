@@ -134,7 +134,7 @@
          [:td {:scope "row"} [:time {:dateTime date} date]]
          [:td lecture-name]
          [:td (map role-people->hiccup (into [] people))]
-         [:td [:p {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :songs) songs)]]])]
+         [:td [:div {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :songs) songs)]]])]
 
      (if (empty? sorted-history)
        [:tfoot
@@ -153,19 +153,87 @@
        [:div {:class "card" :style {:width "18rem"}}
         [:img {:src "" :class "card-img-top"}]
         [:div {:class "card-body"}
-         [:h5 {:class "card-title"} person-name]
+         [:h5 {:class "card-title" :on-click #(swap! stored-state assoc :selected-key person-name)} person-name]
          [:small {:class "text-body-secondary"}
-          [:time {:dateTime starting-date} starting-date]
-          " to "
-          [:time {:dateTime ending-date} ending-date]]]])]))
+          "Appeared " frequency " times."]]])]))
+
+(defn- popular-songs [person]
+  (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
+        songs (reverse (take-last 5 (sort-by second (into [] (data/songs-frequencies filtered-history)))))]
+    [:section {:class "col"}
+     [:table {:class "table"}
+      [:thead
+       [:tr
+        [:th {:scope "col"} "Song name"]
+        [:th {:scope "col"} "Occurances"]]]
+
+      [:tbody
+       (for [[song-name freq] songs]
+         ^{:key song-name}
+
+         [:tr
+          [:td song-name]
+          [:td freq]])]]]))
+
+(defn- popular-partners [person]
+  (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
+        partners (reverse (take-last 5 (sort-by second (into [] (data/people-frequencies filtered-history #{:av :usher})))))]
+    [:section {:class "col"}
+     [:table {:class "table"}
+      [:thead
+       [:tr
+        [:th {:scope "col"} "Partner name"]
+        [:th {:scope "col"} "Occurances"]]]
+
+      [:tbody
+       (for [[partner-name freq] partners
+             :when (not= partner-name person)]
+         ^{:key partner-name}
+
+         [:tr
+          [:td {:on-click #(swap! stored-state assoc :selected-key partner-name)} partner-name]
+          [:td freq]])]]]))
+
+(defn- popular-roles [person]
+  (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
+        roles (reverse (take-last 5 (sort-by second (into [] (data/roles-frequencies filtered-history person)))))]
+    [:section {:class "col"}
+     [:table {:class "table"}
+      [:thead
+       [:tr
+        [:th {:scope "col"} "Role name"]
+        [:th {:scope "col"} "Occurances"]]]
+
+      [:tbody
+       (for [[role-name freq] roles]
+         ^{:key role-name}
+
+         [:tr
+          [:td role-name]
+          [:td freq]])]]]))
+
+(defn- person-content [person]
+    [:div
+     [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
+     [:br]
+     [:br]
+     [:h4 person]
+
+     [:div {:class "row"}
+      [popular-songs person]
+      [popular-partners person]
+      [popular-roles person]]])
 
 (defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
-    [search-bar/component stored-state]
+    (when (nil? (:selected-key @stored-state))
+      [search-bar/component stored-state])
 
     (case (:tab @stored-state)
-      :people [people-content]
+      :people (if (nil? (:selected-key @stored-state))
+                [people-content]
+                [person-content (:selected-key @stored-state)])
       :songs [:p "Songs!"]
       :roles [:p "Roles!"]
       :history [history-content]

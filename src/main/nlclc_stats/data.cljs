@@ -106,6 +106,14 @@
         people
         (assoc-person-data m e person)))))
 
+(defn songs-frequencies
+  "Get songs data. Return a map of song name and their occurrance frequency."
+  [entries]
+  (->> entries
+       (map :entry/songs)
+       flatten
+       frequencies))
+
 (defn people-data
   "Get people data."
   [entries blacklisted-roles]
@@ -114,3 +122,25 @@
     (if (empty? remaining)
       m
       (recur (assoc-people-data m e blacklisted-roles) ex))))
+
+(defn people-frequencies
+  "Get people frequencies. Return a map of person name and their occurrance frequency."
+  [entries blacklisted-roles]
+  (->> entries
+       (map (comp (partial into []) :entry/people))
+       (apply concat)
+       (filter #(not (contains? blacklisted-roles (first %))))
+       (map second)
+       flatten
+       frequencies))
+
+(defn roles-frequencies
+  "Get roles frequencies. Return a map of role name and their occurrance frequency."
+  [entries person]
+  (->> entries
+       (map (comp (partial into []) :entry/people))
+       (apply concat)
+       (filter #(contains? (set (second %)) person))
+       (map first)
+       flatten
+       frequencies))
