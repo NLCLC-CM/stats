@@ -35,21 +35,26 @@
 
     (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
 
-(defn- tabs-component []
-  (let [props-for (fn [t] {:class ["nav-link" "nav-item" (when (= t (:tab @stored-state)) "active")]
-                           :on-click #(switch-tabs! t)})]
-    [:ul {:class "nav flex-column nav-pills col-sm-2"}
-     [:li (props-for :people) "People"]
-     [:li (props-for :songs) "Songs"]
-     [:li (props-for :roles) "Roles"]
-     [:li (props-for :history) "History"]
+(defn- tab-component [tab]
+  [:li {:class "nav-item"
+        :on-click #(switch-tabs! tab)}
+   [:a {:href "#"
+        :class ["nav-link" (when (= tab (:tab @stored-state)) "active")]}
+    (string/capitalize (name tab))]])
 
-     [:li
-      [:button
-       {:class "btn btn-outline-light"
-        :style {:position "fixed" :bottom "1rem"}
-        :on-click #(share-this-page! %)}
-       "Share this page!"]]]))
+(defn- tabs-component []
+  [:ul {:class "nav flex-column nav-pills col-sm-2"}
+   [tab-component :people]
+   [tab-component :songs]
+   [tab-component :roles]
+   [tab-component :history]
+
+   [:li
+    [:button
+     {:class "btn btn-outline-light"
+      :style {:position "fixed" :bottom "1rem"}
+      :on-click #(share-this-page! %)}
+     "Share this page!"]]])
 
 (defn- contains-all-people? [people subset]
   (let [all-people (set (apply concat (vals people)))]
