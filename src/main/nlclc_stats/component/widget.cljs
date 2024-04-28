@@ -102,7 +102,7 @@
                                 :title "View"}
                        item]
                       [:button {:class ["btn" "btn-outline-light"]
-                                :on-click #(search-bar/add-item item-type item stored-state)
+                                :on-click #(search-bar/add-item (name item-type) item stored-state)
                                 :title "Add to query"}
                        \+]])
         role-people->hiccup (fn [[role people]]
