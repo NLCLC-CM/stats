@@ -159,7 +159,7 @@
 
 (defn- popular-songs [person]
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
-        songs (reverse (take-last 5 (sort-by second (into [] (data/songs-frequencies filtered-history)))))]
+        songs (reverse (sort-by second (into [] (data/songs-frequencies filtered-history))))]
     [:section {:class "col"}
      [:h5 "Favourite songs"]
      [:table {:class "table"}
@@ -178,7 +178,7 @@
 
 (defn- popular-partners [person]
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
-        partners (reverse (take-last 5 (sort-by second (into [] (data/people-frequencies filtered-history #{:av :usher})))))]
+        partners (reverse (sort-by second (into [] (data/people-frequencies filtered-history #{:av :usher}))))]
     [:section {:class "col"}
      [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"]
      [:table {:class "table"}
@@ -198,7 +198,7 @@
 
 (defn- popular-roles [person]
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
-        roles (reverse (take-last 5 (sort-by second (into [] (data/roles-frequencies filtered-history person)))))]
+        roles (reverse (sort-by second (into [] (data/roles-frequencies filtered-history person))))]
     [:section {:class "col"}
      [:h5 "Favourite roles"]
      [:table {:class "table"}
