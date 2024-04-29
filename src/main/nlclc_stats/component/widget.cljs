@@ -87,31 +87,38 @@
        (or (nil? starting-date) (not (neg? (compare entry-date starting-date))))
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
+(defn- item->link
+  [item-type item]
+  [:div {:class ["btn-group"]
+         :role "group"
+         :style {:marginBottom "0.2rem"}
+         :key (str item-type \- item)}
+   [:button {:class ["btn" "btn-outline-light"]
+             :style {:width "100%"}
+             :on-click #(do (swap! stored-state assoc :tab item-type)
+                            (swap! stored-state assoc :selected-key item))
+             :title "View"}
+    item]
+   [:button {:class ["btn" "btn-outline-light"]
+             :on-click #(search-bar/add-item (name item-type) item stored-state)
+             :title "Add to query"}
+    \+]])
+
+(defn- role-people->hiccup
+  [[role people]]
+  [:div
+   {:style {:display "grid"
+            :gridTemplateColumns "1fr 1.5fr"}
+    :key role}
+   [item->link :roles role]
+
+   [:div {:style {:display "flex" :flexDirection "column"}}
+    (map (partial item->link :people) people)]])
+
 (defn- history-content []
   (let [query (:query @stored-state)
         filtered-history (filter (partial valid-entry? query) data/entries)
-        sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))
-        item->link (fn [item-type item]
-                     [:div {:class ["btn-group"]
-                            :role "group"
-                            :key (str item-type \- item)}
-                      [:button {:class ["btn" "btn-outline-light"]
-                                :style {:width "100%"}
-                                :on-click #(do (swap! stored-state assoc :tab item-type)
-                                               (swap! stored-state assoc :selected-key item))
-                                :title "View"}
-                       item]
-                      [:button {:class ["btn" "btn-outline-light"]
-                                :on-click #(search-bar/add-item (name item-type) item stored-state)
-                                :title "Add to query"}
-                       \+]])
-        role-people->hiccup (fn [[role people]]
-                              [:div
-                               {:style {:display "grid"
-                                        :gridTemplateColumns "1fr 2fr"}
-                                :key role}
-                               [:div role]
-                               [:div {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :people) people)]])]
+        sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))]
     [:table {:class "table"}
      [:thead
       [:tr
@@ -147,10 +154,11 @@
         filtered-history (filter (partial valid-entry? query) data/entries)
         people (sort-by first (into [] (data/people-data filtered-history '(:av :usher))))]
     [:div
+     {:class ["d-flex" "flex-row" "flex-wrap"]}
      (for [[person-name {:keys [frequency starting-date ending-date]}] people]
        ^{:key person-name}
 
-       [:div {:class "card" :style {:width "18rem"}}
+       [:div {:class "card" :style {:width "15rem"}}
         [:img {:src "" :class "card-img-top"}]
         [:div {:class "card-body"}
          [:h5 {:class "card-title" :on-click #(swap! stored-state assoc :selected-key person-name)} person-name]
