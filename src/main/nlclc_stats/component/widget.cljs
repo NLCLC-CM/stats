@@ -7,6 +7,9 @@
             [main.nlclc-stats.serde :refer [url->state state->url]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
+(defonce clicks-on-my-name (r/atom 0))
+(defonce flipped? (r/atom false))
+
 (defonce stored-state
   (let [url-state (url->state js/window.location)]
     (if (nil? (:tab url-state))
@@ -44,9 +47,8 @@
 
 (defn- share-btn []
   [:button
-   {:class ["btn" "btn-outline-light"]
-    :style {:position "fixed"
-            :bottom "1rem"}
+   {:class ["btn" "btn-outline-light" "position-fixed" "bottom-0"]
+    :style {:margin "1rem"}
     :on-click share-this-page!}
    "Share this page!"])
 
@@ -158,10 +160,13 @@
      (for [[person-name {:keys [frequency starting-date ending-date]}] people]
        ^{:key person-name}
 
-       [:div {:class "card" :style {:width "15rem"}}
+       [:div {:class "card"
+              :style {:width "15rem"
+                      :cursor "pointer"}
+              :on-click #(swap! stored-state assoc :selected-key person-name)}
         [:img {:src "" :class "card-img-top"}]
         [:div {:class "card-body"}
-         [:h5 {:class "card-title" :on-click #(swap! stored-state assoc :selected-key person-name)} person-name]
+         [:h5 {:class "card-title"} person-name]
          [:small {:class "text-body-secondary"}
           "Appeared " frequency " times."]]])]))
 
@@ -224,16 +229,31 @@
           [:td freq]])]]]))
 
 (defn- person-content [person]
-    [:div
-     [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
-     [:br]
-     [:br]
-     [:h4 person]
+  [:div
+   [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
+   [:br]
+   [:br]
+   [:h4 (when (= person "Cheuk") {:on-click #(swap! clicks-on-my-name inc)})
+    person
+    (when (>= @clicks-on-my-name 5)
+      [:div {:on-click #(swap! flipped? not)
+             :class ["form-check" "form-switch"]}
+       [:input {:class "form-check-input"
+                :type "checkbox"
+                :on-change #(reset! flipped? (.-checked (.-target %)))
+                :checked @flipped?
+                :id "flipped-the-switch"}]
+       [:label {:for "flipped-the-switch"
+                :class "form-check-label"}
+        (if @flipped?
+          "Advanced mode enabled"
+          "Advanced mode disabled")]])]
 
-     [:div {:class "row"}
-      [popular-songs person]
-      [popular-partners person]
-      [popular-roles person]]])
+
+   [:div {:class "row"}
+    [popular-songs person]
+    [popular-partners person]
+    [popular-roles person]]])
 
 (defn- content []
   [:section {:class "col-sm-10"}
