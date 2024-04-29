@@ -28,7 +28,7 @@
 (defn- share-this-page! [evt]
   (let [this (.-target evt)
         original-text (.-textContent this)
-        baseurl (str js/window.location.origin js/window.location.path)
+        baseurl (str js/window.location.origin js/window.location.pathname)
         url (state->url baseurl @stored-state)]
     (js/navigator.clipboard.writeText url)
     (set! (.-textContent this) "Copied!")
