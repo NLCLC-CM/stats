@@ -7,7 +7,7 @@
             [main.nlclc-stats.serde :refer [url->state state->url]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
-(defonce clicks-on-my-name (r/atom 0))
+(defonce clicks-on-my-name (r/atom (or (js/window.localStorage.getItem "clicks") 0)))
 (defonce flipped? (r/atom false))
 
 (defonce stored-state
@@ -233,11 +233,15 @@
    [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
    [:br]
    [:br]
-   [:h4 (when (= person "Cheuk") {:on-click #(swap! clicks-on-my-name inc)})
-    person
+   [:div {:class "row"}
+    [:h4 {:class "col-sm-8"
+          :on-click #(do (swap! clicks-on-my-name inc)
+                         (js/window.localStorage.setItem "clicks" @clicks-on-my-name))}
+     person]
+
     (when (>= @clicks-on-my-name 5)
       [:div {:on-click #(swap! flipped? not)
-             :class ["form-check" "form-switch"]}
+             :class ["form-check" "form-switch" "col-sm-4" (when @flipped? "fade-out")]}
        [:input {:class "form-check-input"
                 :type "checkbox"
                 :on-change #(reset! flipped? (.-checked (.-target %)))
