@@ -1,7 +1,7 @@
 (ns main.nlclc-stats.component.widget
   (:require [reagent.core :as r]
             [cljs.pprint :refer [pprint]]
-            [clojure.set :refer [subset?]]
+            [clojure.set :refer [subset? difference]]
             [clojure.string :as string]
             [main.nlclc-stats.data :as data]
             [main.nlclc-stats.serde :refer [url->state state->url]]
@@ -9,6 +9,7 @@
 
 (defonce clicks-on-my-name (r/atom (or (js/window.localStorage.getItem "clicks") 0)))
 (defonce flipped? (r/atom false))
+(defonce role-tab (r/atom 0))
 
 (defonce stored-state
   (let [url-state (url->state js/window.location)]
@@ -189,11 +190,32 @@
           [:td song-name]
           [:td freq]])]]]))
 
+(defn- blacklisted-roles-by-enum
+  [enum]
+  (case enum
+    0 #{:av :usher}
+    1 (difference data/roles #{:av})
+    2 (difference data/roles #{:usher})))
+
 (defn- popular-partners [person]
-  (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
-        partners (reverse (sort-by second (into [] (data/people-frequencies filtered-history #{:av :usher}))))]
+  (let [blacklist (blacklisted-roles-by-enum @role-tab)
+        filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
+        partners (reverse (sort-by second (into [] (data/people-frequencies filtered-history blacklist))))]
+
     [:section {:class "col"}
-     [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"]
+
+     (if @flipped?
+       [:div {:class "row"}
+        (case @role-tab
+          0 [:h5 {:class "col-10"
+                  :title "This implies that there are 'least favourite people (to work with)', and we don't go there."}
+             "Favourite people (to work with)"]
+          1 [:h5 {:class "col-10"} "AV team!"]
+          2 [:h5 {:class "col-10"} "Ushers"])
+        [:button {:class ["col-2" "btn" "btn-outline-secondary"]
+                  :on-click #(swap! role-tab (comp (fn [x] (mod x 3)) inc))} \>]]
+       [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"])
+
      [:table {:class "table"}
       [:thead
        [:tr
@@ -252,7 +274,6 @@
         (if @flipped?
           "Advanced mode enabled"
           "Advanced mode disabled")]])]
-
 
    [:div {:class "row"}
     [popular-songs person]
