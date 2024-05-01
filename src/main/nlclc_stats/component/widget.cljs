@@ -113,7 +113,7 @@
    {:style {:display "grid"
             :gridTemplateColumns "1fr 1.5fr"}
     :key role}
-   [item->link :roles role]
+   [item->link :roles (name role)]
 
    [:div {:style {:display "flex" :flexDirection "column"}}
     (map (partial item->link :people) people)]])
