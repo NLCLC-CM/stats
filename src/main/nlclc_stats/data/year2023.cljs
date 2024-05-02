@@ -8,7 +8,7 @@
                          "Andrew"]
                     :pianist ["Vivian"]}
      :entry/songs ["永活真神"
-                   "神我屬你"
+                   "神我屬祢"
                    "十架犧牲的愛"
                    "祢是君王"
                    "一"
@@ -23,7 +23,7 @@
      :entry/songs ["一生的恩惠"
                    "耶和華以勒"
                    "Beautiful Saviour"
-                   "決心跟你"]
+                   "決心跟祢"]
      :entry/lecture-name "找到生命的焦點"}
     {:entry/date "2023-01-21"
      :entry/people {:lead ["Ken"]
@@ -186,7 +186,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["我願你來"
                    "我的千古保障"
-                   "尋求你"
+                   "尋求祢"
                    "不要憂慮"]
      :entry/lecture-name "求則得之"}
     {:entry/date "2023-05-13"
@@ -226,7 +226,7 @@
                     :vocals ["Kiki Pau"]
                     :av ["Philson"]
                     :pianist ["Eddie"]}
-     :entry/songs ["至高尊貴的你"
+     :entry/songs ["至高尊貴的祢"
                    "無論那刻"
                    "建殿者的呼聲"
                    "讚美三一上帝"]
@@ -257,7 +257,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["我們的神"
                    "無人能像祢"
-                   "10,000 Reasons (Bless the Lord)"
+                   "10,000 Reasons"
                    "捉緊我 - 頌恩旋律"]
      :entry/lecture-name "勇敢無畏的跟隨者"}
     ))
@@ -343,7 +343,7 @@
                     :av ["Cheuk"
                          "Billy Sir"]
                     :pianist ["Eddie"]}
-     :entry/songs ["得着自由"
+     :entry/songs ["得著自由"
                    "真實的悔改"
                    "呼求耶穌"
                    "愛可以再更多一點點"]
@@ -353,7 +353,7 @@
                     :vocals ["Kiki"]
                     :av ["Cheuk"]
                     :pianist ["Dorothy"]}
-     :entry/songs ["至高尊貴的你"
+     :entry/songs ["至高尊貴的祢"
                    "我要一心稱謝你"
                    "神的帳幕在人間"
                    "以愛奉獻"]
@@ -376,7 +376,7 @@
                     :pianist ["Adriel"]}
      :entry/songs ["投靠"
                    "讓我得見祢的榮面"
-                   "我們呼求 (粵語)"
+                   "我們呼求"
                    "求主給這世代看見異象"]
      :entry/lecture-name "跟隨基督的人"}    ; missing sept 16 and sept 23 entries
     {:entry/date "2023-09-30"
@@ -386,7 +386,7 @@
                     :av ["Andrew"
                          "Bertha"]
                     :pianist ["Eddie"]}
-     :entry/songs ["君王就在這裏"
+     :entry/songs ["君王就在這裡"
                    "榮雨降下"
                    "全因基督"
                    "真實的悔改(國語)"]
@@ -471,7 +471,7 @@
                          "Andrew"]
                     :pianist ["Eddie"]}
      :entry/songs ["齊來崇拜"
-                   "是為了愛 [耶穌降生在馬槽]"
+                   "是為了愛"
                    "獨一拯救"
                    "帶我進入你的同在"
                    "最美好...盡力愛祢"]

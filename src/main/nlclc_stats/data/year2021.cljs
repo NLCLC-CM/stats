@@ -124,7 +124,7 @@
                     :drummer ["Kiki"]
                     :pianist ["Eddie"
                               "Cheuk"]}
-     :entry/songs ["耶穌我感謝你"
+     :entry/songs ["耶穌我感謝祢"
                    "Christmas Is a Time to love"
                    "King of Kings"
                    "平安是你"

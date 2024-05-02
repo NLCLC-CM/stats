@@ -132,9 +132,9 @@
      :entry/people {:lead ["Martin"]
                     :vocals ["Kiki Pau"]
                     :pianist ["Adriel"]}
-     :entry/songs ["我要一生一世住在祢聖殿
-                   全因為祢
-                   詩23"]
+     :entry/songs ["我要一生一世住在你聖殿"
+                   "全因為祢"
+                   "詩23"]
      :entry/lecture-name "腓利的福傳人生"}
     {:entry/date "2022-05-14"
      :entry/people {:lead ["Dorothy"]
@@ -215,7 +215,7 @@
      :entry/people {:lead ["YauYau"]
                     :vocals ["Arthur"]
                     :pianist ["Dorothy"]}
-     :entry/songs ["除祢之外"
+     :entry/songs ["除祢以外"
                    "歷代萬代讚頌"
                    "一生不會捨棄你"
                    "能不能"]
@@ -328,7 +328,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["Majesty"
                    "I Surrender"
-                   "尋求你"
+                   "尋求祢"
                    "一顆謙卑的心"]
      :entry/lecture-name "生命被澆獻"}
     {:entry/date "2022-10-29"
@@ -398,7 +398,7 @@
                     :drummer ["Martin"]
                     :pianist ["Dorothy"]}
      :entry/songs ["獻上頌讚"
-                   "除你以外"
+                   "除祢以外"
                    "是為了愛"
                    "在至高之處"
                    "我們愛因為神先愛"]
@@ -412,7 +412,7 @@
      :entry/songs ["Angels We Have Heard On High"
                    "天使和聲跨千里"
                    "Go Tell It On The Mountain"
-                   "萬有都歸你"
+                   "萬有都歸祢"
                    "求主給這世代看見異象"]
      :entry/lecture-name "真光來到世上"}
     ))

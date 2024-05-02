@@ -52,7 +52,7 @@
                         :av ["Philson"]
                         :usher ["Gab"
                                 "Helen"]}
-         :entry/songs ["無人能像你"
+         :entry/songs ["無人能像祢"
                        "Ever be"
                        "投靠"
                        "十字架"]
@@ -172,7 +172,7 @@
                                 "Tin Hei"]
                         :drummer ["Kiki"]
                         :av ["Andrew"]}
-         :entry/songs ["What a Beautiful Name"
+         :entry/songs ["What a beautiful name"
                        "我安然住進"
                        "神的帳幕在人間"
                        "顯現"]
