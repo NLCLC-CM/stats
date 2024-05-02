@@ -171,6 +171,36 @@
          [:small {:class "text-body-secondary"}
           "Appeared " frequency " times."]]])]))
 
+(defn- songs-content []
+  (let [query (:query @stored-state)
+        filtered-history (filter (partial valid-entry? query) data/entries)
+        songs (sort-by first (into [] (data/songs-frequencies filtered-history)))]
+    [:div
+     {:class ["d-flex" "flex-row" "flex-wrap"]}
+     (for [[song-name hits] songs]
+       ^{:key song-name}
+
+       [:div {:class "card"
+              :style {:width "15rem"
+                      :cursor "pointer"}
+              :on-click #(swap! stored-state assoc :selected-key song-name)}
+        [:div {:class "card-body"}
+         [:h5 {:class "card-title"} song-name]
+         [:small {:class "text-body-secondary"}
+          "Appeared " hits " times."]]])]))
+
+(defn- song-history [dates]
+  [:section {:class "col"}
+   [:h5 "Appearances"]
+   [:div {:class "list-group"}
+    (for [date dates]
+      ^{:key date}
+      [:button {:class ["list-group-item" "list-group-item-action"]
+                :on-click #(do (swap! stored-state assoc :tab :history)
+                               (swap! stored-state assoc :query {:songs #{(:selected-key @stored-state)}})
+                               (swap! stored-state assoc :selected-key nil))}
+       date])]])
+
 (defn- popular-songs [person]
   (let [filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
         songs (reverse (sort-by second (into [] (data/songs-frequencies filtered-history))))]
@@ -190,6 +220,24 @@
           [:td song-name]
           [:td freq]])]]]))
 
+(defn- song-faves [favourites]
+  [:section {:class "col"}
+   [:h5 "Favourite pairings"]
+   [:small "Just like having good meat-wine pairings, certain songs pair well with others. At least, that's how we choose to interpret the data."]
+   [:table {:class "table"}
+    [:thead
+     [:tr
+      [:th {:scope "col"} "Song name"]
+      [:th {:scope "col"} "Occurances"]]]
+
+    [:tbody
+     (for [[song-name freq] favourites]
+       ^{:key song-name}
+
+       [:tr
+        [:td song-name]
+        [:td freq]])]]])
+
 (defn- blacklisted-roles-by-enum
   [enum]
   (case enum
@@ -207,9 +255,10 @@
      (if @flipped?
        [:div {:class "row"}
         (case @role-tab
-          0 [:h5 {:class "col-10"
-                  :title "This implies that there are 'least favourite people (to work with)', and we don't go there."}
-             "Favourite people (to work with)"]
+          0 [:div {:class "col"}
+             [:h5 {:class "col-10"}
+              "Favourite people (to work with)"]
+             [:small "This implies that there are 'least favourite people (to work with)', and we don't go there."]]
           1 [:h5 {:class "col-10"} "AV team!"]
           2 [:h5 {:class "col-10"} "Ushers"])
         [:button {:class ["col-2" "btn" "btn-outline-secondary"]
@@ -280,6 +329,20 @@
     [popular-partners person]
     [popular-roles person]]])
 
+(defn- song-content [song-name]
+  [:div
+   [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
+   [:br]
+   [:br]
+   [:div {:class "row"}
+    [:h4 {:class "col-sm-8"}
+     song-name]]
+
+   (let [{:keys [history favourites]} (data/song-data song-name data/entries)]
+     [:div {:class "row"}
+      [song-history history]
+      [song-faves favourites]])])
+
 (defn- content []
   [:section {:class "col-sm-10"}
    [:div {:class "col"}
@@ -290,7 +353,9 @@
       :people (if (nil? (:selected-key @stored-state))
                 [people-content]
                 [person-content (:selected-key @stored-state)])
-      :songs [:p "Songs!"]
+      :songs (if (nil? (:selected-key @stored-state))
+               [songs-content]
+               [song-content (:selected-key @stored-state)])
       :roles [:p "Roles!"]
       :history [history-content]
 

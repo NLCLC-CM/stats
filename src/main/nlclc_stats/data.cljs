@@ -134,6 +134,28 @@
        flatten
        frequencies))
 
+(defn song-history
+  [song entries]
+  (->> entries
+       (filter (comp #(contains? % song) set :entry/songs))
+       (map :entry/date)))
+
+(defn song-pairings
+  [song entries]
+  (as-> entries $
+       (filter (comp #(contains? % song) set :entry/songs) $)
+       (songs-frequencies $)
+       (dissoc $ song)))
+
+(defn song-data
+  "Get song data. Includes when it was used in history, as well as the songs most used."
+  [song entries]
+  {:history (song-history song entries)
+   :favourites (->> (song-pairings song entries)
+                    (into [])
+                    (sort-by second)
+                    reverse)})
+
 (defn roles-frequencies
   "Get roles frequencies. Return a map of role name and their occurrance frequency."
   [entries person]
