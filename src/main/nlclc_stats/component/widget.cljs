@@ -10,6 +10,7 @@
 (defonce clicks-on-my-name (r/atom (or (js/window.localStorage.getItem "clicks") 0)))
 (defonce flipped? (r/atom false))
 (defonce role-tab (r/atom 0))
+(defonce simple-query (r/atom ""))
 
 (defonce stored-state
   (let [url-state (url->state js/window.location)]
@@ -153,41 +154,50 @@
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
 (defn- people-content []
-  (let [query (:query @stored-state)
-        filtered-history (filter (partial valid-entry? query) data/entries)
-        people (sort-by first (into [] (data/people-data filtered-history '(:av :usher))))]
-    [:div
-     {:class ["d-flex" "flex-row" "flex-wrap"]}
-     (for [[person-name {:keys [frequency starting-date ending-date]}] people]
-       ^{:key person-name}
+    (let [sort-field (r/atom :name)
+          sort-asc (r/atom true)]
+      (fn []
+        [:table {:class "table"}
+         [:thead
+          [:tr
+           [:th {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))} "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
+           [:th {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))} "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
 
-       [:div {:class "card"
-              :style {:width "15rem"
-                      :cursor "pointer"}
-              :on-click #(swap! stored-state assoc :selected-key person-name)}
-        [:img {:src "" :class "card-img-top"}]
-        [:div {:class "card-body"}
-         [:h5 {:class "card-title"} person-name]
-         [:small {:class "text-body-secondary"}
-          "Appeared " frequency " times."]]])]))
+         [:tbody
+          (let [people ((if @sort-asc identity reverse)
+                        (sort-by
+                          (if (= @sort-field :name) first second)
+                          (into [] (data/people-data data/entries '(:av :usher)))))
+                filtered-people (filter (comp #(string/includes? % @simple-query) first) people)]
+            (doall (for [[person-name frequency] filtered-people]
+                   ^{:key person-name}
+
+                   [:tr {:on-click #(swap! stored-state assoc :selected-key person-name)}
+                    [:td person-name]
+                    [:td frequency]])))]])))
 
 (defn- songs-content []
-  (let [query (:query @stored-state)
-        filtered-history (filter (partial valid-entry? query) data/entries)
-        songs (sort-by first (into [] (data/songs-frequencies filtered-history)))]
-    [:div
-     {:class ["d-flex" "flex-row" "flex-wrap"]}
-     (for [[song-name hits] songs]
-       ^{:key song-name}
+  (let [sort-field (r/atom :name)
+          sort-asc (r/atom true)]
+      (fn []
+        [:table {:class "table"}
+         [:thead
+          [:tr
+           [:th {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))} "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
+           [:th {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))} "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
 
-       [:div {:class "card"
-              :style {:width "15rem"
-                      :cursor "pointer"}
-              :on-click #(swap! stored-state assoc :selected-key song-name)}
-        [:div {:class "card-body"}
-         [:h5 {:class "card-title"} song-name]
-         [:small {:class "text-body-secondary"}
-          "Appeared " hits " times."]]])]))
+         [:tbody
+          (let [songs ((if @sort-asc identity reverse)
+                       (sort-by
+                         (if (= @sort-field :name) first second)
+                         (into [] (data/songs-frequencies data/entries))))
+                filtered-songs (filter (comp #(string/includes? % @simple-query) first) songs)]
+            (doall (for [[song-name frequency] filtered-songs]
+                   ^{:key song-name}
+
+                   [:tr {:on-click #(swap! stored-state assoc :selected-key song-name)}
+                    [:td song-name]
+                    [:td frequency]])))]])))
 
 (defn- song-history [dates]
   [:section {:class "col"}
@@ -345,21 +355,30 @@
 
 (defn- content []
   [:section {:class "col-sm-10"}
-   [:div {:class "col"}
-    (when (nil? (:selected-key @stored-state))
-      [search-bar/component stored-state])
 
     (case (:tab @stored-state)
-      :people (if (nil? (:selected-key @stored-state))
+      :people [:div {:class "col"}
+               (when (nil? (:selected-key @stored-state))
+                 [:input {:type "search"
+                          :class "form-control"
+                          :on-input #(reset! simple-query (-> % .-target .-value))}])
+               (if (nil? (:selected-key @stored-state))
                 [people-content]
-                [person-content (:selected-key @stored-state)])
-      :songs (if (nil? (:selected-key @stored-state))
+                [person-content (:selected-key @stored-state)])]
+      :songs [:div {:class "col"}
+              (when (nil? (:selected-key @stored-state))
+                [:input {:type "search"
+                         :class "form-control"
+                         :on-input #(reset! simple-query (-> % .-target .-value))}])
+              (if (nil? (:selected-key @stored-state))
                [songs-content]
-               [song-content (:selected-key @stored-state)])
+               [song-content (:selected-key @stored-state)])]
       :roles [:p "Roles!"]
-      :history [history-content]
+      :history [:div {:class "col"}
+                [search-bar/component stored-state]
+                [history-content]]
 
-      [:p {:class "text-danger"} "Unknown tab = " (:tab @stored-state)])]])
+      [:p {:class "text-danger"} "Unknown tab = " (:tab @stored-state)])])
 
 (defn component []
   [:section {:class "row"}

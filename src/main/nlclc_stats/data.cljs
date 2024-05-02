@@ -92,10 +92,8 @@
 
 (defn- assoc-person-data [m e person]
   (if (contains? m person)
-    (assoc-in (update-in m [person :frequency] inc) [person :ending-date] (:entry/date e))
-    (assoc m person {:starting-date (:entry/date e)
-                     :ending-date (:entry/date e)
-                     :frequency 1})))
+    (update m person inc)
+    (assoc m person 1)))
 
 (defn- assoc-people-data [m e blacklisted-roles]
   (loop [[person & people :as remaining] (flatten (vals (apply dissoc (:entry/people e) blacklisted-roles)))
