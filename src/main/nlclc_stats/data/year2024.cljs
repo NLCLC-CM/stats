@@ -189,7 +189,99 @@
                        "Thank You Jesus for the Blood"
                        "向著前方"
                        "期待耶穌"]
-         :entry/lecture-name "我是好牧人"}))
+         :entry/lecture-name "我是好牧人"}
+        {:entry/date "2024-04-27"
+         :entry/people {:lead ["Adriel"]
+                        :vocals ["Andrew"]
+                        :pianist ["Eddie"]
+                        :bassist ["Steven"]
+                        :drummer ["ToTo"]
+                        :usher ["Gab"
+                                "Helen"]
+                        :av ["Andrew"
+                             "Gab"]}
+         :entry/songs ["渴慕你(頌恩旋律)"
+                       "衷心的敬拜"
+                       "祢是葡萄樹我是枝子"
+                       "主喜悅的事"]
+         :entry/lecture-name "多結果子榮耀上帝"}
+        {:entry/date "2024-05-04"
+         :entry/people {:lead ["YauYau"]
+                        :vocals ["ToTo"]
+                        :pianist ["Eddie"]
+                        :usher ["Matthew"
+                                "April"]
+                        :av ["Andrew"]}
+         :entry/songs ["萬有都歸祢"
+                       "神恩典夠我用"
+                       "如此認識我"
+                       "我的生命獻給祢"]
+         :entry/lecture-name "最佳選友"}
+        {:entry/date "2024-05-11"
+         :entry/people {:lead ["ToTo"]
+                        :vocals ["Andrew"]
+                        :pianist ["Vivian"]
+                        :usher ["Stephy"
+                                "Toby"]
+                        :av ["Philson"
+                             "Gab"]}
+         :entry/songs ["高唱入雲"
+                       "遮蓋我"
+                       "求祢以真理和愛引導我方向"
+                       "如飛的一生"]
+         :entry/lecture-name "在世卻不屬世"}
+        {:entry/date "2024-05-18"
+         :entry/people {:lead ["Gab"]
+                        :vocals ["Helen"]
+                        :pianist ["Eddie"]
+                        :usher ["Cindy"
+                                "Toby"]
+                        :av ["Andrew"]}
+         :entry/songs ["你是我神"
+                       "全地至高是我主"
+                       "祈求主聖靈"
+                       "神的帳幕在人間"]
+         :entry/lecture-name "學習、共融、禱告、入世的教會"}
+        {:entry/date "2024-05-25"
+         :entry/people {:lead ["Adriel"]
+                        :vocals ["Cindy"
+                                 "Andrew"]
+                        :pianist ["Dorothy"]
+                        :usher ["Kovia"
+                                "Toby"]
+                        :av ["Cheuk"
+                             "Joyce"]}
+         :entry/songs ["讚美三一上帝"
+                       "祢坐著為王"
+                       "為何揀選我"]
+         :entry/lecture-name "全新的身分"}
+        {:entry/date "2024-06-01"
+         :entry/people {:lead ["Philson"]
+                        :vocals ["Kiki"]
+                        :pianist ["Eddie"]
+                        :usher ["Gab"
+                                "Helen"]
+                        :av ["Cheuk"
+                             "Gab"]}
+         :entry/songs ["尋求祢"
+                       "受造奇妙可畏"
+                       "寶貝"
+                       "最美好的仗"]
+         :entry/lecture-name "主日不可做甚麼?"}
+        {:entry/date "2024-06-08"
+         :entry/people {:lead ["ToTo"]
+                        :vocals ["Liberty"
+                                 "Andrew"]
+                        :pianist ["Adriel"]
+                        :guitarist ["Gab"]
+                        :usher ["Matthew"
+                                "April"]
+                        :av ["Philson"]}
+         :entry/songs ["神坐着爲王"
+                       "祢許可"
+                       "奔跑不放棄"
+                       "勇敢走出去"]
+         :entry/lecture-name "FIXME please fill in"}))
 
 (def q3 (list))
 
