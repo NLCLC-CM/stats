@@ -339,6 +339,13 @@
     [popular-partners person]
     [popular-roles person]]])
 
+(defn- song-badges [badges]
+  [:section {:class "col"}
+   [:div {:class "list-group"}
+    (for [[year [[_ _ i]]] badges]
+      ^{:key year}
+      [:p "Number " i " in year " year "!"])]])
+
 (defn- song-content [song-name]
   [:div
    [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
@@ -348,10 +355,13 @@
     [:h4 {:class "col-sm-8"}
      song-name]]
 
-   (let [{:keys [history favourites]} (data/song-data song-name data/entries)]
+   (let [{:keys [history favourites]} (data/song-data song-name data/entries)
+         badges (filter #(not (empty? (second %))) (data/top-songs-by-year-badges song-name))]
      [:div {:class "row"}
       [song-history history]
-      [song-faves favourites]])])
+      [song-faves favourites]
+      (when (not (empty? badges))
+        [song-badges badges])])])
 
 (defn- content []
   [:section {:class "col-sm-10"}

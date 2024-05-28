@@ -90,6 +90,24 @@
     main.nlclc-stats.data.year2023/assignments
     main.nlclc-stats.data.year2024/assignments))
 
+(def ^:const top-songs-by-year
+  (map
+    #(list (first %)
+           (map-indexed (fn [i [song-name freq]] (list song-name freq (inc i)))
+                        (reverse (take-last 3 (sort-by second (into [] (frequencies (apply concat (map :entry/songs (second %))))))))))
+    (into [] (group-by
+             #(.substring (:entry/date %) 0 4)
+             entries))))
+
+(defn top-songs-by-year-badges
+  [song-name]
+  (map
+    (fn [[year song-list]]
+      (list year (filter (fn [[top-song-name _ _]]
+                           (= song-name top-song-name))
+                         song-list)))
+    top-songs-by-year))
+
 (defn- assoc-person-data [m e person]
   (if (contains? m person)
     (update m person inc)
