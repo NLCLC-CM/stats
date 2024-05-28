@@ -341,9 +341,18 @@
 (defn- song-badges [badges]
   [:section {:class "col"}
    [:div {:class "list-group"}
-    (for [[year [[_ _ i]]] badges]
-      ^{:key year}
-      [:p "Number " i " in year " year "!"])]])
+    (for [[year [[song-name freq i]]] badges]
+      (let [bg-color (nth ["gold" "silver" "#cd7f32"] (dec i))
+            fg-color (nth ["black" "black" "white"] (dec i))
+            traditional-placement (nth ["Gold" "Silver" "Bronze"] (dec i))
+            placement (nth ["Most-Used" "Second-Most-Used" "Third-Most-Used"] (dec i))]
+        ^{:key year}
+        [:span
+         {:class ["badge" "rounded-pill"]
+          :style {:backgroundColor bg-color
+                  :color fg-color}
+          :title (str "Out of all songs used in " year ", " song-name " was the " (.toLowerCase placement) " (used " freq " times).")}
+         year " " traditional-placement]))]])
 
 (defn- song-content [song-name]
   [:div
