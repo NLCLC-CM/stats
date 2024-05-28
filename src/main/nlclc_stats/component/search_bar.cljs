@@ -34,27 +34,27 @@
         (swap! stored-state update-in [:query :roles] conj text)
 
         "starting-date"
-        (swap! stored-state assoc-in [:query :starting-date] text)
+        (when (not (empty? text))
+          (swap! stored-state assoc-in [:query :starting-date] text))
 
         "ending-date"
-        (swap! stored-state assoc-in [:query :ending-date] text))))
+        (when (not (empty? text))
+          (swap! stored-state assoc-in [:query :ending-date] text)))))
 
 (defn- input [{:keys [query selected-item text on-input]}]
   (case selected-item
     ("people" "songs" "roles")
     (let [query (r/atom "")]
       [:div {:class "form-control"}
-       [:input {:type "text"
+       [:input {:type "search"
                 :class "form-control"
                 :list "autocomplete-list"
-                :value text
                 :on-input on-input}]
        [autocomplete-list query selected-item]])
 
     ("starting-date" "ending-date")
     [:input {:type "date"
              :class "form-control"
-             :value text
              :on-input on-input}]))
 
 (defn- add-component [stored-state]
@@ -63,22 +63,18 @@
     (fn []
       [:div {:class "input-group mb-3"}
        [:select {:class "btn btn-outline-secondary"
-                 :value @selected-item
-                 :on-change #(do (reset! selected-item (-> % .-target .-value))
-                                 (reset! typed-text ""))}
+                 :on-change #(reset! selected-item (-> % .-target .-value))}
         [:option {:value "people"} "People"]
         [:option {:value "songs"} "Songs"]
         [:option {:value "roles"} "Roles"]
         [:option {:value "starting-date"} "Starting date"]
         [:option {:value "ending-date"} "Ending date"]]
 
-       [input {:text @typed-text
-               :on-input #(reset! typed-text (-> % .-target .-value))
+       [input {:on-input #(reset! typed-text (-> % .-target .-value))
                :query (:query @stored-state)
                :selected-item @selected-item}]
 
-       [:button {:on-click #(do (add-item @selected-item @typed-text stored-state)
-                                (reset! typed-text ""))
+       [:button {:on-click #(add-item @selected-item @typed-text stored-state)
                  :class "btn btn-outline-secondary"}
         "Add"]])))
 
