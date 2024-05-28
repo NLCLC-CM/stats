@@ -26,9 +26,8 @@
       (r/atom url-state))))
 
 (defn- switch-tabs! [new-tab-name]
-  (when (not= (:tab @stored-state) new-tab-name)
-    (swap! stored-state assoc :tab new-tab-name)
-    (swap! stored-state assoc :selected-key nil)))
+  (swap! stored-state assoc :tab new-tab-name)
+  (swap! stored-state assoc :selected-key nil))
 
 (defn- share-this-page! [evt]
   (let [this (.-target evt)
