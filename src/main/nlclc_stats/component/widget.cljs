@@ -384,6 +384,7 @@
                (when (nil? (:selected-key @stored-state))
                  [:input {:type "search"
                           :class "form-control"
+                          :placeholder "Search people"
                           :on-input #(reset! simple-query (-> % .-target .-value))}])
                (if (nil? (:selected-key @stored-state))
                 [people-content]
@@ -392,6 +393,7 @@
               (when (nil? (:selected-key @stored-state))
                 [:input {:type "search"
                          :class "form-control"
+                         :placeholder "Search songs"
                          :on-input #(reset! simple-query (-> % .-target .-value))}])
               (if (nil? (:selected-key @stored-state))
                [songs-content]

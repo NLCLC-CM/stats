@@ -48,6 +48,7 @@
       [:div {:class "form-control"}
        [:input {:type "search"
                 :class "form-control"
+                :placeholder "Search (autocomplete)"
                 :list "autocomplete-list"
                 :on-input on-input}]
        [autocomplete-list query selected-item]])
