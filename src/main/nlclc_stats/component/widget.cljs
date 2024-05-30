@@ -153,22 +153,27 @@
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
 (defn- people-content []
-    (let [sort-field (r/atom :name)
-          sort-asc (r/atom true)]
-      (fn []
-        [:table {:class "table"}
-         [:thead
-          [:tr
-           [:th {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))} "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
-           [:th {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))} "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
+  (let [sort-field (r/atom :name)
+        sort-asc (r/atom true)]
+    (fn []
+      [:table {:class "table"}
+       [:thead
+        [:tr
+         [:th
+          {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))}
+          "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
+         [:th
+          {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))
+           :title "Counts the times the person is in a worship team, not AV or usher duties."}
+          "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
 
-         [:tbody
-          (let [people ((if @sort-asc identity reverse)
-                        (sort-by
-                          (if (= @sort-field :name) first second)
-                          (into [] (data/people-data data/entries '(:av :usher)))))
-                filtered-people (filter (comp #(string/includes? % @simple-query) first) people)]
-            (doall (for [[person-name frequency] filtered-people]
+       [:tbody
+        (let [people ((if @sort-asc identity reverse)
+                      (sort-by
+                        (if (= @sort-field :name) first second)
+                        (into [] (data/people-data data/entries '(:av :usher)))))
+              filtered-people (filter (comp #(string/includes? % @simple-query) first) people)]
+          (doall (for [[person-name frequency] filtered-people]
                    ^{:key person-name}
 
                    [:tr {:on-click #(swap! stored-state assoc :selected-key person-name)}
