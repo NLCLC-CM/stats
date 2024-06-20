@@ -281,7 +281,38 @@
                        "祢許可"
                        "奔跑不放棄"
                        "勇敢走出去"]
-         :entry/lecture-name "FIXME please fill in"}))
+         :entry/lecture-name "我們都是一家人"}
+        {:entry/date "2024-06-15"
+         :entry/people {:lead ["Sinead"]
+                        :vocals ["YauYau"]
+                        :pianist ["Dorothy"]
+                        :usher ["Stephy"
+                                "Cindy"]
+                        :av ["Cheuk"]}
+         :entry/songs ["建殿者的呼聲"
+                       "住在你裏面"
+                       "耶和華尼西"
+                       "我的生命獻給你"]
+         :entry/lecture-name "成為天國的新人"}
+        {:entry/date "2024-06-29"
+         :entry/people {:lead ["Gab"]
+                        :vocals ["Helen"
+                                 "Adriel"
+                                 "ToTo"]
+                        :pianist ["Eddie"]
+                        :guitarist ["Toby"]
+                        :bass ["Steven"]
+                        :drummer ["Eric"]
+                        :usher ["Cindy"
+                                "Arthur"
+                                "Dorothy"]
+                        :av ["Philson"
+                             "Gab"]}
+         :entry/songs ["獻給我天上的主"
+                       "建殿者的呼聲"
+                       "耶和華行了大事"
+                       "立志擺上"]
+         :entry/lecture-name "上帝在我們中間成就了大事God has done great things among us "}))
 
 (def q3 (list))
 
