@@ -301,7 +301,7 @@
                                  "ToTo"]
                         :pianist ["Eddie"]
                         :guitarist ["Toby"]
-                        :bass ["Steven"]
+                        :bassist ["Steven"]
                         :drummer ["Eric"]
                         :usher ["Cindy"
                                 "Arthur"
