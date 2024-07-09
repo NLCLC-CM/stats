@@ -12,7 +12,8 @@
     (let [id (comp url->state (partial state->url "http://localhost/"))]
       (doseq [state (list {:tab :history
                            :selected-key nil
-                           :sort-dates-asc? false
+                           :sort {:dir :asc
+                                  :k nil}
                            :query {:people #{"Cheuk"}
                                    :songs #{}
                                    :roles #{}
@@ -20,7 +21,8 @@
                                    :ending-date nil}}
                           {:tab :people
                            :selected-key "Cheuk"
-                           :sort-dates-asc? true
+                           :sort {:dir :asc
+                                  :k nil}
                            :query {:people #{}
                                    :songs #{}
                                    :roles #{}

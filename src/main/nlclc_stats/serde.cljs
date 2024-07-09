@@ -18,7 +18,8 @@
 (comment
   (def state {:tab :history
               :selected-key nil
-              :sort-dates-asc? false
+              :sort {:dir :asc
+                     :k nil}
               :query {:people #{"Cheuk"}
                       :songs #{}
                       :roles #{}
@@ -39,7 +40,8 @@
   (let [url (js/URL. url-string)
         state (atom {})]
     (swap! state assoc :tab (keyword (.searchParams.get url "tab")))
-    (swap! state assoc :sort-dates-asc? (= "true" (.searchParams.get url "sort-dates-asc")))
+    (swap! state assoc-in [:sort :k] (keyword (.searchParams.get url "sort-k")))
+    (swap! state assoc-in [:sort :dir] (keyword (.searchParams.get url "sort-dir")))
     (swap! state assoc :selected-key (.searchParams.get url "selected-key"))
     (swap! state assoc-in [:query :people] (into #{} (.searchParams.getAll url "query-people")))
     (swap! state assoc-in [:query :songs] (into #{} (.searchParams.getAll url "query-songs")))
@@ -58,7 +60,10 @@
     (when (not (nil? (:selected-key state)))
       (.searchParams.set url "selected-key" (:selected-key state)))
 
-    (.searchParams.set url "sort-dates-asc" (str (:sort-dates-asc? state)))
+    (.searchParams.set url "sort-dir" (-> state :sort :dir name))
+
+    (when (not (nil? (-> state :sort :k)))
+      (.searchParams.set url "sort-k" (-> state :sort :k name)))
 
     (doseq [person (get-in state [:query :people])]
       (.searchParams.append url "query-people" person))

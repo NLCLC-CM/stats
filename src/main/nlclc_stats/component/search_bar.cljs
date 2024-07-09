@@ -59,7 +59,7 @@
              :on-input on-input}]))
 
 (defn- add-component [stored-state]
-  (let [selected-item (r/atom "songs")
+  (let [selected-item (r/atom "people")
         typed-text (r/atom "")]
     (fn []
       [:div {:class "input-group mb-3"}

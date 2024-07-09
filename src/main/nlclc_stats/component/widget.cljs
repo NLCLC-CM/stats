@@ -7,29 +7,15 @@
             [main.nlclc-stats.serde :refer [url->state state->url]]
             [main.nlclc-stats.component.search-bar :as search-bar]))
 
-(defonce clicks-on-my-name (r/atom (or (js/window.localStorage.getItem "clicks") 0)))
-(defonce flipped? (r/atom false))
-(defonce role-tab (r/atom 0))
 (defonce simple-query (r/atom ""))
 
-(defonce stored-state
-  (let [url-state (url->state js/window.location)]
-    (if (nil? (:tab url-state))
-      (r/atom {:tab :history            ; keyword
-               :selected-key nil        ; str
-               :sort-dates-asc? false   ; bool
-               :query {:people #{}
-                       :songs #{}
-                       :roles #{}
-                       :starting-date nil
-                       :ending-date nil}})
-      (r/atom url-state))))
+(defn- dir-not [dir]
+  (case dir
+    :asc :desc
+    :desc :asc
+    :asc))
 
-(defn- switch-tabs! [new-tab-name]
-  (swap! stored-state assoc :tab new-tab-name)
-  (swap! stored-state assoc :selected-key nil))
-
-(defn- share-this-page! [evt]
+(defn- share-this-page! [stored-state evt]
   (let [this (.-target evt)
         original-text (.-textContent this)
         baseurl (str js/window.location.origin js/window.location.pathname)
@@ -39,29 +25,34 @@
 
     (js/setTimeout #(set! (.-textContent this) original-text) 2000)))
 
-(defn- tab-component [tab]
+(defn- switch-tabs! [stored-state tab]
+  (swap! stored-state assoc :sort {:dir :asc :k nil})
+  (swap! stored-state assoc :tab tab)
+  (swap! stored-state assoc :selected-key nil))
+
+(defn- tab-component [stored-state tab]
   [:li {:class "nav-item"
-        :on-click #(switch-tabs! tab)}
+        :on-click #(switch-tabs! stored-state tab)}
    [:a {:href "#"
         :class ["nav-link" (when (= tab (:tab @stored-state)) "active")]}
     (string/capitalize (name tab))]])
 
-(defn- share-btn []
+(defn- share-btn [stored-state]
   [:button
    {:class ["btn" "btn-outline-light" "position-fixed" "bottom-0"]
     :style {:margin "1rem"}
-    :on-click share-this-page!}
+    :on-click (partial share-this-page! stored-state)}
    "Share this page!"])
 
-(defn- tabs-component []
+(defn- tabs-component [stored-state]
   [:ul {:class "nav flex-column nav-pills col-sm-2"}
-   [tab-component :people]
-   [tab-component :songs]
-   [tab-component :roles]
-   [tab-component :history]
+   [tab-component stored-state :people]
+   [tab-component stored-state :songs]
+   [tab-component stored-state :roles]
+   [tab-component stored-state :history]
 
    [:li
-    [share-btn]]])
+    [share-btn stored-state]]])
 
 (defn- contains-all-people? [people subset]
   (let [all-people (set (apply concat (vals people)))]
@@ -91,7 +82,7 @@
        (or (nil? ending-date) (not (pos? (compare entry-date ending-date))))))
 
 (defn- item->link
-  [item-type item]
+  [stored-state item-type item]
   [:div {:class ["btn-group"]
          :role "group"
          :style {:marginBottom "0.2rem"}
@@ -108,30 +99,53 @@
     \+]])
 
 (defn- role-people->hiccup
-  [[role people]]
+  [stored-state [role people]]
   [:div
    {:style {:display "grid"
             :gridTemplateColumns "1fr 1.5fr"}
     :key role}
-   [item->link :roles (name role)]
+   [item->link stored-state :roles (name role)]
 
    [:div {:style {:display "flex" :flexDirection "column"}}
-    (map (partial item->link :people) people)]])
+    (map (partial item->link stored-state :people) people)]])
 
-(defn- history-content []
+(defn- sort-history
+  [history {:keys [dir k]}]
+  "Sort all history based on some sort of key `k` and some direction `dir`"
+  (let [sort-direction (if (= dir :asc) identity reverse)]
+    (case k
+      :date (sort-direction history)
+      (sort-direction history))))
+
+(defn- on-click-header
+  [stored-state header]
+  (let [not-dir #(if (= % :asc) :desc :asc)
+        swap-dir #(swap! stored-state update-in [:sort :dir] not-dir)
+        {:keys [dir k]} (:sort @stored-state)]
+    (if (= k header)
+      (swap-dir)
+      (swap! stored-state assoc-in [:sort :k] header))))
+
+(defn- sort-direction
+  [stored-state]
+  (case (-> @stored-state :sort :dir)
+    :asc "△"
+    :desc "▽"
+    ""))
+
+(defn- history-content [stored-state]
   (let [query (:query @stored-state)
         filtered-history (filter (partial valid-entry? query) data/entries)
-        sorted-history (if (:sort-dates-asc? @stored-state) filtered-history (reverse filtered-history))]
+        sorted-history (sort-history filtered-history (:sort @stored-state))]
     [:table {:class "table"}
      [:thead
       [:tr
        [:th {:scope "col"
              :style {:cursor "pointer"}
-             :on-click #(swap! stored-state update :sort-dates-asc? not)}
+             :on-click #(do (swap! stored-state update-in [:sort :dir] dir-not)
+                            (swap! stored-state assoc-in [:sort :k] :date))}
         "Date "
-        (if (:sort-dates-asc? @stored-state)
-          "(ASC)"
-          "(DESC)")]
+        [sort-direction stored-state]]
        [:th {:scope "col"} "Lecture title"]
        [:th {:scope "col"} "People involved"]
        [:th {:scope "col"} "Songs"]]]
@@ -143,8 +157,8 @@
         [:tr
          [:td {:scope "row"} [:time {:dateTime date} date]]
          [:td lecture-name]
-         [:td (map role-people->hiccup (into [] people))]
-         [:td [:div {:style {:display "flex" :flexDirection "column"}} (map (partial item->link :songs) songs)]]])]
+         [:td (map (partial role-people->hiccup stored-state) (into [] people))]
+         [:td [:div {:style {:display "flex" :flexDirection "column"}} (map (partial item->link stored-state :songs) songs)]]])]
 
      (if (empty? sorted-history)
        [:tfoot
@@ -152,58 +166,58 @@
        [:tfoot
         [:tr [:td {:colSpan 4} (count sorted-history) " entries found"]]])]))
 
-(defn- people-content []
-  (let [sort-field (r/atom :name)
-        sort-asc (r/atom true)]
-    (fn []
-      [:table {:class "table"}
-       [:thead
-        [:tr
-         [:th
-          {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))}
-          "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
-         [:th
-          {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))
-           :title "Counts the times the person is in a worship team, not AV or usher duties."}
-          "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
+(defn- table-headers [stored-state ks]
+  (let [th (fn [k]
+             [:th
+              {:on-click #(do (swap! stored-state assoc-in [:sort :k] k)
+                              (swap! stored-state update-in [:sort :dir] dir-not))}
+              (if (= (-> @stored-state :sort :k) k)
+                (str (name k)
+                     " "
+                     (sort-direction stored-state))
+                (name k))])]
+    [:thead 
+     [:tr
+      (for [k ks]
+        ^{:key k}
 
-       [:tbody
-        (let [people ((if @sort-asc identity reverse)
-                      (sort-by
-                        (if (= @sort-field :name) first second)
-                        (into [] (data/people-data data/entries '(:av :usher)))))
-              filtered-people (filter (comp #(string/includes? % @simple-query) first) people)]
-          (doall (for [[person-name frequency] filtered-people]
-                   ^{:key person-name}
+        [th k])]]))
 
-                   [:tr {:on-click #(swap! stored-state assoc :selected-key person-name)}
-                    [:td person-name]
-                    [:td frequency]])))]])))
+(defn- people-content [stored-state]
+  [:table {:class "table"}
+   [table-headers stored-state '(:name :hits)]
 
-(defn- songs-content []
-  (let [sort-field (r/atom :name)
-          sort-asc (r/atom true)]
-      (fn []
-        [:table {:class "table"}
-         [:thead
-          [:tr
-           [:th {:on-click #(do (reset! sort-field :name) (swap! sort-asc not))} "Name" (when (= @sort-field :name) (str " " (if @sort-asc "ASC" "DESC")))]
-           [:th {:on-click #(do (reset! sort-field :hits) (swap! sort-asc not))} "Hits" (when (= @sort-field :hits) (str " " (if @sort-asc "ASC" "DESC")))]]]
+   [:tbody
+    (let [people ((if (= :asc (-> @stored-state :sort :dir)) identity reverse)
+                  (sort-by
+                    (if (= (-> @stored-state :sort :k) :name) first second)
+                    (into [] (data/people-data data/entries '(:av :usher)))))
+          filtered-people (filter (comp #(string/includes? % @simple-query) first) people)]
+      (doall (for [[person-name frequency] filtered-people]
+               ^{:key person-name}
 
-         [:tbody
-          (let [songs ((if @sort-asc identity reverse)
-                       (sort-by
-                         (if (= @sort-field :name) first second)
-                         (into [] (data/songs-frequencies data/entries))))
-                filtered-songs (filter (comp #(string/includes? % @simple-query) first) songs)]
-            (doall (for [[song-name frequency] filtered-songs]
-                   ^{:key song-name}
+               [:tr {:on-click #(swap! stored-state assoc :selected-key person-name)}
+                [:td person-name]
+                [:td frequency]])))]])
 
-                   [:tr {:on-click #(swap! stored-state assoc :selected-key song-name)}
-                    [:td song-name]
-                    [:td frequency]])))]])))
+(defn- songs-content [stored-state]
+  [:table {:class "table"}
+   [table-headers stored-state '(:name :hits)]
 
-(defn- song-history [dates]
+   [:tbody
+    (let [songs ((if (= :asc (-> @stored-state :sort :dir)) identity reverse)
+                 (sort-by
+                   (if (= (-> @stored-state :sort :k) :name) first second)
+                   (into [] (data/songs-frequencies data/entries))))
+          filtered-songs (filter (comp #(string/includes? % @simple-query) first) songs)]
+      (doall (for [[song-name frequency] filtered-songs]
+               ^{:key song-name}
+
+               [:tr {:on-click #(swap! stored-state assoc :selected-key song-name)}
+                [:td song-name]
+                [:td frequency]])))]])
+
+(defn- song-history [stored-state dates]
   [:section {:class "col"}
    [:h5 "Appearances"]
    [:div {:class "list-group"}
@@ -259,25 +273,13 @@
     1 (difference data/roles #{:av})
     2 (difference data/roles #{:usher})))
 
-(defn- popular-partners [person]
-  (let [blacklist (blacklisted-roles-by-enum @role-tab)
+(defn- popular-partners [stored-state person]
+  (let [blacklist (blacklisted-roles-by-enum 0)
         filtered-history (filter (partial valid-entry? {:people #{person}}) data/entries)
         partners (reverse (sort-by second (into [] (data/people-frequencies filtered-history blacklist))))]
 
     [:section {:class "col"}
-
-     (if @flipped?
-       [:div {:class "row"}
-        (case @role-tab
-          0 [:div {:class "col"}
-             [:h5 {:class "col-10"}
-              "Favourite people (to work with)"]
-             [:small "This implies that there are 'least favourite people (to work with)', and we don't go there."]]
-          1 [:h5 {:class "col-10"} "AV team!"]
-          2 [:h5 {:class "col-10"} "Ushers"])
-        [:button {:class ["col-2" "btn" "btn-outline-secondary"]
-                  :on-click #(swap! role-tab (comp (fn [x] (mod x 3)) inc))} \>]]
-       [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"])
+     [:h5 {:title "This implies that there are 'least favourite people (to work with)', and we don't go there."} "Favourite people (to work with)"]
 
      [:table {:class "table"}
       [:thead
@@ -313,35 +315,19 @@
           [:td role-name]
           [:td freq]])]]]))
 
-(defn- person-content [person]
+(defn- person-content [stored-state]
   [:div
    [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
    [:br]
    [:br]
    [:div {:class "row"}
-    [:h4 {:class "col-sm-8"
-          :on-click #(do (swap! clicks-on-my-name inc)
-                         (js/window.localStorage.setItem "clicks" @clicks-on-my-name))}
-     person]
-
-    (when (>= @clicks-on-my-name 5)
-      [:div {:on-click #(swap! flipped? not)
-             :class ["form-check" "form-switch" "col-sm-4" (when @flipped? "fade-out")]}
-       [:input {:class "form-check-input"
-                :type "checkbox"
-                :on-change #(reset! flipped? (.-checked (.-target %)))
-                :checked @flipped?
-                :id "flipped-the-switch"}]
-       [:label {:for "flipped-the-switch"
-                :class "form-check-label"}
-        (if @flipped?
-          "Advanced mode enabled"
-          "Advanced mode disabled")]])]
+    [:h4 {:class "col-sm-8"}
+     (:selected-key @stored-state)]]
 
    [:div {:class "row"}
-    [popular-songs person]
-    [popular-partners person]
-    [popular-roles person]]])
+    [popular-songs (:selected-key @stored-state)]
+    [popular-partners stored-state (:selected-key @stored-state)]
+    [popular-roles (:selected-key @stored-state)]]])
 
 (defn- song-badges [badges]
   [:section {:class "col"}
@@ -359,24 +345,24 @@
           :title (str "Out of all songs used in " year ", " song-name " was the " (.toLowerCase placement) " (used " freq " times).")}
          year " " traditional-placement]))]])
 
-(defn- song-content [song-name]
+(defn- song-content [stored-state]
   [:div
    [:a {:href "#" :on-click #(swap! stored-state assoc :selected-key nil)} "back"]
    [:br]
    [:br]
    [:div {:class "row"}
     [:h4 {:class "col-sm-8"}
-     song-name]]
+     (:selected-key @stored-state)]]
 
-   (let [{:keys [history favourites]} (data/song-data song-name data/entries)
-         badges (filter #(not (empty? (second %))) (data/top-songs-by-year-badges song-name))]
+   (let [{:keys [history favourites]} (data/song-data (:selected-key @stored-state) data/entries)
+         badges (filter #(not (empty? (second %))) (data/top-songs-by-year-badges (:selected-key @stored-state)))]
      [:div {:class "row"}
-      [song-history history]
+      [song-history stored-state history]
       [song-faves favourites]
       (when (not (empty? badges))
         [song-badges badges])])])
 
-(defn- content []
+(defn- content [stored-state]
   [:section {:class "col-sm-10"}
 
     (case (:tab @stored-state)
@@ -387,8 +373,8 @@
                           :placeholder "Search people"
                           :on-input #(reset! simple-query (-> % .-target .-value))}])
                (if (nil? (:selected-key @stored-state))
-                [people-content]
-                [person-content (:selected-key @stored-state)])]
+                [people-content stored-state]
+                [person-content stored-state])]
       :songs [:div {:class "col"}
               (when (nil? (:selected-key @stored-state))
                 [:input {:type "search"
@@ -396,16 +382,30 @@
                          :placeholder "Search songs"
                          :on-input #(reset! simple-query (-> % .-target .-value))}])
               (if (nil? (:selected-key @stored-state))
-               [songs-content]
-               [song-content (:selected-key @stored-state)])]
+               [songs-content stored-state]
+               [song-content stored-state])]
       :roles [:p "Roles!"]
       :history [:div {:class "col"}
                 [search-bar/component stored-state]
-                [history-content]]
+                [history-content stored-state]]
 
       [:p {:class "text-danger"} "Unknown tab = " (:tab @stored-state)])])
 
 (defn component []
-  [:section {:class "row"}
-   [tabs-component]
-   [content]])
+  (let [url-state (url->state js/window.location)
+        stored-state (if (nil? (:tab url-state))
+                       (r/atom {:tab :history
+                                :selected-key nil
+                                :sort {:dir :asc
+                                       :k nil}
+                                :query {:people #{}
+                                        :songs #{}
+                                        :roles #{}
+                                        :starting-date nil
+                                        :ending-date nil}})
+                       (r/atom url-state))]
+
+    (fn []
+      [:section {:class "row"}
+       [tabs-component stored-state]
+       [content stored-state]])))
