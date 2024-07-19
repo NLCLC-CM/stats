@@ -314,7 +314,45 @@
                        "立志擺上"]
          :entry/lecture-name "上帝在我們中間成就了大事God has done great things among us "}))
 
-(def q3 (list))
+(def q3
+  (list {:entry/date "2024-07-06"
+         :entry/people {:lead ["Adriel"]
+                        :vocals ["Liberty"]
+                        :pianist ["Vivian"]
+                        :usher ["Toby"
+                                "Kovia"]
+                        :av ["Cheuk"
+                             "Ivan"]}
+         :entry/songs ["永活真神"
+                       "How Great Is Our God"
+                       "神恩典夠我用"
+                       "因祢堅持"]
+         :entry/lecture-name "請差遣我"}
+        {:entry/date "2024-07-13"
+         :entry/people {:lead ["Philson"]
+                        :vocals ["Helen"]
+                        :pianist ["Dorothy"]
+                        :usher ["Jethro"
+                                "Toby"]
+                        :av ["Cheuk"
+                             "Joyce"]}
+         :entry/songs ["我們歡迎君王降臨"
+                       "祢配得"
+                       "聖潔主"
+                       "為何揀選我"]
+         :entry/lecture-name "屬靈的福分"}
+        {:entry/date "2024-07-20"
+         :entry/people {:lead ["ToTo"]
+                        ; :vocals []
+                        :pianist ["Eddie"]
+                        :usher ["Gab"
+                                "Helen"]
+                        :av ["Philson"]}
+         :entry/songs ["尋求祢"
+                       "十字架"
+                       "求主給這世代看見異象"
+                       "求充滿這地"]
+         :entry/lecture-name "沒有牧人的羊"}))
 
 (def q4 (list))
 
