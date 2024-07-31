@@ -343,7 +343,6 @@
          :entry/lecture-name "屬靈的福分"}
         {:entry/date "2024-07-20"
          :entry/people {:lead ["ToTo"]
-                        ; :vocals []
                         :pianist ["Eddie"]
                         :usher ["Gab"
                                 "Helen"]
@@ -352,7 +351,16 @@
                        "十字架"
                        "求主給這世代看見異象"
                        "求充滿這地"]
-         :entry/lecture-name "沒有牧人的羊"}))
+         :entry/lecture-name "沒有牧人的羊"}
+        {:entry/date "2024-07-27"
+         :entry/people {:av ["Cheuk"]
+                        :usher ["Tin Hei"
+                                "April"]}
+         :entry/songs ["榮耀上帝"
+                       "神祢信實奇妙"
+                       "諸天頌讚"
+                       "神同在"]
+         :entry/lecture-name "要知道我是神"}))
 
 (def q4 (list))
 
