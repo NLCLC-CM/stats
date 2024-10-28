@@ -360,9 +360,190 @@
                        "神祢信實奇妙"
                        "諸天頌讚"
                        "神同在"]
-         :entry/lecture-name "要知道我是神"}))
+         :entry/lecture-name "要知道我是神"}
+        {:entry/date "2024-08-03"
+         :entry/people {:av ["Cheuk"
+                             "Joyce"]
+                        :lead ["Sinead"]
+                        :vocals ["Kiki"]
+                        :pianist ["Dorothy"]
+                        :usher ["Cindy"
+                                "Helen"]}
+         :entry/songs ["憂傷痛悔的靈"
+                       "生命活水充滿我"
+                       "你是配得"
+                       "我要愛慕你"]
+         :entry/lecture-name "向著目標竭力追求"}
+        {:entry/date "2024-08-10"
+         :entry/people {:av ["Philson"
+                             "Ivan"]
+                        :lead ["Arthur"]
+                        :vocals ["Dorothy"]
+                        :pianist ["Devin"]
+                        :usher ["Tin Hei"
+                                "Toby"]}
+         :entry/songs ["全地至高是我主"
+                       "信心的宣告"
+                       "詩23"
+                       "我向祢禱告"
+                       "寶貝"]
+         :entry/lecture-name "信的人有永生"}
+        {:entry/date "2024-08-17"
+         :entry/people {:av ["Cheuk"]
+                        :lead ["Gab"]
+                        :vocals ["Helen"]
+                        :pianist ["Adriel"]
+                        :usher ["Jethro"
+                                "Kovia"]}
+         :entry/songs ["你最喜悅的敬拜"
+                       "詩篇111"
+                       "迷羊"
+                       "垂絲柳樹下"]
+         :entry/lecture-name "耶穌是生命的糧"}
+        {:entry/date "2024-08-24"
+         :entry/people {:av ["Gab"]
+                        :lead ["Philson"]
+                        :vocals ["ToTo"]
+                        :pianist ["Eddie"]
+                        :drummer ["Kiki"]
+                        :usher ["Kovia"
+                                "April"]}
+         :entry/songs ["我的千古保障"
+                       "幽谷中的盼望"
+                       "在呼召我之地"
+                       "主祢知道"]
+         :entry/lecture-name "大工程與小工人"}
+        {:entry/date "2024-08-31"
+         :entry/people {:av ["Cheuk"]
+                        :lead ["Adriel"]
+                        :vocals ["Kiki"]
+                        :pianist ["ToTo"]
+                        :usher ["Gab"
+                                "Toby"]}
+         :entry/songs ["耶穌基督祢是王"
+                       "我們的神"
+                       "保守我心"
+                       "遮蓋我"]
+         :entry/lecture-name "潔淨我"}
+        {:entry/date "2024-09-07"
+         :entry/people {:av ["Cheuk"]
+                        :lead ["ToTo"]
+                        :vocals ["Andrew"]
+                        :pianist ["Eddie"]
+                        :bassist ["Steven"]
+                        :drummer ["Eric"]
+                        :usher ["Cindy"
+                                "Helen"]}
+         :entry/songs ["無言的讚頌"
+                       "唯有耶穌"
+                       "祢是配得"
+                       "永約的神"
+                       "豐盛的應許"]
+         :entry/lecture-name "有行為的信心"}
+        {:entry/date "2024-09-14"
+         :entry/people {:av ["Gab"]
+                        :lead ["Arthur"]
+                        :vocals ["Dorothy"]
+                        :pianist ["Eddie"]
+                        :usher ["Toby"
+                                "Cindy"]}
+         :entry/songs ["讓我靈頌你名"
+                       "求主赦免"
+                       "日日夜夜"
+                       "得著自由"]
+         :entry/lecture-name "言語的力量"}
+        {:entry/date "2024-09-21"
+         :entry/people {:av ["Philson"]
+                        :lead ["Gab"]
+                        :vocals ["Helen"]
+                        :pianist ["ToTo"]
+                        :usher ["Toby"
+                                "Cindy"]}
+         :entry/songs ["What a beautiful name"
+                       "投靠"
+                       "真實的悔改"
+                       "你是我神"]
+         :entry/lecture-name "大與小"}
+        {:entry/date "2024-09-28"
+         :entry/people {:av ["Cheuk"
+                             "Ivan"]
+                        :lead ["Philson"]
+                        :vocals ["Kiki"]
+                        :pianist ["Eddie"]
+                        :usher ["Helen"
+                                "April"]}
+         :entry/songs ["祢是我唯一的依靠"
+                       "全信靠上帝"
+                       "真實的悔改"
+                       "世界最美的聲音"]
+         :entry/lecture-name "最後召集（final call)"}))
 
-(def q4 (list))
+(def q4
+  (list
+    {:entry/date "2024-10-05"
+     :entry/people {:av ["Philson"]
+                    :lead ["ToTo"]
+                    :vocals ["Andrew"]
+                    :pianist ["Adriel"]
+                    :usher ["Gab"
+                            "Tin Hei"]}
+     :entry/songs ["因為祢先愛我們"
+                   "每一口呼吸"
+                   "You are my all in all"
+                   "世界最美的聲音"
+                   "在耶穌的腳前"]
+     :entry/lecture-name "像小孩進天國"}
+    {:entry/date "2024-10-12"
+     :entry/people {:av ["Gab"]
+                    :lead ["Dorothy"]
+                    :vocals ["Arthur"]
+                    :pianist ["Devin"]
+                    :guitarist ["Toby"]
+                    :usher ["Kovia"
+                            "Helen"]}
+     :entry/songs ["Great are you lord"
+                   "每一口呼吸"
+                   "祢許可"
+                   "仍能讚美"
+                   "一生不會捨棄祢"]
+     :entry/lecture-name "只差一件事"}
+    {:entry/date "2024-10-19"
+     :entry/people {:av ["Cheuk"]
+                    :lead ["Adriel"]
+                    :vocals ["Liberty"]
+                    :pianist ["Eddie"]
+                    :usher ["Toby"
+                            "Tin Hei"]}
+     :entry/songs ["大祭司"
+                   "永活真神"
+                   "祢是君王"
+                   "君尊義僕"]
+     :entry/lecture-name "你在那裡?"}
+    {:entry/date "2024-10-26"
+     :entry/people {:av ["Philson"
+                         "Ivan"]
+                    :lead ["Gab"]
+                    :vocals ["Helen"]
+                    :pianist ["ToTo"]
+                    :usher ["Cindy"
+                            "April"]}
+     :entry/songs ["祢是我惟一的倚靠"
+                   "逾越"
+                   "這一生最美的祝福"
+                   "世界最美的聲音"]
+     :entry/lecture-name "重尋失落的至寶"}
+    {:entry/date "2024-11-02"
+     :entry/people {:av ["Gab"]
+                    :lead ["Philson"]
+                    :vocals ["Kiki"]
+                    :pianist ["Eddie"]
+                    :usher ["Gab"
+                            "Jethro"]}
+     :entry/songs ["建殿者的呼聲"
+                   "靠著祢寶血"
+                   "最美好盡力愛祢"
+                   "撒種者的愛"]
+     :entry/lecture-name "邊個字最緊要"}))
 
 (def assignments
   (concat q1 q2 q3 q4))
