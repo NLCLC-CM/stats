@@ -1,8 +1,8 @@
 ```console
-$ # Start development server
-$ npm run dev
-$ # Build files for release (done in CD only, no need for any normal dev to do this)
-$ npm run release
-$ # Test things
-$ npm test
+$ # Start nREPL (do it in another tab)
+$ clj -M:cider-clj
+$ # Build files (probably a good idea to do it in another tab)
+$ clj -M:build _out/
+$ # TODO Test things (you know the drill)
+$ # clj -M:test
 ```
