@@ -61,9 +61,9 @@
      (sidebar :people)
      [:section.col-sm-10
       (for [names (partition 4 (sort data/names))]
-        [:div.row.mb-3
+        [:div.row
          (for [n names]
-           [:a.col.name
+           [:a.col-3.name.mb-3
             {:href (str "/people/" n ".html")}
             n])])]]))
 
@@ -76,9 +76,9 @@
        [:input#query.form-control {:type "search"}]]
 
       (for [songs-list (partition 4 (sort distinct-songs))]
-        [:div.row.mb-3
+        [:div.row
          (for [s songs-list]
-           [:a.col.song
+           [:a.col-3.song.mb-3
             {:href (str "/songs/" s ".html")}
             s])])]]
 
