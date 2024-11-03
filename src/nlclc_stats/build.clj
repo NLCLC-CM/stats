@@ -12,18 +12,22 @@
      {:href "about.html"}
      "About this site"]]])
 
-(defn- sidebar-tab [active-tab tab-kw]
-  [:li.nav-item
-   [:a
-    {:href (str (name tab-kw) ".html")
-     :class ["nav-link" (when (= active-tab tab-kw) "active")]}
-    (name tab-kw)]])
+(defn- sidebar-tab
+  ([active-tab tab-kw]
+   (sidebar-tab active-tab tab-kw (str (name tab-kw) ".html")))
+  ([active-tab tab-kw href-tab]
+   [:li.nav-item
+    [:a
+     {:href href-tab
+      :class ["nav-link" (when (= active-tab tab-kw) "active")]
+      :style {:text-transform "uppercase"}}
+     (name tab-kw)]]))
 
 (defn- sidebar [active-tab]
   [:ul.nav.flex-column.nav-pills.col-sm-2
    (sidebar-tab active-tab :people)
    (sidebar-tab active-tab :songs)
-   (sidebar-tab active-tab :history)])
+   (sidebar-tab active-tab :history "index.html")])
 
 (defn- template [& content]
   (p/html5
@@ -44,10 +48,18 @@
      header
      [:article.container content]]))
 
+(def people
+  (template
+    [:section.row
+     (sidebar :people)
+     [:section.col-sm-10
+      [:label.form-label.mb-3
+       [:input.form-control {:name "query"}]]]]))
+
 (def index
   (template
     [:section.row
-     (sidebar :index)
+     (sidebar :history)
      [:section.col-sm-10
       [:form
        {:action "history"
@@ -98,15 +110,15 @@
          {:datetime (:entry/date (last data/entries))}
          (:entry/date (last data/entries))]]]]]))
 
-(defn- create-index [output-dir]
-  (let [index-file (io/file output-dir "index.html")]
-    (printf "writing to %s\n" (.getName index-file))
-    (spit index-file index)))
+(defn- create-page [output-dir filename filedata]
+  (let [file (io/file output-dir filename)]
+    (printf "writing to %s\n" (.getName file))
+    (spit file filedata)))
 
-(defn- create-about [output-dir]
-  (let [about-file (io/file output-dir "about.html")]
-    (printf "writing to %s\n" (.getName about-file))
-    (spit about-file about)))
+(def pages
+  (list (list "index.html" index)
+        (list "about.html" about)
+        (list "people.html" people)))
 
 (defn -main
   ([] (println "missing destination parameter"))
@@ -118,7 +130,7 @@
          (when (not (.mkdir output-dir))
            (throw (ex-info "could not create output directory" {:dirname (.getName output-dir)}))))
 
-       (create-index output-dir)
-       (create-about output-dir))
+       (doseq [page-data pages]
+         (apply create-page output-dir page-data)))
      (catch Exception e
        (printf "exception: %s with data %s\n" e (ex-data e))))))
