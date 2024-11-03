@@ -19,8 +19,7 @@
    [:li.nav-item
     [:a
      {:href href-tab
-      :class ["nav-link" (when (= active-tab tab-kw) "active")]
-      :style {:text-transform "uppercase"}}
+      :class ["nav-link" (when (= active-tab tab-kw) "active")]}
      (name tab-kw)]]))
 
 (defn- sidebar [active-tab]
@@ -44,17 +43,46 @@
                :src "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
                :integrity "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
                :crossorigin "anonymous"}]]
-    [:body.bg-dark {:data-bs-theme "dark"}
+    [:body.bg-dark
+     {:data-bs-theme "dark"
+      :style {:text-transform "uppercase"}}
      header
      [:article.container content]]))
+
+(def distinct-songs
+  (->> data/entries
+       (map :entry/songs)
+       (apply concat)
+       (distinct)))
 
 (def people
   (template
     [:section.row
      (sidebar :people)
      [:section.col-sm-10
-      [:label.form-label.mb-3
-       [:input.form-control {:name "query"}]]]]))
+      (for [names (partition 4 (sort data/names))]
+        [:div.row.mb-3
+         (for [n names]
+           [:a.col.name
+            {:href (str "/people/" n ".html")}
+            n])])]]))
+
+(def songs
+  (template
+    [:section.row
+     (sidebar :songs)
+     [:section.col-sm-10
+      [:label.form-label.mb-3 "Search"
+       [:input#query.form-control {:type "search"}]]
+
+      (for [songs-list (partition 4 (sort distinct-songs))]
+        [:div.row.mb-3
+         (for [s songs-list]
+           [:a.col.song
+            {:href (str "/songs/" s ".html")}
+            s])])]]
+
+    (p/include-js "/js/songs.js")))
 
 (def index
   (template
@@ -66,7 +94,7 @@
         :method "GET"
         :style {:margin "auto"}}
        [:label.form-label.mb-3 "Search"
-        [:input.form-control {:name "query"}]]]]]))
+        [:input#query.form-control {:type "search"}]]]]]))
 
 (def about
   (template
@@ -81,7 +109,7 @@
      "Code: "
      [:a {:href "https://github.com/NLCLC-CM/stats"}
       "https://github.com/NLCLC-CM/stats"]]
-    
+
     [:table.table
      [:thead
       [:tr
@@ -96,7 +124,7 @@
        [:td (count data/names)]]
       [:tr
        [:th {:scope "row"} "Songs"]
-       [:td (count (distinct (apply concat (map :entry/songs data/entries))))]]
+       [:td (count distinct-songs)]]
       [:tr
        [:th {:scope "row"} "Earliest entry"]
        [:td
@@ -110,15 +138,29 @@
          {:datetime (:entry/date (last data/entries))}
          (:entry/date (last data/entries))]]]]]))
 
-(defn- create-page [output-dir filename filedata]
-  (let [file (io/file output-dir filename)]
-    (printf "writing to %s\n" (.getName file))
-    (spit file filedata)))
+(defn- create-page
+  ([output-dir filename filedata]
+   (let [file (io/file output-dir filename)]
+     (printf "writing to %s\n" (.getName file))
+     (spit file filedata)))
+  ([output-dir filename filedata js-filename]
+   (let [src (io/file "public" "js" js-filename)
+         dest-parent (io/file output-dir "js")
+         dest (io/file output-dir "js" js-filename)]
+     (when (not (.exists dest-parent))
+       (printf "creating js directory %s\n" (.getName dest-parent))
+       (.mkdirs dest-parent))
+
+     (printf "copying to %s\n" (.getName dest))
+     (io/copy src dest)
+
+     (create-page output-dir filename filedata))))
 
 (def pages
-  (list (list "index.html" index)
-        (list "about.html" about)
-        (list "people.html" people)))
+  `(("index.html" ~index)
+    ("about.html" ~about)
+    ("people.html" ~people)
+    ("songs.html" ~songs "songs.js")))
 
 (defn -main
   ([] (println "missing destination parameter"))
