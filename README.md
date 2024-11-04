@@ -6,5 +6,7 @@ $ clj -M:build _out/
 $ # Test things (you know the drill)
 $ clj -M:test
 $ # Continuous compilation (no need to include libraries when you can just pipe things)
-$ find src/ | entr clj -M:build out
+$ find src/ public/js/ | entr clj -M:build out
+$ # serve the files (with python http server)
+$ python -m http.server -d out/
 ```
