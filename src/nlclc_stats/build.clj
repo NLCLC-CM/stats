@@ -162,15 +162,23 @@
     ("people.html" ~people)
     ("songs.html" ~songs "songs.js")))
 
+(defn- create-dir [dir]
+  (when (not (.exists dir))
+    (printf "creating output directory %s\n" (.getName dir))
+    (when (not (.mkdir dir))
+      (throw (ex-info "could not create output directory" {:dirname (.getName dir)})))))
+
 (defn -main
   ([] (println "missing destination parameter"))
   ([path]
    (try
-     (let [output-dir (io/file path)]
-       (when (not (.exists output-dir))
-         (printf "creating output directory `%s`\n" (.getName output-dir))
-         (when (not (.mkdir output-dir))
-           (throw (ex-info "could not create output directory" {:dirname (.getName output-dir)}))))
+     (let [output-dir (io/file path)
+           people-dir (io/file output-dir "people")
+           songs-dir (io/file output-dir "songs")]
+
+       (create-dir output-dir)
+       (create-dir people-dir)
+       (create-dir songs-dir)
 
        (doseq [page-data pages]
          (apply create-page output-dir page-data)))
