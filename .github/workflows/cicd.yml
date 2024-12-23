@@ -13,15 +13,25 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
-          key: shadow-cljs
-          path: .shadow-cljs
-      - uses: actions/setup-node@v4
-      - run: npm ci
-      - run: npm run release
-      - run: npm test
+          key: out
+          path: out
+      - uses: actions/setup-clojure@13
+        with:
+          cli: latest
+      - uses: actions/cache@v4
+        with:
+          key: cljdeps-${{ hashFiles('deps.edn') }}
+          path: |
+            ~/.m2/repository
+            ~/.gitlibs
+            ~/.deps.clj
+      - name: Test
+        run: clj -M:test
+      - name: Build
+        run: clj -M:build out
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public/
+          path: out/
 
   deploy:
     needs: build
