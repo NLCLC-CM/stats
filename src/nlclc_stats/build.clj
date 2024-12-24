@@ -84,6 +84,10 @@
 
     (p/include-js "/js/songs.js")))
 
+(defn entry [e]
+  [:div.entry
+   "hello world"])
+
 (def index
   (template
     [:section.row
@@ -94,7 +98,11 @@
         :method "GET"
         :style {:margin "auto"}}
        [:label.form-label.mb-3 "Search"
-        [:input#query.form-control {:type "search"}]]]]]))
+        [:input#query.form-control {:type "search"}]]]
+      
+      [:div#entries
+       (for [e data/entries]
+         (entry e))]]]))
 
 (def about
   (template
