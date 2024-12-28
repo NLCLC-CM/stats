@@ -84,9 +84,31 @@
 
     (p/include-js "/js/songs.js")))
 
-(defn entry [e]
+(defn entry-role [role assoc-ppl]
+  [:li
+   [:span.role (name role)]
+   [:span.people
+    (for [person assoc-ppl]
+      [:span.person person])]])
+
+(defn entry-people [people]
+  (let [people (sort first (into [] people))]
+    [:ul.entry-people
+     (for [[role associated-ppl] people]
+       (entry-role role associated-ppl))]))
+
+(defn entry-songs [songs]
+  [:ul.entry-songs
+   (for [song songs]
+     [:li song])])
+
+(defn entry [{:entry/keys [people date songs lecture-name]}]
   [:div.entry
-   "hello world"])
+   [:time {:datetime date} date]
+   (entry-people people)
+   (entry-songs songs)
+   [:p.lecture-name
+    lecture-name]])
 
 (def index
   (template
