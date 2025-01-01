@@ -29,6 +29,8 @@ jobs:
         run: clj -M:test
       - name: Build
         run: clj -M:build out
+      - name: Copy public files
+        run: cp -r public/* out/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out/

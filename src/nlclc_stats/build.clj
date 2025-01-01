@@ -24,9 +24,9 @@
 
 (defn- sidebar [active-tab]
   [:ul.nav.flex-column.nav-pills.col-sm-2
-   (sidebar-tab active-tab :people)
-   (sidebar-tab active-tab :songs)
-   (sidebar-tab active-tab :history "index.html")])
+   (sidebar-tab active-tab :people "/people/")
+   (sidebar-tab active-tab :songs "/songs/")
+   (sidebar-tab active-tab :history "/")])
 
 (defn- template [& content]
   (p/html5
@@ -68,7 +68,9 @@
          (for [n names]
            [:a.col-3.name.mb-3
             {:href (str "/people/" n ".html")}
-            n])])]]))
+            n])])]]
+
+    [:script {:type "module" :src "/js/people.mjs"}]))
 
 (def songs
   (template
@@ -85,7 +87,7 @@
             {:href (str "/songs/" s ".html")}
             s])])]]
 
-    (p/include-js "/js/songs.js")))
+    [:script {:type "module" :src "/js/songs.mjs"}]))
 
 (defn entry-role [role assoc-ppl]
   [:li
@@ -173,27 +175,16 @@
 
 (defn- create-page
   ([output-dir filename filedata]
-   (let [file (io/file output-dir filename)]
-     (printf "writing to %s\n" (.getName file))
-     (spit file filedata)))
-  ([output-dir filename filedata js-filename]
-   (let [src (io/file "public" "js" js-filename)
-         dest-parent (io/file output-dir "js")
-         dest (io/file output-dir "js" js-filename)]
-     (when (not (.exists dest-parent))
-       (printf "creating js directory %s\n" (.getName dest-parent))
-       (.mkdirs dest-parent))
-
-     (printf "copying to %s\n" (.getName dest))
-     (io/copy src dest)
-
-     (create-page output-dir filename filedata))))
+   (let [file (apply io/file output-dir filename)
+         display-name (subs (.getAbsolutePath file) (count (.getAbsolutePath output-dir)))]
+     (printf "writing to %s\n" display-name)
+     (spit file filedata))))
 
 (def pages
-  `(("index.html" ~index)
-    ("about.html" ~about)
-    ("people.html" ~people)
-    ("songs.html" ~songs "songs.js")))
+  `((["index.html"] ~index)
+    (["about.html"] ~about)
+    (["people" "index.html"] ~people)
+    (["songs" "index.html"] ~songs)))
 
 (defn- create-dir [dir]
   (when (not (.exists dir))
