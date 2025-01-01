@@ -9,7 +9,7 @@
    [:nav.navbar
     [:h1.navbar-brand "NLCLC Stats"]
     [:a.navbar-item
-     {:href "about.html"}
+     {:href "/about.html"}
      "About this site"]]])
 
 (defn- sidebar-tab
@@ -133,6 +133,9 @@
 
 (def about
   (template
+   [:div
+    {:style {:text-transform "none"}}
+
     [:h1 "About this site"]
     [:p "This site was created with the following goals in mind:"]
     [:ol
@@ -171,7 +174,7 @@
        [:td
         [:time
          {:datetime (:entry/date (last data/entries))}
-         (:entry/date (last data/entries))]]]]]))
+         (:entry/date (last data/entries))]]]]]]))
 
 (defn- create-page
   ([output-dir filename filedata]
