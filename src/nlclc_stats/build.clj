@@ -60,6 +60,9 @@
     [:section.row
      (sidebar :people)
      [:section.col-sm-10
+      [:label.form-label.mb-3 "Search"
+       [:input#query.form-control {:type "search"}]]
+
       (for [names (partition 4 (sort data/names))]
         [:div.row
          (for [n names]
@@ -92,7 +95,7 @@
       [:span.person person])]])
 
 (defn entry-people [people]
-  (let [people (sort first (into [] people))]
+  (let [people (sort-by first (into [] people))]
     [:ul.entry-people
      (for [[role associated-ppl] people]
        (entry-role role associated-ppl))]))
