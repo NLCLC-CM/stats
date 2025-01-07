@@ -543,7 +543,116 @@
                    "靠著祢寶血"
                    "最美好盡力愛祢"
                    "撒種者的愛"]
-     :entry/lecture-name "邊個字最緊要"}))
+     :entry/lecture-name "邊個字最緊要"}
+    {:entry/date "2024-11-09"
+     :entry/people {:av ["Andrew"]
+                    :lead ["Ken"]
+                    :pianist ["Vivian"]
+                    :usher ["Toby"
+                            "Kovia"]}
+     :entry/songs ["祢是我神"
+                   "獻給我天上的主"
+                   "將身體獻上"]
+     :entry/lecture-name "真假信仰"}
+    {:entry/date "2024-11-16"
+     :entry/people {:av ["Cheuk"
+                         "Ivan"]
+                    :lead ["ToTo"]
+                    :vocals ["Andrew"]
+                    :pianist ["Carmen"]
+                    :drummer ["Eddie"]
+                    :usher ["Helen"
+                            "Jethro"]}
+     :entry/songs ["因主的名"
+                   "我要一生一世住在祢聖殿"
+                   "獨一拯救"
+                   "求主給這世代看見異象"]
+     :entry/lecture-name "末日的徵兆"}
+    {:entry/date "2024-11-23"
+     :entry/people {:av ["Philson"]
+                    :lead ["Gab"]
+                    :vocals ["Helen"]
+                    :pianist ["ToTo"]
+                    :usher ["April"
+                            "Gab"]}
+     :entry/songs ["我們歡迎君王降臨"
+                   "神的帳幕在人間"
+                   "獨一拯救"]
+     :entry/lecture-name "聖經對時代的挑戰"}
+    {:entry/date "2024-11-30"
+     :entry/people {:av ["Andrew"]
+                    :lead ["Adriel"]
+                    :vocals ["Liberty"]
+                    :pianist ["Cheuk"]
+                    :usher ["Tin Hei"
+                            "Cindy"]}
+     :entry/songs ["以馬內利，懇求降臨"
+                   "求祢以真理和愛引導我"
+                   "信心的等待"
+                   "獻上今天"]
+     :entry/lecture-name "儆醒候主臨"}
+    {:entry/date "2024-12-07"
+     :entry/people {:av ["Gab"]
+                    :lead ["Philson"]
+                    :vocals ["Cindy"]
+                    :pianist ["Eddie"]
+                    :drummer ["Kiki"]
+                    :usher ["Jethro"
+                            "Kovia"]}
+     :entry/songs ["再次將我更新"
+                   "明明我原不可愛"
+                   "祢坐著為王"
+                   "世上最好的愛"]
+     :entry/lecture-name "愛與喜樂的禱告"}
+    {:entry/date "2024-12-14"
+     :entry/people {:av ["Cheuk"
+                         "Ivan"
+                         "Terry"]
+                    :lead ["ToTo"]
+                    :vocals ["Andrew"]
+                    :pianist ["Devin"]
+                    :usher ["Gab"
+                            "Helen"]}
+     :entry/songs ["齊來崇拜"
+                   "普世歡騰"
+                   "唯有主基督"
+                   "真實的悔改"]
+     :entry/lecture-name "將臨期: 我們該作甚麼呢?"}
+    {:entry/date "2024-12-21"
+     :entry/people {:av ["Philson"
+                         "Terry"]
+                    :lead ["Helen"]
+                    :vocals ["Gab"]
+                    :pianist ["Jethro"]
+                    :usher ["April"
+                            "Toby"]}
+     :entry/songs ["全地至高是我主"
+                   "平安的約"
+                   "是為了愛"]
+     :entry/lecture-name "成爲義的奴僕"}
+    {:entry/date "2024-12-25"
+     :entry/people {:av ["Philson"
+                         "Ivan"
+                         "Cheuk"]
+                    :lead ["Adriel"]
+                    :vocals ["Liberty"]
+                    :pianist ["Eddie"]
+                    :guitarist ["Toby"]}
+     :entry/songs ["齊來，宗主信徒"
+                   "到山嶺上去傳揚"
+                   "我們是耶穌降生的理由"]
+     :entry/lecture-name "不一樣的禮物"}
+    {:entry/date "2024-12-28"
+     :entry/people {:av ["Philson"]
+                    :lead ["Martin"]
+                    :vocals ["Esther"]
+                    :pianist ["Dorothy"]
+                    :usher ["YauYau"
+                            "Toby"]}
+     :entry/songs ["祢是王"
+                   "至高尊貴的祢"
+                   "憂傷痛悔的靈"]
+     :entry/lecture-name "尋、尋、尋"}))
 
 (def assignments
   (concat q1 q2 q3 q4))

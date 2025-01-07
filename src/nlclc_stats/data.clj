@@ -3,7 +3,8 @@
             [nlclc-stats.data.year2021]
             [nlclc-stats.data.year2022]
             [nlclc-stats.data.year2023]
-            [nlclc-stats.data.year2024]))
+            [nlclc-stats.data.year2024]
+            [nlclc-stats.data.year2025]))
 
 (def names
   #{
@@ -14,6 +15,7 @@
     "Arthur"
     "Bertha"
     "Billy Sir"
+    "Carmen"
     "Cheuk"
     "Cindy"
     "Dave"
@@ -90,7 +92,8 @@
     nlclc-stats.data.year2021/assignments
     nlclc-stats.data.year2022/assignments
     nlclc-stats.data.year2023/assignments
-    nlclc-stats.data.year2024/assignments))
+    nlclc-stats.data.year2024/assignments
+    nlclc-stats.data.year2025/assignments))
 
 (def ^:const top-songs-by-year
   (map
