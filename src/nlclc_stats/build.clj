@@ -107,29 +107,56 @@
    (for [song songs]
      [:li song])])
 
+(def earliest-year
+  (-> data/entries
+      first
+      :entry/date
+      (subs 0 4)))
+
+(def latest-year
+  (-> data/entries
+      last
+      :entry/date
+      (subs 0 4)))
+
 (defn entry [{:entry/keys [people date songs lecture-name]}]
-  [:div.entry
-   [:time {:datetime date} date]
-   (entry-people people)
-   (entry-songs songs)
-   [:p.lecture-name
-    lecture-name]])
+  (let [year (subs date 0 4)
+        month (subs date 5 7)
+        day (subs date 8)]
+    [:div.entry.p-2
+     [:time {:datetime date} (str month "/" day)]
+     ; (entry-people people)
+     ; (entry-songs songs)
+     [:p.lecture-name
+      lecture-name]]))
 
 (def index
-  (template
-    [:section.row
-     (sidebar :history)
-     [:section.col-sm-10
-      [:form
-       {:action "history"
-        :method "GET"
-        :style {:margin "auto"}}
-       [:label.form-label.mb-3 "Search"
-        [:input#query.form-control {:type "search"}]]]
-      
-      [:div#entries
-       (for [e data/entries]
-         (entry e))]]]))
+  (let [part-by-year (partition-by (comp #(subs % 0 4) :entry/date) data/entries)]
+    (template
+      [:section.row
+       (sidebar :history)
+       [:section.col-sm-10
+        [:div#entries
+         (for [entries part-by-year]
+           (let [year (subs (:entry/date (first entries)) 0 4)
+                 part-by-month (partition-by (comp #(subs % 5 7) :entry/date) entries)]
+             [:div.year
+              {:data-year year
+               :style (if (= year latest-year) {} {:display "none"})}
+              [:h2
+               [:button.prev.btn.btn-outline-primary.me-3
+                (when (= year earliest-year) {:disabled true})
+                "<"]
+               year
+               [:button.next.btn.btn-outline-primary.ms-3
+                (when (= year latest-year) {:disabled true})
+                ">"]]
+              (for [month-entries part-by-month]
+                [:div.month.d-flex.flex-row
+                 (for [e month-entries]
+                   (entry e))])]))]]]
+
+      [:script {:type "module" :src "/js/index.mjs"}])))
 
 (def about
   (template
