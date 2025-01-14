@@ -27,6 +27,8 @@ jobs:
             ~/.deps.clj
       - name: Test
         run: clj -M:test
+      - name: Set up build environmental variable
+        run: echo "ROOT_FOLDER=/stats/" >> "$GITHUB_ENV"
       - name: Build
         run: clj -M:build out
       - name: Copy public files
