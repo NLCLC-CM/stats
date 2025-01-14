@@ -137,6 +137,12 @@
      [:p.lecture-name
       lecture-name]]))
 
+(def all-years
+  (as-> data/entries $
+        (map (comp #(subs % 0 4) :entry/date) $)
+        (set $)
+        (sort $)))
+
 (def index
   (let [part-by-year (partition-by (comp #(subs % 0 4) :entry/date) data/entries)]
     (template
@@ -154,7 +160,10 @@
                [:button.prev.btn.btn-outline-primary.me-3
                 (when (= year earliest-year) {:disabled true})
                 "<"]
-               year
+               [:select.year-selector
+                {:data-year year}
+                (for [y all-years]
+                  [:option (if (= year y) {:value y :selected true} {:value y}) y])]
                [:button.next.btn.btn-outline-primary.ms-3
                 (when (= year latest-year) {:disabled true})
                 ">"]]
