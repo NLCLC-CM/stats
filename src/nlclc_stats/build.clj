@@ -4,12 +4,19 @@
             [clojure.java.io :as io]
             [nlclc-stats.data :as data]))
 
+(def ROOT
+  (or (System/getenv "ROOT_FOLDER")
+      "/"))
+
+(defn ->abs-url [& parts]
+  (apply str ROOT (interpose "/" parts)))
+
 (def header
   [:header.container
    [:nav.navbar
     [:h1.navbar-brand "NLCLC Stats"]
     [:a.navbar-item
-     {:href "/about.html"}
+     {:href (->abs-url "about.html")}
      "About this site"]]])
 
 (defn- sidebar-tab
@@ -24,9 +31,9 @@
 
 (defn- sidebar [active-tab]
   [:ul.nav.flex-column.nav-pills.col-sm-2
-   (sidebar-tab active-tab :people "/people/")
-   (sidebar-tab active-tab :songs "/songs/")
-   (sidebar-tab active-tab :history "/")])
+   (sidebar-tab active-tab :people (->abs-url "people/"))
+   (sidebar-tab active-tab :songs (->abs-url "songs/"))
+   (sidebar-tab active-tab :history (->abs-url ""))])
 
 (defn- template [& content]
   (p/html5
@@ -67,10 +74,10 @@
         [:div.row
          (for [n names]
            [:a.col-3.name.mb-3
-            {:href (str "/people/" n ".html")}
+            {:href (->abs-url (str "people/" n ".html"))}
             n])])]]
 
-    [:script {:type "module" :src "/js/people.mjs"}]))
+    [:script {:type "module" :src (->abs-url "js" "people.mjs")}]))
 
 (def songs
   (template
@@ -87,7 +94,7 @@
             {:href (str "/songs/" s ".html")}
             s])])]]
 
-    [:script {:type "module" :src "/js/songs.mjs"}]))
+    [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
 
 (defn entry-role [role assoc-ppl]
   [:li
@@ -156,7 +163,7 @@
                  (for [e month-entries]
                    (entry e))])]))]]]
 
-      [:script {:type "module" :src "/js/index.mjs"}])))
+      [:script {:type "module" :src (->abs-url "js" "index.mjs")}])))
 
 (def about
   (template
