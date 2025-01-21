@@ -97,7 +97,7 @@
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
 
 (defn entry-role [role assoc-ppl]
-  [:li
+  [:li.entry-role
    [:span.role (name role)]
    [:span.people
     (for [person assoc-ppl]
@@ -106,13 +106,15 @@
 (defn entry-people [people]
   (let [people (sort-by first (into [] people))]
     [:ul.entry-people
+     {:style {:display "none"}}
      (for [[role associated-ppl] people]
        (entry-role role associated-ppl))]))
 
 (defn entry-songs [songs]
   [:ul.entry-songs
+   {:style {:display "none"}}
    (for [song songs]
-     [:li song])])
+     [:li.song song])])
 
 (def earliest-year
   (-> data/entries
@@ -132,10 +134,12 @@
         day (subs date 8)]
     [:div.entry.p-2
      [:time {:datetime date} (str month "/" day)]
-     ; (entry-people people)
-     ; (entry-songs songs)
+     (entry-people people)
+     (entry-songs songs)
      [:p.lecture-name
-      lecture-name]]))
+      lecture-name]
+     [:button.details
+      "Details"]]))
 
 (def all-years
   (as-> data/entries $
@@ -172,6 +176,28 @@
                  (for [e month-entries]
                    (entry e))])]))]]]
 
+      [:dialog#details-box
+       {:style {:min-width "30rem"}}
+       [:form
+        {:method "dialog"}
+        [:input {:type "submit" :value "Close"}]]
+       [:table.table.table-hover
+        [:tbody
+         {:style {:text-transform "none"}}
+         [:tr
+          [:td "Date"]
+          [:td [:time#selected-time ""]]]
+         [:tr
+          [:td "Sermon title"]
+          [:td#selected-sermon-title ""]]
+         [:tr
+          [:td "Participants"]
+          [:td#selected-participants ""]]
+         [:tr
+          [:td "Songs"]
+          [:td#selected-songs.d-flex.flex-column ""]]]]]
+
+      [:link {:href (->abs-url "css" "index.css") :rel "stylesheet"}]
       [:script {:type "module" :src (->abs-url "js" "index.mjs")}])))
 
 (def about
