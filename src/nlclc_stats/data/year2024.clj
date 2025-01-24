@@ -541,7 +541,7 @@
                             "Jethro"]}
      :entry/songs ["建殿者的呼聲"
                    "靠著祢寶血"
-                   "最美好盡力愛祢"
+                   "最美好盡力愛你"
                    "撒種者的愛"]
      :entry/lecture-name "邊個字最緊要"}
     {:entry/date "2024-11-09"
@@ -550,7 +550,7 @@
                     :pianist ["Vivian"]
                     :usher ["Toby"
                             "Kovia"]}
-     :entry/songs ["祢是我神"
+     :entry/songs ["你是我神"
                    "獻給我天上的主"
                    "將身體獻上"]
      :entry/lecture-name "真假信仰"}

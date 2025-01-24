@@ -206,7 +206,7 @@
                     :av ["Philson"]
                     :pianist ["Eddie"]}
      :entry/songs ["駕著雲彩"
-                   "祢是我神"
+                   "你是我神"
                    "禱告的大軍"
                    "只要有祢在我左右"
                    "站於天地之間"]
@@ -404,7 +404,7 @@
                     :pianist ["Eddie"]}
      :entry/songs ["The Heart of Worship"
                    "永約之誓"
-                   "祢是我神"
+                   "你是我神"
                    "住在祢𥚃面"]
      :entry/lecture-name "能結果子的民"}    ; missing oct 14 entry
     {:entry/date "2023-10-21"
@@ -460,7 +460,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["我們愛戴的王"
                    "求主給這代看見異象"
-                   "最美好...盡力愛祢"
+                   "最美好盡力愛你"
                    "迷羊"]
      :entry/lecture-name "審判的對象，是他也是你和我"}
     {:entry/date "2023-12-02"
@@ -474,7 +474,7 @@
                    "是為了愛"
                    "獨一拯救"
                    "帶我進入你的同在"
-                   "最美好...盡力愛祢"]
+                   "最美好盡力愛你"]
      :entry/lecture-name "與主共享團契"}
     {:entry/date "2023-12-09"
      :entry/people {:lead ["Philson"]
