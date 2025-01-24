@@ -9,6 +9,82 @@
   (or (System/getenv "ROOT_FOLDER")
       "/"))
 
+(defn make-stats
+  []
+  (defn- update-people-stats
+    [people-stats date entry-people songs]
+    people-stats)
+; (update-song-stats {:people {"Cheuk" 2} :songs {"good song" 12} :dates #{"2025-02-01"}} "2025-01-01" ["Phils" "Cheuk"] ["abc-song" "good song"])
+
+  (defn- update-song-stats
+    [song-stats date entry-people songs]
+    (defn- -inc
+      [x]
+      (if (nil? x)
+        1
+        (inc x)))
+
+    (defn- -person
+      [m person]
+      (update-in m [:people person] -inc))
+
+    (defn- -people
+      [m people]
+      (loop [m m
+             [person & rst :as all] people]
+        (if (empty? all)
+          m
+          (recur (-person m person)
+                 rst))))
+
+    (defn- -song
+      [m song]
+      (update-in m [:songs song] -inc))
+
+    (defn- -songs
+      [m songs]
+      (loop [m m
+             [song & rst :as all] songs]
+        (if (empty? all)
+          m
+          (recur (-song m song)
+                 rst))))
+
+    (defn- f
+      [m songs]
+      (if (nil? m)
+        {:people (into {} (map #(vector % 1) entry-people))
+         :songs (into {} (map #(vector % 1) songs))
+         :dates #{date}}
+        (-> m
+            (update :dates conj date)
+            (-people entry-people)
+            (-songs songs))))
+
+    (loop [s song-stats
+           [song & rst :as all] songs]
+      (if (empty? all)
+        s
+        (recur (update s song f (remove (partial = song) songs))
+               rst))))
+
+  (defn- update-stats
+    [{:keys [people-stats song-stats]} {:entry/keys [people songs date] :as entry}]
+    (let [entry-people (-> people (dissoc :av) vals flatten distinct)]
+      {:people-stats (update-people-stats people-stats date entry-people songs)
+       :song-stats (update-song-stats song-stats date entry-people songs)}))
+
+  (loop [s {:people-stats {} :song-stats {}}
+         [e & es :as rst] data/entries]
+    (if (empty? rst)
+      s
+      (recur (update-stats s e)
+             es))))
+
+(def stats (make-stats))
+(def people-stats (:people-stats stats))
+(def song-stats (:song-stats stats))
+
 (defn ->abs-url [& parts]
   (apply str ROOT (interpose "/" parts)))
 
