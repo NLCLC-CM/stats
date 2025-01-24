@@ -14,7 +14,6 @@
   (defn- update-people-stats
     [people-stats date entry-people songs]
     people-stats)
-; (update-song-stats {:people {"Cheuk" 2} :songs {"good song" 12} :dates #{"2025-02-01"}} "2025-01-01" ["Phils" "Cheuk"] ["abc-song" "good song"])
 
   (defn- update-song-stats
     [song-stats date entry-people songs]
