@@ -70,7 +70,7 @@
 
   (defn- update-stats
     [{:keys [people-stats song-stats]} {:entry/keys [people songs date] :as entry}]
-    (let [entry-people (-> people (dissoc :av) vals flatten distinct)]
+    (let [entry-people (-> people (dissoc :av) (dissoc :usher) vals flatten distinct)]
       {:people-stats (update-people-stats people-stats date entry-people songs)
        :song-stats (update-song-stats song-stats date entry-people songs)}))
 
