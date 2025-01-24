@@ -1,6 +1,7 @@
 (ns nlclc-stats.build
   (:require [hiccup2.core :as h]
             [hiccup.page :as p]
+            [clojure.tools.logging.readable :refer [info error errorf infof trace tracef]]
             [clojure.java.io :as io]
             [nlclc-stats.data :as data]))
 
@@ -249,7 +250,7 @@
   ([output-dir filename filedata]
    (let [file (apply io/file output-dir filename)
          display-name (subs (.getAbsolutePath file) (count (.getAbsolutePath output-dir)))]
-     (printf "writing to %s\n" display-name)
+     (tracef "writing to %s" display-name)
      (spit file filedata))))
 
 (def pages
@@ -260,12 +261,12 @@
 
 (defn- create-dir [dir]
   (when (not (.exists dir))
-    (printf "creating output directory %s\n" (.getName dir))
+    (tracef "creating output directory %s" (.getName dir))
     (when (not (.mkdir dir))
       (throw (ex-info "could not create output directory" {:dirname (.getName dir)})))))
 
 (defn -main
-  ([] (println "missing destination parameter"))
+  ([] (error "missing destination parameter"))
   ([path]
    (try
      (let [output-dir (io/file path)
@@ -279,4 +280,4 @@
        (doseq [page-data pages]
          (apply create-page output-dir page-data)))
      (catch Exception e
-       (printf "exception: %s with data %s\n" e (ex-data e))))))
+       (error e "something went wrong??")))))
