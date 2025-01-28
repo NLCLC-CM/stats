@@ -11,44 +11,60 @@
 
 (defn make-stats
   []
+  (defn- -inc
+    [x]
+    (if (nil? x)
+      1
+      (inc x)))
+
+  (defn- -person
+    [m person]
+    (update-in m [:people person] -inc))
+
+  (defn- -people
+    [m people]
+    (loop [m m
+           [person & rst :as all] people]
+      (if (empty? all)
+        m
+        (recur (-person m person)
+               rst))))
+
+  (defn- -song
+    [m song]
+    (update-in m [:songs song] -inc))
+
+  (defn- -songs
+    [m songs]
+    (loop [m m
+           [song & rst :as all] songs]
+      (if (empty? all)
+        m
+        (recur (-song m song)
+               rst))))
+
   (defn- update-people-stats
     [people-stats date entry-people songs]
-    people-stats)
+    (defn- f
+      [m people]
+      (if (nil? m)
+        {:people (into {} (map #(vector % 1) people))
+         :songs (into {} (map #(vector % 1) songs))
+         :dates #{date}}
+        (-> m
+            (update :dates conj date)
+            (-people people)
+            (-songs songs))))
+
+    (loop [s people-stats
+           [person & rst :as all] entry-people]
+      (if (empty? all)
+        s
+        (recur (update s person f (remove (partial = person) entry-people))
+               rst))))
 
   (defn- update-song-stats
     [song-stats date entry-people songs]
-    (defn- -inc
-      [x]
-      (if (nil? x)
-        1
-        (inc x)))
-
-    (defn- -person
-      [m person]
-      (update-in m [:people person] -inc))
-
-    (defn- -people
-      [m people]
-      (loop [m m
-             [person & rst :as all] people]
-        (if (empty? all)
-          m
-          (recur (-person m person)
-                 rst))))
-
-    (defn- -song
-      [m song]
-      (update-in m [:songs song] -inc))
-
-    (defn- -songs
-      [m songs]
-      (loop [m m
-             [song & rst :as all] songs]
-        (if (empty? all)
-          m
-          (recur (-song m song)
-                 rst))))
-
     (defn- f
       [m songs]
       (if (nil? m)
@@ -171,6 +187,54 @@
             s])])]]
 
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
+
+(defn indiv-element-tmpl
+  [n {:keys [people songs dates]}]
+  (template
+    [:section.row
+     (sidebar :song)
+
+     [:section.col-sm-10
+      [:h3 n]
+      [:section.row
+       [:section.col-sm-4
+        [:h5 "Appearances" " (" (count dates) ")"]
+        [:ul
+         (let [dates (reverse (sort dates))]
+           (for [date dates]
+             [:li [:time {:datetime date} date]]))]]
+
+       [:section.col-sm-4
+        [:h5 "Song pairings"]
+        [:table.table
+         {:style {:text-transform "none"}}
+         [:thead
+          [:tr
+           [:th "Song name"]
+           [:th "Occurances"]]]
+
+         [:tbody
+          (let [pairings (reverse (sort-by second (into [] songs)))]
+            (for [[song freq] pairings]
+              [:tr
+               [:td [:a {:href (->abs-url "songs" (str song ".html"))} song]]
+               [:td freq]]))]]]
+
+       [:section.col-sm-4
+        [:h5 "People pairings"]
+        [:table.table
+         {:style {:text-transform "none"}}
+         [:thead
+          [:tr
+           [:th "Person"]
+           [:th "Occurances"]]]
+
+         [:tbody
+          (let [pairings (reverse (sort-by second (into [] people)))]
+            (for [[person freq] pairings]
+              [:tr
+               [:td [:a {:href (->abs-url "people" (str person ".html"))} person]]
+               [:td freq]]))]]]]]]))
 
 (defn entry-role [role assoc-ppl]
   [:li.entry-role
@@ -344,6 +408,8 @@
   ([] (error "missing destination parameter"))
   ([path]
    (try
+     (info "starting write")
+
      (let [output-dir (io/file path)
            people-dir (io/file output-dir "people")
            songs-dir (io/file output-dir "songs")]
@@ -353,6 +419,18 @@
        (create-dir songs-dir)
 
        (doseq [page-data pages]
-         (apply create-page output-dir page-data)))
+         (apply create-page output-dir page-data))
+
+       (doseq [[person stats] (into [] people-stats)]
+         (let [file (io/file people-dir (str person ".html"))]
+           (tracef "writing person to file %s" (.getName file))
+           (spit file (indiv-element-tmpl person stats))))
+
+       (doseq [[song-name stats] (into [] song-stats)]
+         (let [file (io/file songs-dir (str song-name ".html"))]
+           (tracef "writing song to file %s" (.getName file))
+           (spit file (indiv-element-tmpl song-name stats)))))
+
+     (info "finished write")
      (catch Exception e
        (error e "something went wrong??")))))
