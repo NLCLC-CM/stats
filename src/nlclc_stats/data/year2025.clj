@@ -54,7 +54,7 @@
                                    "Ryan"]
                               :lead ["Philson"]
                               :vocals ["Kiki"]
-                              :pianist []}
+                              :pianist ["Eddie"]}
                :entry/songs ["祢是君王"
                              "大祭司"
                              "唯有主基督"
