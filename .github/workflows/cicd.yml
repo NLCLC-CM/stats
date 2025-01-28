@@ -15,9 +15,9 @@ jobs:
         with:
           key: out
           path: out
-      - uses: actions/setup-clojure@13
-        with:
-          cli: latest
+      # - uses: actions/setup-clojure@13
+      #   with:
+      #     cli: latest
       - uses: actions/cache@v4
         with:
           key: cljdeps-${{ hashFiles('deps.edn') }}
