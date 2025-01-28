@@ -90,8 +90,7 @@ function toSongsElements(songs) {
 
     for (const song of songs) {
         const songElement = document.createElement('a');
-        const href = new URL(`/songs/${song}.html`, baseUrl);
-        songElement.href = href.toString();
+        songElement.href = `${baseUrl}songs/${song}.html`;
         songElement.textContent = song;
         elements.push(songElement);
     }
@@ -130,10 +129,9 @@ function toRolePeopleElements(people) {
 
     for (const person of people) {
         const link = document.createElement('a');
-        const href = new URL(`/people/${person}.html`, baseUrl);
         link.classList.add('row');
         link.textContent = person;
-        link.href = href;
+        link.href = `${baseUrl}people/${person}.html`;
         elements.push(link);
     }
 

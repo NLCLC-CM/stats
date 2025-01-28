@@ -166,7 +166,7 @@
         [:div.row
          (for [n names]
            [:a.col-3.name.mb-3
-            {:href (->abs-url (str "people/" n ".html"))}
+            {:href (->abs-url "people" (str n ".html"))}
             n])])]]
 
     [:script {:type "module" :src (->abs-url "js" "people.mjs")}]))
@@ -183,7 +183,7 @@
         [:div.row
          (for [s songs-list]
            [:a.col-3.song.mb-3
-            {:href (str "/songs/" s ".html")}
+            {:href (->abs-url "songs" (str s ".html"))}
             s])])]]
 
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
