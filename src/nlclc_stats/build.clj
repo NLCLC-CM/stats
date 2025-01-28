@@ -160,7 +160,7 @@
      (sidebar :people)
      [:section.col-sm-10
       [:label.form-label.mb-3 "Search"
-       [:input#query.form-control {:type "search"}]]
+       [:input#query.form-control {:type "search" :autofocus true}]]
 
       (for [names (partition 4 (sort data/names))]
         [:div.row
@@ -177,7 +177,7 @@
      (sidebar :songs)
      [:section.col-sm-10
       [:label.form-label.mb-3 "Search"
-       [:input#query.form-control {:type "search"}]]
+       [:input#query.form-control {:type "search" :autofocus true}]]
 
       (for [songs-list (partition 4 (sort distinct-songs))]
         [:div.row
