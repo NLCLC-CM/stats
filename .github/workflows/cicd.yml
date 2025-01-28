@@ -27,10 +27,10 @@ jobs:
             ~/.deps.clj
       - name: Test
         run: clojure -M:test
-      - name: Set up build environmental variable
-        run: echo "ROOT_FOLDER=/stats/" >> "$GITHUB_ENV"
       - name: Build
         run: clojure -M:build out
+        env:
+          ROOT_FOLDER: /stats/
       - name: Copy public files
         run: cp -r public/* out/
       - uses: actions/upload-pages-artifact@v3

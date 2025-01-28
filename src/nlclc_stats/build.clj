@@ -408,7 +408,7 @@
   ([] (error "missing destination parameter"))
   ([path]
    (try
-     (info "starting write")
+     (infof "starting write with ROOT = %s" ROOT)
 
      (let [output-dir (io/file path)
            people-dir (io/file output-dir "people")
