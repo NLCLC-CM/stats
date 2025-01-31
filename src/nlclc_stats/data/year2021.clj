@@ -24,7 +24,7 @@
      :entry/songs ["奔跑不放棄"
                    "神啊你在哪兒"
                    "至死忠心"
-                   "深深愛祢"]
+                   "深深愛你"]
      :entry/lecture-name "The Paradox of Love Commandment"}
     {:entry/date "2021-10-30"
      :entry/people {:lead ["YauYau"]
@@ -68,10 +68,10 @@
                     :vocals ["Ken"
                              "Tin Hei"]
                     :pianist ["Eddie"]}
-     :entry/songs ["祢是王"
+     :entry/songs ["你是王"
                    "高舉基督為王"
                    "我們歡迎君王降臨"
-                   "祢是君王"]
+                   "你是君王"]
      :entry/lecture-name "迎候我王"}
     {:entry/date "2021-11-27"
      :entry/people {:lead ["YauYau"]
@@ -124,7 +124,7 @@
                     :drummer ["Kiki"]
                     :pianist ["Eddie"
                               "Cheuk"]}
-     :entry/songs ["耶穌我感謝祢"
+     :entry/songs ["耶穌我感謝你"
                    "Christmas Is a Time to love"
                    "King of Kings"
                    "平安是你"

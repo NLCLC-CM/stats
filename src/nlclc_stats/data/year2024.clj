@@ -26,7 +26,7 @@
                         :vocals ["Kiki"]
                         :pianist ["Dorothy"]
                         :av ["Andrew"]}
-         :entry/songs ["盼望在乎祢"
+         :entry/songs ["盼望在乎你"
                        "避難所"
                        "世界最美的聲音"
                        "立志擺上"]
@@ -42,7 +42,7 @@
          :entry/songs ["真實的悔改"
                        "獻給我天上的主"
                        "讓我高飛"
-                       "我的生命獻給祢"]
+                       "我的生命獻給你"]
          :entry/lecture-name "作上帝話語的忠僕"}
         {:entry/date "2024-02-03"
          :entry/people {:lead ["Sinead"]
@@ -52,7 +52,7 @@
                         :av ["Philson"]
                         :usher ["Gab"
                                 "Helen"]}
-         :entry/songs ["無人能像祢"
+         :entry/songs ["無人能像你"
                        "Ever be"
                        "投靠"
                        "十字架"]
@@ -68,7 +68,7 @@
                                 "Cindy"]}
          :entry/songs ["10,000 Reasons"
                        "逾越"
-                       "主祢真偉大 - How Awesome You Are"
+                       "主你真偉大 - How Awesome You Are"
                        "寶貴恩典"]
          :entry/lecture-name "天國有幾好?"}
         {:entry/date "2024-02-17"
@@ -82,7 +82,7 @@
          :entry/songs ["耶和華是我的倚靠"
                        "投靠"
                        "垂絲柳樹下"
-                       "有祢同行"]
+                       "有你同行"]
          :entry/lecture-name "2024年的新挑戰"}
         {:entry/date "2024-02-24"
          :entry/people {:lead ["Gab"]
@@ -105,7 +105,7 @@
                         :usher ["Toby"
                                 "Kovia"]}
          :entry/songs ["再次將我更新"
-                       "祢成就救恩"
+                       "你成就救恩"
                        "我要一生一世住在你聖殿"
                        "煉淨我"]
          :entry/lecture-name "爲著主的殿而焦急"}
@@ -162,7 +162,7 @@
          :entry/songs ["得著自由"
                        "再次將我更新"
                        "平安"
-                       "耶穌我感謝祢"]
+                       "耶穌我感謝你"]
          :entry/lecture-name "不要疑惑，總要信！"}
         {:entry/date "2024-04-13"
          :entry/people {:lead ["Philson"]
@@ -202,7 +202,7 @@
                              "Gab"]}
          :entry/songs ["渴慕你(頌恩旋律)"
                        "衷心的敬拜"
-                       "祢是葡萄樹我是枝子"
+                       "你是葡萄樹我是枝子"
                        "主喜悅的事"]
          :entry/lecture-name "多結果子榮耀上帝"}
         {:entry/date "2024-05-04"
@@ -212,10 +212,10 @@
                         :usher ["Matthew"
                                 "April"]
                         :av ["Andrew"]}
-         :entry/songs ["萬有都歸祢"
+         :entry/songs ["萬有都歸你"
                        "神恩典夠我用"
                        "如此認識我"
-                       "我的生命獻給祢"]
+                       "我的生命獻給你"]
          :entry/lecture-name "最佳選友"}
         {:entry/date "2024-05-11"
          :entry/people {:lead ["ToTo"]
@@ -227,7 +227,7 @@
                              "Gab"]}
          :entry/songs ["高唱入雲"
                        "遮蓋我"
-                       "求祢以真理和愛引導我方向"
+                       "求你以真理和愛引導我方向"
                        "如飛的一生"]
          :entry/lecture-name "在世卻不屬世"}
         {:entry/date "2024-05-18"
@@ -252,7 +252,7 @@
                         :av ["Cheuk"
                              "Joyce"]}
          :entry/songs ["讚美三一上帝"
-                       "祢坐著為王"
+                       "你坐著為王"
                        "為何揀選我"]
          :entry/lecture-name "全新的身分"}
         {:entry/date "2024-06-01"
@@ -263,7 +263,7 @@
                                 "Helen"]
                         :av ["Cheuk"
                              "Gab"]}
-         :entry/songs ["尋求祢"
+         :entry/songs ["尋求你"
                        "受造奇妙可畏"
                        "寶貝"
                        "最美好的仗"]
@@ -278,7 +278,7 @@
                                 "April"]
                         :av ["Philson"]}
          :entry/songs ["神坐着爲王"
-                       "祢許可"
+                       "你許可"
                        "奔跑不放棄"
                        "勇敢走出去"]
          :entry/lecture-name "我們都是一家人"}
@@ -326,7 +326,7 @@
          :entry/songs ["永活真神"
                        "How Great Is Our God"
                        "神恩典夠我用"
-                       "因祢堅持"]
+                       "因你堅持"]
          :entry/lecture-name "請差遣我"}
         {:entry/date "2024-07-13"
          :entry/people {:lead ["Philson"]
@@ -337,7 +337,7 @@
                         :av ["Cheuk"
                              "Joyce"]}
          :entry/songs ["我們歡迎君王降臨"
-                       "祢配得"
+                       "你配得"
                        "聖潔主"
                        "為何揀選我"]
          :entry/lecture-name "屬靈的福分"}
@@ -347,7 +347,7 @@
                         :usher ["Gab"
                                 "Helen"]
                         :av ["Philson"]}
-         :entry/songs ["尋求祢"
+         :entry/songs ["尋求你"
                        "十字架"
                        "求主給這世代看見異象"
                        "求充滿這地"]
@@ -357,7 +357,7 @@
                         :usher ["Tin Hei"
                                 "April"]}
          :entry/songs ["榮耀上帝"
-                       "神祢信實奇妙"
+                       "神你信實奇妙"
                        "諸天頌讚"
                        "神同在"]
          :entry/lecture-name "要知道我是神"}
@@ -385,7 +385,7 @@
          :entry/songs ["全地至高是我主"
                        "信心的宣告"
                        "詩23"
-                       "我向祢禱告"
+                       "我向你禱告"
                        "寶貝"]
          :entry/lecture-name "信的人有永生"}
         {:entry/date "2024-08-17"
@@ -411,7 +411,7 @@
          :entry/songs ["我的千古保障"
                        "幽谷中的盼望"
                        "在呼召我之地"
-                       "主祢知道"]
+                       "主你知道"]
          :entry/lecture-name "大工程與小工人"}
         {:entry/date "2024-08-31"
          :entry/people {:av ["Cheuk"]
@@ -420,7 +420,7 @@
                         :pianist ["ToTo"]
                         :usher ["Gab"
                                 "Toby"]}
-         :entry/songs ["耶穌基督祢是王"
+         :entry/songs ["耶穌基督你是王"
                        "我們的神"
                        "保守我心"
                        "遮蓋我"]
@@ -436,7 +436,7 @@
                                 "Helen"]}
          :entry/songs ["無言的讚頌"
                        "唯有耶穌"
-                       "祢是配得"
+                       "你是配得"
                        "永約的神"
                        "豐盛的應許"]
          :entry/lecture-name "有行為的信心"}
@@ -472,7 +472,7 @@
                         :pianist ["Eddie"]
                         :usher ["Helen"
                                 "April"]}
-         :entry/songs ["祢是我唯一的依靠"
+         :entry/songs ["你是我唯一的依靠"
                        "全信靠上帝"
                        "真實的悔改"
                        "世界最美的聲音"]
@@ -487,7 +487,7 @@
                     :pianist ["Adriel"]
                     :usher ["Gab"
                             "Tin Hei"]}
-     :entry/songs ["因為祢先愛我們"
+     :entry/songs ["因為你先愛我們"
                    "每一口呼吸"
                    "You are my all in all"
                    "世界最美的聲音"
@@ -503,9 +503,9 @@
                             "Helen"]}
      :entry/songs ["Great are you lord"
                    "每一口呼吸"
-                   "祢許可"
+                   "你許可"
                    "仍能讚美"
-                   "一生不會捨棄祢"]
+                   "一生不會捨棄你"]
      :entry/lecture-name "只差一件事"}
     {:entry/date "2024-10-19"
      :entry/people {:av ["Cheuk"]
@@ -516,7 +516,7 @@
                             "Tin Hei"]}
      :entry/songs ["大祭司"
                    "永活真神"
-                   "祢是君王"
+                   "你是君王"
                    "君尊義僕"]
      :entry/lecture-name "你在那裡?"}
     {:entry/date "2024-10-26"
@@ -527,7 +527,7 @@
                     :pianist ["ToTo"]
                     :usher ["Cindy"
                             "April"]}
-     :entry/songs ["祢是我惟一的倚靠"
+     :entry/songs ["你是我惟一的倚靠"
                    "逾越"
                    "這一生最美的祝福"
                    "世界最美的聲音"]
@@ -540,7 +540,7 @@
                     :usher ["Gab"
                             "Jethro"]}
      :entry/songs ["建殿者的呼聲"
-                   "靠著祢寶血"
+                   "靠著你寶血"
                    "最美好盡力愛你"
                    "撒種者的愛"]
      :entry/lecture-name "邊個字最緊要"}
@@ -564,7 +564,7 @@
                     :usher ["Helen"
                             "Jethro"]}
      :entry/songs ["因主的名"
-                   "我要一生一世住在祢聖殿"
+                   "我要一生一世住在你聖殿"
                    "獨一拯救"
                    "求主給這世代看見異象"]
      :entry/lecture-name "末日的徵兆"}
@@ -587,7 +587,7 @@
                     :usher ["Tin Hei"
                             "Cindy"]}
      :entry/songs ["以馬內利，懇求降臨"
-                   "求祢以真理和愛引導我"
+                   "求你以真理和愛引導我"
                    "信心的等待"
                    "獻上今天"]
      :entry/lecture-name "儆醒候主臨"}
@@ -601,7 +601,7 @@
                             "Kovia"]}
      :entry/songs ["再次將我更新"
                    "明明我原不可愛"
-                   "祢坐著為王"
+                   "你坐著為王"
                    "世上最好的愛"]
      :entry/lecture-name "愛與喜樂的禱告"}
     {:entry/date "2024-12-14"
@@ -649,8 +649,8 @@
                     :pianist ["Dorothy"]
                     :usher ["YauYau"
                             "Toby"]}
-     :entry/songs ["祢是王"
-                   "至高尊貴的祢"
+     :entry/songs ["你是王"
+                   "至高尊貴的你"
                    "憂傷痛悔的靈"]
      :entry/lecture-name "尋、尋、尋"}))
 

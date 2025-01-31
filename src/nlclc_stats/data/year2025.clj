@@ -8,9 +8,9 @@
                               :pianist ["Eddie"]
                               :usher ["Tin Hei"
                                       "Cindy"]}
-               :entry/songs ["祢成就救恩"
+               :entry/songs ["你成就救恩"
                              "一千次頌讚"
-                             "我要一生一世住在祢聖殿"
+                             "我要一生一世住在你聖殿"
                              "永約之誓"]
                :entry/lecture-name "以天父的事為念"}
               {:entry/date "2025-01-11"
@@ -22,7 +22,7 @@
                               :pianist ["Devin"]
                               :usher ["Jethro"
                                       "Kovia"]}
-               :entry/songs ["我願祢來"
+               :entry/songs ["我願你來"
                              "King of Kings"
                              "新的異象新的方向"
                              "祈求主聖靈"]
@@ -34,8 +34,8 @@
                               :pianist ["Adriel"]
                               :usher ["Toby"]}
                :entry/songs ["最美好盡力愛你"
-                             "先求祢的國"
-                             "萬有都歸祢"
+                             "先求你的國"
+                             "萬有都歸你"
                              "你是我神"]
                :entry/lecture-name "耶穌第一次顯榮耀"}
               {:entry/date "2025-01-25"
@@ -44,7 +44,7 @@
                               :lead ["Adriel"]
                               :vocals ["Liberty"]
                               :pianist ["Cheuk"]}
-               :entry/songs ["祢真偉大"
+               :entry/songs ["你真偉大"
                              "主的喜樂是我力量"
                              "恩典太美麗"
                              "同心合意"]
@@ -55,11 +55,21 @@
                               :lead ["Philson"]
                               :vocals ["Kiki"]
                               :pianist ["Eddie"]}
-               :entry/songs ["祢是君王"
+               :entry/songs ["你是君王"
                              "大祭司"
                              "唯有主基督"
                              "十架的冠冕"]
-               :entry/lecture-name "耶穌，為我們成了肉身"}))
+               :entry/lecture-name "耶穌，為我們成了肉身"}
+              {:entry/date "2025-02-08"
+               :entry/people {:av ["Philson"]
+                              :lead ["ToTo"]
+                              :vocals ["Arthur"]
+                              :pianist ["Devin"]}
+               :entry/songs ["日日夜夜"
+                             "真相"
+                             "決心跟你"
+                             "將身體獻上"]
+               :entry/lecture-name "成為得人的漁夫"}))
 
 (def q2 (list))
 

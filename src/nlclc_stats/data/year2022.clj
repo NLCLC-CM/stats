@@ -19,7 +19,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["耶和華坐著為王"
                    "神的帳幕在人間"
-                   "祢是我唯一的依靠"
+                   "你是我唯一的依靠"
                    "聽命勝於獻祭"]
      :entry/lecture-name "照亮別人生命的榮光"}
     {:entry/date "2022-03-05"
@@ -38,7 +38,7 @@
                              "Rita"]
                     :guitarist ["Steven"]
                     :pianist ["Eddie"]}
-     :entry/songs ["萬有都歸祢"
+     :entry/songs ["萬有都歸你"
                    "我要一生一世住在你聖殿"
                    "主禱文"
                    "平安的約"]
@@ -47,8 +47,8 @@
      :entry/people {:lead ["Dorothy"]
                     :vocals ["ToTo"]
                     :pianist ["Jesse"]}
-     :entry/songs ["在祢跟前"
-                   "尋求祢"
+     :entry/songs ["在你跟前"
+                   "尋求你"
                    "捨尊為我"
                    "世界最美的聲音"]
      :entry/lecture-name "驚人的父愛"}
@@ -133,7 +133,7 @@
                     :vocals ["Kiki Pau"]
                     :pianist ["Adriel"]}
      :entry/songs ["我要一生一世住在你聖殿"
-                   "全因為祢"
+                   "全因為你"
                    "詩23"]
      :entry/lecture-name "腓利的福傳人生"}
     {:entry/date "2022-05-14"
@@ -141,8 +141,8 @@
                     :vocals ["Arthur"]
                     :guitarist ["Dorothy"]
                     :pianist ["Vivian"]}
-     :entry/songs ["祢真偉大"
-                   "萬有都歸祢"
+     :entry/songs ["你真偉大"
+                   "萬有都歸你"
                    "只因愛"
                    "永遠敬拜"
                    "寶貝"]
@@ -154,7 +154,7 @@
                     :pianist ["Cheuk"]}
      :entry/songs ["永活真神"
                    "永約之誓"
-                   "祢在我身後"
+                   "你在我身後"
                    "讓祂的喜樂充滿你"]
      :entry/lecture-name "向主示愛"}
     {:entry/date "2022-05-28"
@@ -206,8 +206,8 @@
      :entry/people {:lead ["ToTo"]
                     :vocals ["Ken"]
                     :pianist ["Jack"]}
-     :entry/songs ["尋求祢"
-                   "祢許可"
+     :entry/songs ["尋求你"
+                   "你許可"
                    "平安"
                    "Be With You"]
      :entry/lecture-name "不信與小信"}
@@ -215,7 +215,7 @@
      :entry/people {:lead ["YauYau"]
                     :vocals ["Arthur"]
                     :pianist ["Dorothy"]}
-     :entry/songs ["除祢以外"
+     :entry/songs ["除你以外"
                    "歷代萬代讚頌"
                    "一生不會捨棄你"
                    "能不能"]
@@ -227,7 +227,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["The Stand"
                    "得著自由"
-                   "我要愛慕祢"
+                   "我要愛慕你"
                    "主禱文"]
      :entry/lecture-name "n/a"}
     {:entry/date "2022-07-30"
@@ -236,7 +236,7 @@
                              "Kiki"]
                     :bassist ["Cheuk"]
                     :pianist ["Eddie"]}
-     :entry/songs ["尋求祢"
+     :entry/songs ["尋求你"
                    "神是我這生供應者"
                    "一生的恩惠"]
      :entry/lecture-name "人算不如天算"}    ;; missing august 6
@@ -258,7 +258,7 @@
                     :guitarist ["Toby"]
                     :pianist ["Jack"]}
      :entry/songs ["全地至高是我主"
-                   "萬有都歸祢"
+                   "萬有都歸你"
                    "醫治我"
                    "逾越"]
      :entry/lecture-name "釋放 - 上帝的國度彰顯"}
@@ -292,7 +292,7 @@
      :entry/people {:lead ["ToTo"]
                     :vocals ["Philson"]
                     :pianist ["Eddie"]}
-     :entry/songs ["祢是配得"
+     :entry/songs ["你是配得"
                    "求主給這世代看見異象"
                    "Turn your eyes upon Jesus"
                    "信心的等待"]
@@ -328,7 +328,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["Majesty"
                    "I Surrender"
-                   "尋求祢"
+                   "尋求你"
                    "一顆謙卑的心"]
      :entry/lecture-name "生命被澆獻"}
     {:entry/date "2022-10-29"
@@ -344,7 +344,7 @@
      :entry/people {:lead ["Martin"]}
      :entry/songs ["全地至高是我主"
                    "保守我心"
-                   "祢是我唯一的依靠"
+                   "你是我唯一的依靠"
                    "永活真神"]
      :entry/lecture-name "上帝是活人的上帝"}
     {:entry/date "2022-11-12"
@@ -380,7 +380,7 @@
      :entry/people {:lead ["Philson"]
                     :vocals ["Kiki"]
                     :pianist ["Eddie"]}
-     :entry/songs ["萬有都歸祢"
+     :entry/songs ["萬有都歸你"
                    "君王就在這裡"
                    "憂傷痛悔的靈"
                    "來投靠耶穌"]
@@ -398,7 +398,7 @@
                     :drummer ["Martin"]
                     :pianist ["Dorothy"]}
      :entry/songs ["獻上頌讚"
-                   "除祢以外"
+                   "除你以外"
                    "是為了愛"
                    "在至高之處"
                    "我們愛因為神先愛"]
@@ -412,7 +412,7 @@
      :entry/songs ["Angels We Have Heard On High"
                    "天使和聲跨千里"
                    "Go Tell It On The Mountain"
-                   "萬有都歸祢"
+                   "萬有都歸你"
                    "求主給這世代看見異象"]
      :entry/lecture-name "真光來到世上"}
     ))

@@ -8,9 +8,9 @@
                          "Andrew"]
                     :pianist ["Vivian"]}
      :entry/songs ["永活真神"
-                   "神我屬祢"
+                   "神我屬你"
                    "十架犧牲的愛"
-                   "祢是君王"
+                   "你是君王"
                    "一"
                    "主喜悅的事"]
      :entry/lecture-name "見證主福音"}
@@ -23,7 +23,7 @@
      :entry/songs ["一生的恩惠"
                    "耶和華以勒"
                    "Beautiful Saviour"
-                   "決心跟祢"]
+                   "決心跟你"]
      :entry/lecture-name "找到生命的焦點"}
     {:entry/date "2023-01-21"
      :entry/people {:lead ["Ken"]
@@ -53,7 +53,7 @@
                     :av ["Terry"]
                     :pianist ["Eddie"]}
      :entry/songs ["主的喜樂是我力量"
-                   "祢最喜悅的敬拜"
+                   "你最喜悅的敬拜"
                    "世界最美的聲音"
                    "獻給我天上的主"]
      :entry/lecture-name "最美的敬拜"}
@@ -64,11 +64,11 @@
                     :av ["Cheuk"
                          "Andrew"]
                     :pianist ["Vivian"]}
-     :entry/songs ["祢的信實廣大"
-                   "尋求祢"
+     :entry/songs ["你的信實廣大"
+                   "尋求你"
                    "垂絲柳樹下"
-                   "這時代要呼求祢"
-                   "決心跟祢"]
+                   "這時代要呼求你"
+                   "決心跟你"]
      :entry/lecture-name "生死的抉擇"}
     {:entry/date "2023-02-18"
      :entry/people {:lead ["Sinead"]
@@ -76,12 +76,12 @@
                     :pianist ["Dorothy"]
                     :av ["Terry"]
                     :guitarist ["Bertha"]}
-     :entry/songs ["我要愛慕祢"
+     :entry/songs ["我要愛慕你"
                    "世界最美的聲音"
-                   "祢最喜悅的敬拜"
+                   "你最喜悅的敬拜"
                    "在寶座上聖潔羔羊"
                    "親眼看見你"]
-     :entry/lecture-name "親眼看見祢"}
+     :entry/lecture-name "親眼看見你"}
     {:entry/date "2023-02-25"
      :entry/people {:lead ["Martin"]
                     :vocals ["Kiki Pau"]
@@ -99,7 +99,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["恩典"
                    "世界最美的聲音"
-                   "至高尊貴的祢"
+                   "至高尊貴的你"
                    "燃動生命"]
      :entry/lecture-name "重生進天國"}
     {:entry/date "2023-03-11"
@@ -108,7 +108,7 @@
                     :av ["Terry"]
                     :pianist ["Cheuk"]}
      :entry/songs ["頌讚全能上帝"
-                   "祢坐著為王"
+                   "你坐著為王"
                    "生命活水充滿我"
                    "恩典太美麗"]
      :entry/lecture-name "豐收在望"}
@@ -144,7 +144,7 @@
                          "Andrew"]
                     :pianist ["Dorothy"]}
      :entry/songs ["耶穌配得至聖尊榮"
-                   "祢是彌賽亞"
+                   "你是彌賽亞"
                    "逾越"
                    "Servant King 君尊義僕"]
      :entry/lecture-name "驚動全城"}
@@ -163,7 +163,7 @@
                     :av ["Cheuk"]
                     :pianist ["ToTo"]}
      :entry/songs ["仍能讚美"
-                   "神我屬祢"
+                   "神我屬你"
                    "信心的等待"
                    "完全信靠"]
      :entry/lecture-name "同行"}
@@ -175,9 +175,9 @@
                          "Andrew"]
                     :pianist ["Eddie"]}
      :entry/songs ["誰曾應許"
-                   "永恆的祢"
+                   "永恆的你"
                    "豐盛的應許"
-                   "有祢同行"]
+                   "有你同行"]
      :entry/lecture-name "追求美好，同行新生"}
     {:entry/date "2023-05-06"
      :entry/people {:lead ["Martin"]
@@ -186,7 +186,7 @@
                     :pianist ["Vivian"]}
      :entry/songs ["我願你來"
                    "我的千古保障"
-                   "尋求祢"
+                   "尋求你"
                    "不要憂慮"]
      :entry/lecture-name "求則得之"}
     {:entry/date "2023-05-13"
@@ -208,7 +208,7 @@
      :entry/songs ["駕著雲彩"
                    "你是我神"
                    "禱告的大軍"
-                   "只要有祢在我左右"
+                   "只要有你在我左右"
                    "站於天地之間"]
      :entry/lecture-name "基督為我們祈求"}
     {:entry/date "2023-05-27"
@@ -216,7 +216,7 @@
                     :vocals ["Cindy"]
                     :av ["Terry"]
                     :pianist ["Cheuk"]}
-     :entry/songs ["渴慕祢"
+     :entry/songs ["渴慕你"
                    "你坐著為王"
                    "你是配得"
                    "寶貝聖靈"]
@@ -226,7 +226,7 @@
                     :vocals ["Kiki Pau"]
                     :av ["Philson"]
                     :pianist ["Eddie"]}
-     :entry/songs ["至高尊貴的祢"
+     :entry/songs ["至高尊貴的你"
                    "無論那刻"
                    "建殿者的呼聲"
                    "讚美三一上帝"]
@@ -237,7 +237,7 @@
                     :av ["Terry"]
                     :pianist ["Cheuk"]}
      :entry/songs ["全地至高是我主"
-                   "我向祢禱告"
+                   "我向你禱告"
                    "因著信"
                    "永遠的依靠"]
      :entry/lecture-name "作門徒的方式"}
@@ -256,7 +256,7 @@
                     :av ["Terry"]
                     :pianist ["Vivian"]}
      :entry/songs ["我們的神"
-                   "無人能像祢"
+                   "無人能像你"
                    "10,000 Reasons"
                    "捉緊我 - 頌恩旋律"]
      :entry/lecture-name "勇敢無畏的跟隨者"}
@@ -269,7 +269,7 @@
                     :bassist ["Cheuk"]
                     :av ["Philson"]
                     :pianist ["Vivian"]}
-     :entry/songs ["至高尊貴的祢"
+     :entry/songs ["至高尊貴的你"
                    "願你公義降臨"
                    "避難所"
                    "以賽亞60"
@@ -301,9 +301,9 @@
                     :vocals ["Kiki"]
                     :av ["Cheuk"]
                     :pianist ["Eddie"]}
-     :entry/songs ["尋求祢"
+     :entry/songs ["尋求你"
                    "如此認識我"
-                   "盼望在乎祢"
+                   "盼望在乎你"
                    "亂世中的禱告"]
      :entry/lecture-name "自省不「稗」，忍耐等候"}
     {:entry/date "2023-07-29"
@@ -312,7 +312,7 @@
                     :av ["Philson"]
                     :pianist ["Eddie"]}
      :entry/songs ["God I Look To You"
-                   "讓我得見祢的榮面"
+                   "讓我得見你的榮面"
                    "願盡我一生"
                    "立志擺上"]
      :entry/lecture-name "天國的比喻"}
@@ -353,7 +353,7 @@
                     :vocals ["Kiki"]
                     :av ["Cheuk"]
                     :pianist ["Dorothy"]}
-     :entry/songs ["至高尊貴的祢"
+     :entry/songs ["至高尊貴的你"
                    "我要一心稱謝你"
                    "神的帳幕在人間"
                    "以愛奉獻"]
@@ -375,7 +375,7 @@
                     :av ["Philson"]
                     :pianist ["Adriel"]}
      :entry/songs ["投靠"
-                   "讓我得見祢的榮面"
+                   "讓我得見你的榮面"
                    "我們呼求"
                    "求主給這世代看見異象"]
      :entry/lecture-name "跟隨基督的人"}    ; missing sept 16 and sept 23 entries
@@ -405,7 +405,7 @@
      :entry/songs ["The Heart of Worship"
                    "永約之誓"
                    "你是我神"
-                   "住在祢𥚃面"]
+                   "住在你𥚃面"]
      :entry/lecture-name "能結果子的民"}    ; missing oct 14 entry
     {:entry/date "2023-10-21"
      :entry/people {:lead ["Philson"]
@@ -413,9 +413,9 @@
                     :av ["Cheuk"]
                     :pianist ["Dorothy"]}
      :entry/songs ["獻上頌讚"
-                   "至高尊貴的祢"
-                   "神我屬祢"
-                   "萬有都歸祢"]
+                   "至高尊貴的你"
+                   "神我屬你"
+                   "萬有都歸你"]
      :entry/lecture-name "把上帝的東西給上帝"}
     {:entry/date "2023-10-28"
      :entry/people {:lead ["Gab"]
@@ -436,7 +436,7 @@
                     :pianist ["Cheuk"]}
      :entry/songs ["讓我靈頌你名"
                    "衷心的敬拜"
-                   "祢最喜悅的敬拜"
+                   "你最喜悅的敬拜"
                    "真實的悔改"
                    "以愛奉獻"]
      :entry/lecture-name "「言行一致」跟隨主"}  ; missing nov 11 entry
@@ -449,7 +449,7 @@
      :entry/songs ["我們歡迎君王降臨"
                    "永約之誓"
                    "一生的恩惠"
-                   "讓我得見祢的榮面"]
+                   "讓我得見你的榮面"]
      :entry/lecture-name "真理與傳説"}
     {:entry/date "2023-11-25"
      :entry/people {:lead ["ToTo"]
