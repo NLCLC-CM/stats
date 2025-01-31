@@ -25,6 +25,15 @@
                    "Beautiful Saviour"
                    "決心跟你"]
      :entry/lecture-name "找到生命的焦點"}
+    {:entry/date "2023-01-20"
+     :entry/people {:lead ["Terry"]
+                    :vocals ["Dorothy"
+                             "Andrew"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["憂傷痛悔的靈"
+                   "萬有都歸你"
+                   "我要一生一世住在你聖殿"]
+     :entry/lecture-name "Bible Study - Overview"}
     {:entry/date "2023-01-21"
      :entry/people {:lead ["Ken"]
                     :vocals ["Gigi"]
@@ -70,6 +79,17 @@
                    "這時代要呼求你"
                    "決心跟你"]
      :entry/lecture-name "生死的抉擇"}
+    {:entry/date "2023-02-17"
+     :entry/people {:lead ["Kiki"]
+                    :vocals ["Liberty"
+                             "Gab"]
+                    :pianist ["Cheuk"]
+                    :guitarist ["Kovia"]}
+     :entry/songs ["尋求你"
+                   "求你以真理和愛引導我"
+                   "你是我惟一的倚靠"
+                   "我要一生一世住在你聖殿"]
+     :entry/lecture-name "Bible Study - James 1:1-18"}
     {:entry/date "2023-02-18"
      :entry/people {:lead ["Sinead"]
                     :vocals ["Dorothy"]
@@ -112,6 +132,15 @@
                    "生命活水充滿我"
                    "恩典太美麗"]
      :entry/lecture-name "豐收在望"}
+    {:entry/date "2023-03-17"
+     :entry/people {:lead ["ToTo"]
+                    :vocals ["Kiki"
+                             "Terry"]
+                    :pianist ["Dorothy"]}
+     :entry/songs ["最美好盡力愛你"
+                   "聽命勝於獻祭"
+                   "我們都是這樣靠主走過的"]
+     :entry/lecture-name "Bible Study - James 1:19-27"}
     {:entry/date "2023-03-18"
      :entry/people {:lead ["Adriel"]
                     :av ["Cheuk"
@@ -157,6 +186,14 @@
                    "主基督配得 (Worthy Is The Lamb)"
                    "復活的主 - 基恩敬拜"]
      :entry/lecture-name "因信得生"}
+    {:entry/date "2023-04-21"
+     :entry/people {:lead ["Philson"]
+                    :vocals ["Kiki"]
+                    :pianist ["ToTo"]}
+     :entry/songs ["安靜"
+                   "仍能讚美"
+                   "立志擺上"]
+     :entry/lecture-name "Bible Study - James 2:1-13"}
     {:entry/date "2023-04-22"
      :entry/people {:lead ["Philson"]
                     :vocals ["Kiki"]
@@ -200,6 +237,14 @@
                    "寶貝聖靈"
                    "聖法蘭西斯禱文"]
      :entry/lecture-name "受苦也有福"}
+    {:entry/date "2023-05-19"
+     :entry/people {:lead ["Stanley"]
+                    :vocals ["Sinead"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["全地至高是我主"
+                   "因着信"
+                   "主喜悅的事"]
+     :entry/lecture-name "Bible Study - James 2:14-26"}
     {:entry/date "2023-05-20"
      :entry/people {:lead ["ToTo"]
                     :vocals ["Gab"]
@@ -378,7 +423,16 @@
                    "讓我得見你的榮面"
                    "我們呼求"
                    "求主給這世代看見異象"]
-     :entry/lecture-name "跟隨基督的人"}    ; missing sept 16 and sept 23 entries
+     :entry/lecture-name "釋放與捆綁"}    ; missing sept 16 and sept 23 entries
+    {:entry/date "2023-09-15"
+     :entry/people {:lead ["Philson"]
+                    :vocals ["Tin Hei"]
+                    :pianist ["Cheuk"]}
+     :entry/songs ["合一的心"
+                   "只有你永恆的主"
+                   "Turn Your Eyes Upon Jesus"
+                   "當轉眼仰望耶穌"]
+     :entry/lecture-name "Bible Study - James 5:1-11"}
     {:entry/date "2023-09-30"
      :entry/people {:lead ["Sinead"]
                     :vocals ["YauYau"]
@@ -440,6 +494,18 @@
                    "真實的悔改"
                    "以愛奉獻"]
      :entry/lecture-name "「言行一致」跟隨主"}  ; missing nov 11 entry
+    {:entry/date "2023-11-17"
+     :entry/people {:lead ["Andrew"]
+                    :vocals ["Liberty"
+                             "ToTo"]
+                    :guitarist ["Gab"]
+                    :drummer ["Kiki"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["It is Well"
+                   "我向你禱告"
+                   "站於天地之間"
+                   "保守我心"]
+     :entry/lecture-name "Bible Study - James 5:12-20"}
     {:entry/date "2023-11-18"
      :entry/people {:lead ["Sinead"]
                     :vocals ["Arthur"]
@@ -517,7 +583,7 @@
                    "聽啊天軍讚美聲"
                    "我們愛戴的王"
                    "是為了愛"]
-     :entry/lecture-name "上帝的話沒有不帶能力"}
+     :entry/lecture-name "上帝的話沒有不帶能力 (2)"}
     {:entry/date "2023-12-25"
      :entry/people {:lead ["ToTo"]
                     :vocals ["Ken"]

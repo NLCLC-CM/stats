@@ -21,6 +21,14 @@
                        "如此認識我"
                        "主，我願像你 (頌主聖詩383)"]
          :entry/lecture-name "將看見更大的事"}
+        {:entry/date "2024-01-19"
+         :entry/people {:lead ["Stanley"]
+                        :vocals ["ToTo"]
+                        :pianist ["Adriel"]}
+         :entry/songs ["頌讚全能上帝"
+                       "寶貝聖靈"
+                       "憑信跨過"]
+         :entry/lecture-name "n/a"}
         {:entry/date "2024-01-20"
          :entry/people {:lead ["Philson"]
                         :vocals ["Kiki"]
@@ -136,6 +144,17 @@
                        "如你"
                        "寶貴十架"]
          :entry/lecture-name "父的本性"}
+        {:entry/date "2024-03-22"
+         :entry/people {:lead ["Andrew"]
+                        :vocals ["Liberty"]
+                        :pianist ["Adriel"]
+                        :bassist ["Cheuk"]
+                        :guitarist ["Gab"]
+                        :drummer ["ToTo"]}
+         :entry/songs ["無言的讚頌"
+                       "神我屬祢"
+                       "Above All"]
+         :entry/lecture-name "n/a"}
         {:entry/date "2024-03-23"
          :entry/people {:lead ["Arthur"]
                         :vocals ["Helen"]
@@ -177,6 +196,18 @@
                        "神的帳幕在人間"
                        "顯現"]
          :entry/lecture-name "你認得主嗎？"}
+        {:entry/date "2024-04-19"
+         :entry/people {:lead ["Helen"]
+                        :vocals ["Tin Hei"]
+                        :pianist ["Jethro"
+                                  "Adriel"]
+                        :guitarist ["Kovia"]
+                        :bassist ["Jerry"]
+                        :drummer ["Jethro"]}
+         :entry/songs ["求你以真理和愛引導我"
+                       "主，你知道"
+                       "Yet Not I but Through Christ in Me"]
+         :entry/lecture-name "n/a"}
         {:entry/date "2024-04-20"
          :entry/people {:lead ["Arthur"]
                         :vocals ["Dorothy"]
@@ -242,6 +273,14 @@
                        "祈求主聖靈"
                        "神的帳幕在人間"]
          :entry/lecture-name "學習、共融、禱告、入世的教會"}
+        {:entry/date "2024-05-24"
+         :entry/people {:lead ["Philson"]
+                        :vocals ["Liberty"]
+                        :pianist ["Adriel"]}
+         :entry/songs ["恩典太美麗"
+                       "我需要有你在我生命中"
+                       "憑信跨過"]
+         :entry/lecture-name "n/a"}
         {:entry/date "2024-05-25"
          :entry/people {:lead ["Adriel"]
                         :vocals ["Cindy"
@@ -388,6 +427,14 @@
                        "我向你禱告"
                        "寶貝"]
          :entry/lecture-name "信的人有永生"}
+        {:entry/date "2024-08-16"
+         :entry/people {:lead ["Kiki"]
+                        :vocals ["Tin Hei"]
+                        :pianist ["Cheuk"]}
+         :entry/songs ["主你知道"
+                       "Jesus I Need You"
+                       "我們呼求"]
+         :entry/lecture-name "n/a"}
         {:entry/date "2024-08-17"
          :entry/people {:av ["Cheuk"]
                         :lead ["Gab"]
@@ -507,6 +554,14 @@
                    "仍能讚美"
                    "一生不會捨棄你"]
      :entry/lecture-name "只差一件事"}
+    {:entry/date "2024-10-18"
+     :entry/people {:lead ["Philson"]
+                    :guitarist ["Gab"]
+                    :drummer ["Kiki"]}
+     :entry/songs ["願盡我一生"
+                   "得著自由"
+                   "以愛還愛"]
+     :entry/lecture-name "n/a"}
     {:entry/date "2024-10-19"
      :entry/people {:av ["Cheuk"]
                     :lead ["Adriel"]

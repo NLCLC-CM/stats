@@ -107,6 +107,16 @@
                    "因祂活著"
                    "我的救贖者活箸"]
      :entry/lecture-name "何處找到活著的基督?"}
+    {:entry/date "2022-04-22"
+     :entry/people {:vocals ["Philson"
+                             "Stanley"
+                             "Terry"
+                             "ToTo"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["一首讚美的詩歌"
+                   "保守我心"
+                   "你是葡萄樹我是枝子"]
+     :entry/lecture-name "Bible Study: 1 John 2:18-27"}
     {:entry/date "2022-04-23"
      :entry/people {:lead ["Sinead"]
                     :vocals ["Arthur"]
@@ -147,6 +157,17 @@
                    "永遠敬拜"
                    "寶貝"]
      :entry/lecture-name "門徒的qr code"}
+    {:entry/date "2022-05-20"
+     :entry/people {:vocals ["Dorothy"
+                             "Tin Hei"
+                             "Philson"]
+                    :guitarist ["Gab"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["你是耶穌我的一切"
+                   "願你公義降臨"
+                   "住在你裡面"
+                   "我們愛因為神先愛"]
+     :entry/lecture-name "Bible Study: 1 John 2:28 - 1 John 3"}
     {:entry/date "2022-05-21"
      :entry/people {:lead ["Sinead"]
                     :vocals ["YauYau"]
@@ -188,6 +209,17 @@
                    "永遠敬拜"
                    "在耶穌的腳前"]
      :entry/lecture-name "在崇拜認識三一上帝"}
+    {:entry/date "2022-06-17"
+     :entry/people {:vocals ["Sinead"
+                             "Liberty"
+                             "Stanley"
+                             "Terry"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["全地之高是我主"
+                   "神大愛"
+                   "你是我神"
+                   "如你"]
+     :entry/lecture-name "Bible Study: 1 John 4:1-12"}
     {:entry/date "2022-06-18"
      :entry/people {:lead ["YauYau"]
                     :vocals ["Sinead"]
@@ -320,6 +352,17 @@
                    "呼求耶穌"
                    "主禱文"]
      :entry/lecture-name "禱告的態度"}
+    {:entry/date "2022-10-21"
+     :entry/people {:vocals ["Liberty"
+                             "Philson"
+                             "YauYau"]
+                    :pianist ["Adriel"]}
+     :entry/songs ["Shout to the Lord"
+                   "獻上頌讚"
+                   "聽命勝於獻祭"
+                   "求你以真理和愛引導我"
+                   "是為你預備"]
+     :entry/lecture-name "Bible Study - 2 John"}
     {:entry/date "2022-10-22"
      :entry/people {:lead ["Sinead"]
                     :vocals ["Vivian"

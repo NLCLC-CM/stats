@@ -4,16 +4,24 @@
             [clojure.string :as st]
             [nlclc-stats.data :as data]))
 
-(deftest data-spec-validity
+(deftest data-validity
   (testing "entries meet the specs"
     (is (let [dates (map :entry/date data/entries)]
           (= (sort dates) dates)))
 
-    (is (s/valid? :roster/entries data/entries)
-        (s/explain-str :roster/entries data/entries)))
+    (doseq [entry data/entries]
+      (is (s/valid? :roster/entry entry)
+          (s/explain-str :roster/entry entry)))
 
   (testing "songs should not have alternate version"
     (let [unique-songs (set (distinct (flatten (map :entry/songs data/entries))))
           replaced (set (map #(st/replace % "你" "你") unique-songs))]
       (doseq [song unique-songs]
-        (is (contains? replaced song))))))
+        (is (contains? replaced song)))))
+  
+  (testing "unique lecture names (might delete later)"
+    (let [lectures (map :entry/lecture-name data/entries)
+          freq (frequencies lectures)]
+      (doseq [[lecture-name c] (into [] freq)]
+        (is (or (= lecture-name "n/a") (= 1 c))
+            lecture-name))))))
