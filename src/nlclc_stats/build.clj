@@ -148,18 +148,24 @@
      header
      [:article.container content]]))
 
-(def distinct-songs
+(def flattened-songs
   (->> data/entries
        (map :entry/songs)
-       (apply concat)
-       (distinct)))
+       (apply concat)))
+
+(def distinct-songs
+  (distinct flattened-songs))
+
+(def song-frequencies
+  (frequencies flattened-songs))
 
 (def people
   (template
     [:section.row
      (sidebar :people)
      [:section.col-sm-10
-      [:label.form-label.mb-3 "Search"
+      [:label.form-label.mb-3
+       "Search " (count data/names) " people"
        [:input#query.form-control {:type "search" :autofocus true}]]
 
       (for [names (partition 4 (sort data/names))]
@@ -176,15 +182,17 @@
     [:section.row
      (sidebar :songs)
      [:section.col-sm-10
-      [:label.form-label.mb-3 "Search"
+      [:label.form-label.mb-3
+       "Search " (count distinct-songs) " songs"
        [:input#query.form-control {:type "search" :autofocus true}]]
 
       (for [songs-list (partition 4 (sort distinct-songs))]
         [:div.row
          (for [s songs-list]
            [:a.col-3.song.mb-3
-            {:href (->abs-url "songs" (str s ".html"))}
-            s])])]]
+            {:href (->abs-url "songs" (str s ".html"))
+             :data-total (get song-frequencies s 0)}
+            s " [" (get song-frequencies s 0) "]"])])]]
 
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
 
