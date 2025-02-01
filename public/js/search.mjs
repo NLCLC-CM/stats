@@ -10,15 +10,18 @@ export function handleHighlightSearch(e, thingsToSearchThrough) {
     /** @var {string} query */
     const query = e.target.value.toLowerCase();
     for (const element of thingsToSearchThrough) {
-        const contentLowerCase = element.textContent.toLowerCase();
-        if (contentLowerCase.includes(query)) {
-            element.style.display = '';
+        const content = element.getElementsByClassName('content')[0];
+        const contentLowerCase = content.textContent.toLowerCase();
+        if (query.length > 0 && contentLowerCase.includes(query)) {
+            element.style.display = 'block';
             // doesn't matter because we display everything in uppercase anyways
-            element.innerHTML = contentLowerCase.replace(query, `<span class="text-warning">${query}</span>`);
+            content.innerHTML = contentLowerCase.replace(query, `<span class="text-warning">${query}</span>`);
+        } else if (query.length === 0) {
+            element.style.display = 'block';
+            content.textContent = element.dataset.content;
         } else {
             element.style.display = 'none';
-            // probably effectively delete the text styling
-            element.innerHTML = element.textContent;
+            content.textContent = element.dataset.content;
         }
     }
 }

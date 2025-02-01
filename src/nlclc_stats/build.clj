@@ -168,12 +168,30 @@
        "Search " (count data/names) " people"
        [:input#query.form-control {:type "search" :autofocus true}]]
 
-      (for [names (partition 4 (sort data/names))]
-        [:div.row
-         (for [n names]
-           [:a.col-3.name.mb-3
-            {:href (->abs-url "people" (str n ".html"))}
-            n])])]]
+      [:fieldset
+       {:style {:text-transform "none"}}
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :checked true
+          :value "name.asc"}]
+        "Name ASC"]
+
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :value "name.desc"}]
+        "Name DESC"]]
+
+      [:div#people
+       (for [n (sort data/names)]
+         [:a.col-3.name.mb-3.float-start
+          {:href (->abs-url "people" (str n ".html"))
+           :data-content n
+           :style {:display "block"}}
+          [:span.content n]])]]]
 
     [:script {:type "module" :src (->abs-url "js" "people.mjs")}]))
 
@@ -186,13 +204,39 @@
        "Search " (count distinct-songs) " songs"
        [:input#query.form-control {:type "search" :autofocus true}]]
 
-      (for [songs-list (partition 4 (sort distinct-songs))]
-        [:div.row
-         (for [s songs-list]
-           [:a.col-3.song.mb-3
-            {:href (->abs-url "songs" (str s ".html"))
-             :data-total (get song-frequencies s 0)}
-            s " [" (get song-frequencies s 0) "]"])])]]
+      [:fieldset
+       {:style {:text-transform "none"}}
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :checked true
+          :value "title.asc"}]
+        "Title ASC"]
+
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :value "title.desc"}]
+        "Title DESC"]
+
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :value "hits.desc"}]
+        "Hits DESC"]]
+
+      [:div#songs
+       (for [s (sort distinct-songs)]
+         [:a.col-3.song.mb-3.float-start
+          {:href (->abs-url "songs" (str s ".html"))
+           :data-total (get song-frequencies s 0)
+           :data-content s
+           :style {:display "block"}}
+          [:span.content s]
+          [:span.badge.text-bg-secondary (get song-frequencies s 0)]])]]]
 
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
 
