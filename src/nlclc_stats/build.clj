@@ -240,6 +240,44 @@
 
     [:script {:type "module" :src (->abs-url "js" "songs.mjs")}]))
 
+(defn bar-chart
+  "Horizontal bar chart."
+  [kv-pairs]
+  (let [w 100
+        h 100
+        max-v (apply max (map second kv-pairs))
+        section-h (/ h (count kv-pairs))
+        text-x-padding 5
+        text-y-padding 3
+        bar-h-padding (* 1/10 section-h)
+        bar-h (* 9/10 section-h)]
+    [:svg
+     {:width "100%"
+      :max-v max-v
+      :height (str h "px")
+      :preserveAspectRatio "xMinYMin"
+      :viewBox (apply str (interpose " " [0 0 w h]))}
+     (for [[i [label v]] (map-indexed list kv-pairs)]
+       [:g
+        [:rect
+         {:x 0
+          :y (+ bar-h-padding (* i section-h))
+          :width (str (double (* 100 (/ v max-v))) "%")
+          :height bar-h
+          :style {:fill "var(--bs-secondary-bg)"}}
+         
+         [:animate
+          {:attributeName :width
+           :values (apply str (interpose ";" [0 (str (double (* 100 (/ v max-v))) "%")]))
+           :dur "0.2s"
+           :repeatCount 1}]]
+
+        [:text
+         {:x text-x-padding
+          :y (+ bar-h-padding bar-h (- 0 text-y-padding) (* i section-h))
+          :style {:fill "var(--bs-secondary-color)"}}
+         label " (" v " times)"]])]))
+
 (defn indiv-element-tmpl
   [n {:keys [people songs dates]}]
   (template
@@ -251,10 +289,14 @@
       [:section.row
        [:section.col-sm-4
         [:h5 "Appearances" " (" (count dates) ")"]
-        [:ul
-         (let [dates (reverse (sort dates))]
-           (for [date dates]
-             [:li [:time {:datetime date} date]]))]]
+        (bar-chart (sort-by first (into [] (frequencies (map #(subs % 0 4) dates)))))
+        (for [dates-by-year (partition-by #(subs % 0 4) (reverse (sort dates)))]
+          (let [year (subs (first dates-by-year) 0 4)]
+            [:details
+             [:summary year " (" (count dates-by-year) ")"]
+             [:ul
+              (for [date dates-by-year]
+                [:li [:time {:datetime date} date]])]]))]
 
        [:section.col-sm-4
         [:h5 "Song pairings"]
