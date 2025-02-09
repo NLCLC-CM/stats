@@ -1,0 +1,17 @@
+g.bar > rect {
+    transition: fill 0.5s;
+    fill: var(--bs-secondary-bg);
+}
+
+g.bar > text {
+    transition: fill 0.5s;
+    fill: var(--bs-secondary-color);
+}
+
+.bar:hover > rect {
+    fill: var(--bs-info);
+}
+
+.bar:hover > text {
+    fill: var(--bs-emphasis-color);
+}

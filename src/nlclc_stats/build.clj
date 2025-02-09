@@ -243,8 +243,8 @@
 (defn bar-chart
   "Horizontal bar chart."
   [kv-pairs]
-  (let [w 100
-        h 100
+  (let [w 350
+        h 150
         max-v (apply max (map second kv-pairs))
         section-h (/ h (count kv-pairs))
         text-x-padding 5
@@ -255,17 +255,16 @@
      {:width "100%"
       :max-v max-v
       :height (str h "px")
-      :preserveAspectRatio "xMinYMin"
+      :preserveAspectRatio "none"
       :viewBox (apply str (interpose " " [0 0 w h]))}
      (for [[i [label v]] (map-indexed list kv-pairs)]
-       [:g
+       [:g.bar
         [:rect
          {:x 0
           :y (+ bar-h-padding (* i section-h))
           :width (str (double (* 100 (/ v max-v))) "%")
-          :height bar-h
-          :style {:fill "var(--bs-secondary-bg)"}}
-         
+          :height bar-h}
+
          [:animate
           {:attributeName :width
            :values (apply str (interpose ";" [0 (str (double (* 100 (/ v max-v))) "%")]))
@@ -274,9 +273,19 @@
 
         [:text
          {:x text-x-padding
-          :y (+ bar-h-padding bar-h (- 0 text-y-padding) (* i section-h))
-          :style {:fill "var(--bs-secondary-color)"}}
+          :y (+ bar-h-padding bar-h (- 0 text-y-padding) (* i section-h))}
          label " (" v " times)"]])]))
+
+(def all-years
+  (->> data/entries
+       (map (comp #(subs % 0 4) :entry/date))
+       set
+       sort))
+
+(def years-default-freq
+  (->> all-years
+       (map #(vector % 0))
+       (into {})))
 
 (defn indiv-element-tmpl
   [n {:keys [people songs dates]}]
@@ -289,7 +298,8 @@
       [:section.row
        [:section.col-sm-4
         [:h5 "Appearances" " (" (count dates) ")"]
-        (bar-chart (sort-by first (into [] (frequencies (map #(subs % 0 4) dates)))))
+        (bar-chart (sort-by first (into [] (merge years-default-freq (frequencies (map #(subs % 0 4) dates))))))
+        [:link {:href (->abs-url "css" "chart.css") :rel "stylesheet"}]
         (for [dates-by-year (partition-by #(subs % 0 4) (reverse (sort dates)))]
           (let [year (subs (first dates-by-year) 0 4)]
             [:details
@@ -374,12 +384,6 @@
       lecture-name]
      [:button.details
       "Details"]]))
-
-(def all-years
-  (as-> data/entries $
-        (map (comp #(subs % 0 4) :entry/date) $)
-        (set $)
-        (sort $)))
 
 (def index
   (let [part-by-year (partition-by (comp #(subs % 0 4) :entry/date) data/entries)]
@@ -516,14 +520,20 @@
          (apply create-page output-dir page-data))
 
        (doseq [[person stats] (into [] people-stats)]
-         (let [file (io/file people-dir (str person ".html"))]
-           (tracef "writing person to file %s" (.getName file))
-           (spit file (indiv-element-tmpl person stats))))
+         (let [file (io/file people-dir (str person ".html"))
+               old-contents (if (.exists file) (slurp file) "")
+               new-contents (indiv-element-tmpl person stats)]
+           (when (not= old-contents new-contents)
+             (tracef "writing person to file %s" (.getName file))
+             (spit file new-contents))))
 
        (doseq [[song-name stats] (into [] song-stats)]
-         (let [file (io/file songs-dir (str song-name ".html"))]
-           (tracef "writing song to file %s" (.getName file))
-           (spit file (indiv-element-tmpl song-name stats)))))
+         (let [file (io/file songs-dir (str song-name ".html"))
+               old-contents (if (.exists file) (slurp file) "")
+               new-contents (indiv-element-tmpl song-name stats)]
+           (when (not= old-contents new-contents)
+             (tracef "writing song to file %s" (.getName file))
+             (spit file new-contents)))))
 
      (info "finished write")
      (catch Exception e
