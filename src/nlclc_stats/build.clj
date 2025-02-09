@@ -176,7 +176,7 @@
      (sidebar :people)
      [:section.col-sm-10
       [:label.form-label.mb-3
-       "Search " (count data/names) " people"
+       "Search " (count distinct-people) " people"
        [:input#query.form-control {:type "search" :autofocus true}]]
 
       [:fieldset
@@ -194,24 +194,15 @@
          {:type "radio"
           :name "sort"
           :value "name.desc"}]
-        "Name DESC"]
-
-       [:label.form-label.p-1
-        [:input.sort-btns
-         {:type "radio"
-          :name "sort"
-          :value "hits.desc"}]
-        "Hits DESC"]]
+        "Name DESC"]]
 
       [:div#people
        (for [n (sort distinct-people)]
          [:a.col-3.name.mb-3.float-start
           {:href (->abs-url "people" (str n ".html"))
-           :data-total (get people-frequencies n 0)
            :data-content n
            :style {:display "block"}}
-          [:span.content n]
-          [:span.badge.text-bg-secondary (get people-frequencies n 0)]])]]]
+          [:span.content n]])]]]
 
     [:script {:type "module" :src (->abs-url "js" "people.mjs")}]))
 

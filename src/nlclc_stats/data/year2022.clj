@@ -5,7 +5,7 @@
     {:entry/date "2022-02-19"
      :entry/people {:lead ["YauYau"]
                     :vocals ["Cindy"
-                             "Kiki Pau"]
+                             "Kiki P"]
                     :guitarist ["Toby"]
                     :drummer ["Martin"]
                     :pianist ["Eddie"]}
@@ -82,7 +82,7 @@
      :entry/lecture-name "主要用你"}
     {:entry/date "2022-04-15"
      :entry/people {:lead ["Martin"]
-                    :vocals ["Kiki Pau"
+                    :vocals ["Kiki P"
                              "Arthur"
                              "Esther"]
                     :guitarist ["Toby"]
@@ -140,7 +140,7 @@
      :entry/lecture-name "盡力愛主，忠心跟隨"}
     {:entry/date "2022-05-07"
      :entry/people {:lead ["Martin"]
-                    :vocals ["Kiki Pau"]
+                    :vocals ["Kiki P"]
                     :pianist ["Adriel"]}
      :entry/songs ["我要一生一世住在你聖殿"
                    "全因為你"
@@ -437,7 +437,7 @@
      :entry/lecture-name "衝破四堵牆的教會"}    ;; missing dec 17
     {:entry/date "2022-12-24"
      :entry/people {:lead ["YauYau"]
-                    :vocals ["Kiki Pau"]
+                    :vocals ["Kiki P"]
                     :drummer ["Martin"]
                     :pianist ["Dorothy"]}
      :entry/songs ["獻上頌讚"

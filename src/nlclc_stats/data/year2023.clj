@@ -104,7 +104,7 @@
      :entry/lecture-name "親眼看見你"}
     {:entry/date "2023-02-25"
      :entry/people {:lead ["Martin"]
-                    :vocals ["Kiki Pau"]
+                    :vocals ["Kiki P"]
                     :av ["Philson"
                          "Andrew"]
                     :pianist ["Vivian"]}
@@ -268,7 +268,7 @@
      :entry/lecture-name "聖靈在信徒生活中的行動"}
     {:entry/date "2023-06-03"
      :entry/people {:lead ["Martin"]
-                    :vocals ["Kiki Pau"]
+                    :vocals ["Kiki P"]
                     :av ["Philson"]
                     :pianist ["Eddie"]}
      :entry/songs ["至高尊貴的你"
@@ -353,7 +353,7 @@
      :entry/lecture-name "自省不「稗」，忍耐等候"}
     {:entry/date "2023-07-29"
      :entry/people {:lead ["Martin"]
-                    :vocals ["Kiki Pau"]
+                    :vocals ["Kiki P"]
                     :av ["Philson"]
                     :pianist ["Eddie"]}
      :entry/songs ["God I Look To You"

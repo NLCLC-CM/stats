@@ -37,7 +37,7 @@
     "Julianna"
     "Ka Bo"
     "Ken"
-    "Kiki Pau"
+    "Kiki P"
     "Kiki"
     "Kovia"
     "Liberty"

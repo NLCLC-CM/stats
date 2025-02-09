@@ -11,10 +11,6 @@ function sortPeople(sortMethod) {
         [...container.children]
             .sort((a, b) => a.dataset.content < b.dataset.content ? 1 : -1)
             .forEach(e => container.append(e));
-    } else if (sortMethod === 'hits.desc') {
-        [...container.children]
-            .sort((a, b) => parseInt(a.dataset.total) < parseInt(b.dataset.total) ? 1 : -1)
-            .forEach(e => container.append(e));
     }
 }
 
