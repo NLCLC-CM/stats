@@ -159,6 +159,17 @@
 (def song-frequencies
   (frequencies flattened-songs))
 
+(def flattened-people
+  (->> data/entries
+       (map (comp flatten vals #(-> % (dissoc :av) (dissoc :usher)) :entry/people))
+       (apply concat)))
+
+(def distinct-people
+  (distinct flattened-people))
+
+(def people-frequencies
+  (frequencies flattened-people))
+
 (def people
   (template
     [:section.row
@@ -183,15 +194,24 @@
          {:type "radio"
           :name "sort"
           :value "name.desc"}]
-        "Name DESC"]]
+        "Name DESC"]
+
+       [:label.form-label.p-1
+        [:input.sort-btns
+         {:type "radio"
+          :name "sort"
+          :value "hits.desc"}]
+        "Hits DESC"]]
 
       [:div#people
-       (for [n (sort data/names)]
+       (for [n (sort distinct-people)]
          [:a.col-3.name.mb-3.float-start
           {:href (->abs-url "people" (str n ".html"))
+           :data-total (get people-frequencies n 0)
            :data-content n
            :style {:display "block"}}
-          [:span.content n]])]]]
+          [:span.content n]
+          [:span.badge.text-bg-secondary (get people-frequencies n 0)]])]]]
 
     [:script {:type "module" :src (->abs-url "js" "people.mjs")}]))
 
